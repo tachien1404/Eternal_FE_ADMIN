@@ -7,19 +7,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import { RouterModule } from '@angular/router';
+import { BrandComponent } from './layouts/brand/brand.component';
+import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {BrandModule} from "./layouts/brand/brand.module";
+import { CategoryComponent } from './layouts/category/category.component';
+import { OrderComponent } from './layouts/order/order.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    BrandComponent,
+    CategoryComponent,
+    OrderComponent
   ],
   imports: [
+
     BrowserModule,
     SidebarModule,
-    RouterModule.forRoot(AppRoutingModule,{
-      useHash: true
-    })
+    AppRoutingModule,HttpClientModule,ReactiveFormsModule,
+FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
