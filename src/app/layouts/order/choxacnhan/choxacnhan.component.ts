@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../../service/order.service";
 import {FormControl, FormGroup} from "@angular/forms";
 
@@ -8,25 +8,47 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./choxacnhan.component.css']
 })
 export class ChoxacnhanComponent implements OnInit {
-orderdata:any;
+  orderdata: any;
 
-  constructor(private service:OrderService) {
-this.loadAll0();}
+  constructor(private service: OrderService) {
+    this.loadAll0();
+  }
+
   ngOnInit(): void {
   }
-loadAll0(){
-    this.service.getBy0().subscribe(result =>{
-      this.orderdata=result;
+
+  loadAll0() {
+    this.service.getBy0().subscribe(result => {
+      this.orderdata = result;
+    })
+  }
+
+  Input = new FormGroup({
+
+status:new FormControl()
   })
+
+  updatetrangthai(id:any,status:any) {
+
+if(status==1){
+  this.Input.value.status=status
+  this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
+
+    this.loadAll0()
+
+  });
+}else if(status==3){
+  this.Input.value.status=status
+  this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
+
+    this.loadAll0()
+
+  });
 }
-Input=new FormGroup({
-  status:new FormControl("1")
-})
-updatetrangthai(id:any){
-    this.service.updatetrangthai(this.Input.value,id).subscribe(result=>{
-      this.loadAll0()
-    });
 
 
-}
+
+
+
+  }
 }

@@ -27,4 +27,7 @@ export class OrderService{
   updatetrangthai(input:any,id:any):Observable<Object>{
     return this.http.put(this.api+'/trangthai/'+id,input)
   }
+  getByPage(input:any):Observable<Object>{
+    return  this.http.post(this.api+'/search-by-page',input)
+  }
 }
