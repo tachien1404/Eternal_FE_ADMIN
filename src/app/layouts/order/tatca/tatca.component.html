@@ -23,6 +23,7 @@
 
 
     </div>
+    <h4>..Đơn hàng</h4>
     <div class="col-12 table-responsive" style="border-radius: 15px; height: auto">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
@@ -59,9 +60,18 @@
             phát triển</a></th>
           <td>{{item.note}}</td>
           <td >
-
+<span *ngIf="item.status ==0">
            <a   class="btn-dark " style="border-radius: 5px; font-size: 12px; color: white;background-color:orangered">{{item.statusName}}</a>
-
+</span>
+            <span *ngIf="item.status ==1">
+           <a   class="btn-dark " style="border-radius: 5px; font-size: 12px; color: white;background-color:blue">{{item.statusName}}</a>
+</span>
+            <span *ngIf="item.status ==2">
+           <a   class="btn-dark " style="border-radius: 5px; font-size: 12px; color: white;background-color:#70bf73">{{item.statusName}}</a>
+</span>
+            <span *ngIf="item.status ==3">
+           <a   class="btn-dark " style="border-radius: 5px; font-size: 12px; color: white;background-color:red">{{item.statusName}}</a>
+</span>
           </td>
         </tr>
         </tbody>
