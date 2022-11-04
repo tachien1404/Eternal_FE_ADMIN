@@ -6,6 +6,9 @@ import { ChoxacnhanComponent } from './choxacnhan/choxacnhan.component';
 import { DahuyComponent } from './dahuy/dahuy.component';
 import { DanggiaoComponent } from './danggiao/danggiao.component';
 import { DaGiaoComponent } from './da-giao/da-giao.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Material_module} from "../../../material_module";
+import { ModalPopupComponent } from './modal-popup/modal-popup.component';
 
 @NgModule({
   declarations:[
@@ -13,11 +16,15 @@ import { DaGiaoComponent } from './da-giao/da-giao.component';
     ChoxacnhanComponent,
     DahuyComponent,
     DanggiaoComponent,
-    DaGiaoComponent
+    DaGiaoComponent,
+    ModalPopupComponent
   ],
   imports :[
+
     CommonModule,
-    OrderRouting
+    OrderRouting,
+
+    Material_module
   ]
 })
 export class OrderModule{}

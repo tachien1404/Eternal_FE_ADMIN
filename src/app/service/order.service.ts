@@ -30,4 +30,7 @@ export class OrderService{
   getByPage(input:any):Observable<Object>{
     return  this.http.post(this.api+'/search-by-page',input)
   }
+  getOrderId(id:any):Observable<Object>{
+    return this.http.get(this.api+'/getOrderId/'+id)
+  }
 }

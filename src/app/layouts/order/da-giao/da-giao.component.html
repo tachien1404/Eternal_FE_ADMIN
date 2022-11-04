@@ -1,12 +1,11 @@
-<div class="container mt-5 ">
+<div class="container mt-5 text-center">
   <div class="row ">
     <h2>Danh sách </h2>
     <hr>
     <div class="row">
-
       <div class="col-2">
         <select class="form-select " aria-label="Default select example">
-          <option selected>Open this select menu</option>
+          <option selected>Tính năng này đang đc phát triển</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
@@ -15,8 +14,7 @@
 
       <div class="col-10">
 
-        <input type="text" class="col-9 m-md-3" placeholder="Username" aria-label="Username"
-               aria-describedby="basic-addon1">
+        <input type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển" aria-label="Username" aria-describedby="basic-addon1">
 
 
         <button class="col-2 btn btn-danger">Tìm kiếm</button>
@@ -48,25 +46,26 @@
 
           <td>{{item.id}}</td>
           <td>
-            <a class="delete" title="Delete" data-toggle="tooltip" ><i
+            <a class="delete" title="Hủy Đơn hàng" data-toggle="tooltip"(click)="updatetrangthai(item.id,'3')"><i
               class="material-icons">&#xE872;</i></a>
-            <a class="add" title="Add" data-toggle="tooltip" ><i class="material-icons">&#xE03B;</i></a>
+
+              <a class="view" title="View" data-toggle="tooltip"
+                 (click)="OpenDialog('1000ms','500ms',item.id,item.statusName )"><i
+                class="material-icons">play_arrow</i></a>
+
           </td>
           <td>{{item.name_acount}}</td>
           <td>{{item.create_date}}</td>
           <td>{{item.price}}</td>
-          <th>Đang phát triển</th>
+          <th>{{item.address}}</th>
           <th><a class="btn-dark " style="border-radius: 5px; font-size: 12px; color: white;background-color:blue">Đang
             phát triển</a></th>
           <td>{{item.note}}</td>
-          <td><a class="btn-dark "
-                 style="border-radius: 5px; font-size: 12px; color: white;background-color:#4CAF50">{{item.statusName}}</a>
+          <td><a class="btn-dark " style="border-radius: 5px; font-size: 12px; color: white;background-color:#4CAF50">{{item.statusName}}</a>
           </td>
         </tr>
         </tbody>
       </table>
-
-
     </div>
 
   </div>

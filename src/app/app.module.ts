@@ -13,6 +13,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrandModule} from "./layouts/brand/brand.module";
 import { CategoryComponent } from './layouts/category/category.component';
 import { OrderComponent } from './layouts/order/order.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {Material_module} from "../material_module";
+import {CommonModule} from "@angular/common";
 
 
 @NgModule({
@@ -24,7 +27,9 @@ import { OrderComponent } from './layouts/order/order.component';
     OrderComponent
   ],
   imports: [
-
+    BrowserAnimationsModule,
+    Material_module,
+    CommonModule,
     BrowserModule,
     SidebarModule,
     AppRoutingModule,HttpClientModule,ReactiveFormsModule,
