@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../../service/order.service";
 import {FormControl, FormGroup} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {ModalPopupComponent} from "../modal-popup/modal-popup.component";
 
 @Component({
   selector: 'app-choxacnhan',
@@ -10,7 +12,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class ChoxacnhanComponent implements OnInit {
   orderdata: any;
 
-  constructor(private service: OrderService) {
+  constructor(private service: OrderService,private dialog: MatDialog) {
     this.loadAll0();
   }
 
@@ -45,10 +47,19 @@ if(status==1){
 
   });
 }
+  }
 
+  OpenDialog(enteranimation: any, exitanimation: any,id:any,statusname:any) {
 
+    this.dialog.open(ModalPopupComponent, {
+      enterAnimationDuration: enteranimation,
+      exitAnimationDuration: exitanimation,
+      width: "70%",
+      data:{
+        id:id,
+        statusname:statusname
+      },
 
-
-
+    })
   }
 }

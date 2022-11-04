@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {OrderService} from "../../../service/order.service";
+import {ModalPopupComponent} from "../modal-popup/modal-popup.component";
+import {MatDialog} from "@angular/material/dialog";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-danggiao',
@@ -8,7 +11,7 @@ import {OrderService} from "../../../service/order.service";
 })
 export class DanggiaoComponent implements OnInit {
   orderdata:any;
-  constructor( private service:OrderService) {
+  constructor( private service:OrderService,private dialog: MatDialog) {
     this.loadAll1();
   }
 
@@ -19,4 +22,40 @@ loadAll1(){
       this.orderdata=result;
     })
 }
+  Input = new FormGroup({
+
+    status:new FormControl()
+  })
+
+  updatetrangthai(id:any,status:any) {
+
+    if(status==2){
+      this.Input.value.status=status
+      this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
+
+        this.loadAll1()
+
+      });
+    }else if(status==3){
+      this.Input.value.status=status
+      this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
+
+        this.loadAll1()
+
+      });
+    }
+  }
+  OpenDialog(enteranimation: any, exitanimation: any,id:any) {
+
+    this.dialog.open(ModalPopupComponent, {
+      enterAnimationDuration: enteranimation,
+      exitAnimationDuration: exitanimation,
+      width: "70%",
+      data:{
+        id:id
+
+      },
+
+    })
+  }
 }
