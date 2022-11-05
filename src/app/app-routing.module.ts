@@ -4,27 +4,25 @@ import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.componen
 import {BrandComponent} from "./layouts/brand/brand.component";
 import {CategoryComponent} from "./layouts/category/category.component";
 
-const routes: Routes = [
-
+const routes:  Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'dashboard',
+  //   pathMatch: 'full',
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: 'dashboard'
+  // }
   {
-    path: '',
-    component: AdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(x => x.AdminLayoutModule)
-      }]},
-  {
-    path:'brand',  loadChildren: () => import('./layouts/brand/brand.module').then(x => x.BrandModule)
+    path:'product', loadChildren: () => import('./pages/product/product.module').then(m => m.ProductModule)
   }
-  ,
-  {
-    path:'category',  loadChildren: () => import('./layouts/category/category.module').then(x => x.CategoryModule)
+  ,{
+    path :'category',loadChildren:()=> import('./pages/category/add-cate/cate.module').then((m =>m.CateModule))
   },
   {
-    path:'order',  loadChildren: () => import('./layouts/order/order.module').then(x => x.OrderModule)
-  }
-
+    path :'SCDetails',loadChildren:()=> import('./pages/s-c-details/s-c.module').then((m =>m.SCModule))
+  },
 ]
 @NgModule({
   imports:[RouterModule.forRoot(routes)],
