@@ -23,6 +23,9 @@ const routes:  Routes = [
   {
     path :'SCDetails',loadChildren:()=> import('./pages/s-c-details/s-c.module').then((m =>m.SCModule))
   },
+  {
+    path:'order',loadChildren:()=>import('./layouts/order/order.module').then((m=>m.OrderModule))
+  }
 ]
 @NgModule({
   imports:[RouterModule.forRoot(routes)],
