@@ -1,0 +1,279 @@
+
+<div class="card">
+  <div class="row mx-2">
+    <form (ngSubmit)="onSubmitSearch()" [formGroup]="formSearch">
+      <!--      <ng-template #content1 let-modal>-->
+      <div class="row">
+        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm sản phẩm</h2>
+        <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
+      </div>
+      <div class="row">
+
+        <div class="row ml-3">
+          <div class="col-6">
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Mã sản phẩm : </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="id" style="border: solid 1px gray;" >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Tên sản phẩm: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Giá nhập:</label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="inportprice" style="border: solid 1px gray;">
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-6">
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Giá xuất:</label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Danh Mục: </label>
+              <div class="col-md-10 mt-2">
+                <div>
+                  <select class="form-control" formControlName="category" style="border: solid 1px gray;">
+                    <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
+                    </option>
+
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Hãng: </label>
+              <div class="col-md-10 mt-2">
+                <div>
+                  <select class="form-control" formControlName="hang" style="border: solid 1px gray;">
+                    <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
+                    </option>
+
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row ml-3" >
+        <div>
+          <button type="button" class="btn btn-success me-2" type="submit" > Tìm kiếm</button>
+          <button class="btn btn-primary  ml-1 " (click)="openLg(content)">Thêm mới</button>
+        </div>
+      </div>
+      <!--      </ng-template>-->
+
+    </form>
+  </div>
+</div>
+<div class="card mt-3">
+  <table class="table table-hover table-responsive table-bordered">
+    <thead>
+    <tr>
+      <th class="text-center" scope="col" (click)="sortByValue('id')">Mã Sản phẩm</th>
+      <th class="text-center" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>
+      <th class="text-center" scope="col" (click)="sortByValue('inportprice')">Giá nhập</th>
+      <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>
+      <!--      <th class="text-center" scope="col" >Trạng thái</th>-->
+      <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>
+      <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="datas">
+    <tr  *ngFor="let item of datas" (click)="infoProduct(item.id,content)">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.inportprice}}</td>
+      <td>{{item.outputprice}}</td>
+      <!--      <td *ngIf ="item.status">Hàng mới</td>-->
+      <!--      <td *ngIf ="!item.status">Hết </td>-->
+      <td *ngIf="item.category">{{item.category.name}}</td>
+      <td *ngIf="item.hang">{{item.hang.name}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div>
+
+
+    <!--              Pagination                -->
+    <nav *ngIf="Page" class="mr-3" aria-label="...">
+      <ul class="pagination justify-content-end">
+        <select #selectSize (change)="pageItem(selectSize.value)"   class="page-items mr-1" >
+          <option selected >5</option>
+          <option >10</option>
+          <option >15</option>
+        </select>
+        <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+          <a class="page-link" (click)="preNextPage('pre')">Previous</a>
+        </li>
+
+        <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
+            class="page-item" [ngClass]="indexPage == i?'active':''">
+          <a class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+        </li>
+
+        <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
+          <a class="page-link" (click)="preNextPage('next')">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<form novalidate  [formGroup]="formAdd">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">{{message}} sản phẩm</h2>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Tên sản phẩm: </label>
+            <div class="col-md-10">
+              <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formAdd.get('name')?.errors?.required && formAdd.get('name')?.touched">
+                Tên sản phẩm không được để trống !
+              </small>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Giá nhập: </label>
+            <div class="col-md-10">
+              <input class="form-control" type="text" formControlName="inportprice" style="border: solid 1px gray;">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formAdd.get('inportprice')?.errors?.required && formAdd.get('inportprice')?.touched">
+                Giá nhập không được để trống !
+              </small>
+
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formAdd.get('inportprice')?.errors?.inportprice && formAdd.get('inportprice')?.touched">
+                Định dạng giá nhập chưa đúng !
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Giá bán: </label>
+            <div class="col-md-10">
+              <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formAdd.get('outputprice')?.errors?.required && formAdd.get('outputprice')?.touched">
+                Giá bán  không được để trống !
+              </small>
+
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formAdd.get('outputprice')?.errors?.outputprice && formAdd.get('outputprice')?.touched">
+                Định dạng giá bán  chưa đúng !
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <!--         <div class="form-group row">-->
+          <!--           <label class="col-md-2 col-form-label">Tình trạng :</label>-->
+          <!--           <div class="col-md-10 mt-2 ">-->
+          <!--             <select class="form-control" formControlName="status">-->
+          <!--               <option  value="1">Còn hàng</option>-->
+          <!--               <option value="0">Hết hàng</option>-->
+          <!--             </select>-->
+          <!--             <small class="col alert text-danger" role="alert"-->
+          <!--                    *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">-->
+          <!--               Tình trạng chưa được chọn  !-->
+          <!--             </small>-->
+          <!--           </div>-->
+          <!--         </div>-->
+
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Danh mục: </label>
+            <div class="col-md-10 mt-2">
+              <div>
+                <select class="form-control" formControlName="category" style="border: solid 1px gray;">
+                  <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
+                  </option>
+
+                </select>
+
+                <small class="col alert text-danger" role="alert"
+                       *ngIf="formAdd.get('category')?.errors?.required && formAdd.get('category')?.touched">
+                  Danh mục chưa được chọn !
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Hãng: </label>
+            <div class="col-md-10 mt-2">
+              <div>
+                <select class="form-control" formControlName="hang" style="border: solid 1px gray;">
+                  <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
+                  </option>
+
+                </select>
+
+                <small class="col alert text-danger" role="alert"
+                       *ngIf="formAdd.get('hang')?.errors?.required && formAdd.get('hang')?.touched">
+                  Hãng chưa được chọn !
+                </small>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf ="!hiddeen"  class="form-group row"  >
+            <label  class="col-md-4 col-form-label">Ngày tạo: </label>
+            <div class="col-md-10" >
+              <input class="form-control" type="date" formControlName="createDate">
+            </div>
+          </div>
+
+          <div *ngIf ="!hiddeen" class="form-group row">
+            <label  class="col-md-4 col-form-label">Ngày cập nhật: </label>
+            <div class="col-md-10">
+              <input  [disabled] ="!hiddeen" class="form-control" type="date" formControlName="updatedate">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div>
+        <button [hidden]="!hiddeen" type="button" class="btn btn-success" type="submit" (click)="create()"  >Thêm mới</button>
+      </div>
+      <div *ngIf="!hiddeen" >
+        <button type="button" class="btn btn-success" type="submit" (click)="update()"  >Cập nhật</button>
+      </div>
+      <div *ngIf="!hiddeen">
+        <button type="button" class="btn btn-danger" type="submit" (click)="delete()"  >Xóa</button>
+      </div>
+    </div>
+  </ng-template>
+</form>
