@@ -50,7 +50,7 @@ loadAll1(){
     this.dialog.open(ModalPopupComponent, {
       enterAnimationDuration: enteranimation,
       exitAnimationDuration: exitanimation,
-      width: "70%",
+      width: "100%",
       data:{
         id:id
 

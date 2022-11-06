@@ -19,21 +19,11 @@
     <!-- Collapsible wrapper -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-lg-0 fw-bold" href="#">
+      <!-- <a class="navbar-brand mt-2 mt-lg-0 fw-bold" href="#">
         Admin Page Control
-      </a>
+      </a> -->
+      <img src="./assets/img/logo.png" alt="" style="width: 20%; height: 20%;">
       <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Projects</a>
-        </li>
-      </ul>
       <!-- Left links -->
     </div>
     <!-- Collapsible wrapper -->
@@ -89,8 +79,8 @@
             <div class="sidenav-header">
               <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
               <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
-                <img src="./assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold text-white">Material Dashboard</span>
+                <img src="./assets/img/favicon.png" class="navbar-brand-img h-100" alt="main_logo" style="border-radius: 7px;">
+                <span class="ms-1 font-weight-bold text-white">Control Dashboard</span>
               </a>
             </div>
             <hr class="horizontal light mt-0 mb-2">
@@ -105,16 +95,16 @@
                       <i class="material-icons opacity-10">dashboard</i>
                     </div>
 
-                    <span class="nav-link-text ms-1">Dashboard</span>
+                    <span class="nav-link-text ms-1">Thống Kê</span>
                   </a>
                 </li>
 
 
                 <li class="nav-item">
-                  <a class="nav-link text-white "[routerLink]="['/order']">
+                  <a class="nav-link text-white "[routerLink]="['/order/tatca']">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">view_in_ar</i>
+                      <i class="material-icons opacity-10">receipt_long</i>
                     </div>
 
                     <span class="nav-link-text ms-1">Đơn đặt hàng</span>
@@ -123,55 +113,32 @@
 
 
                 <li class="nav-item">
-                  <a class="nav-link text-white " href="./billing.html">
+                  <a class="nav-link text-white " routerLink="/product">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">receipt_long</i>
+
+                      <i class="material-icons opacity-10">inventory</i>
                     </div>
 
-                    <span class="nav-link-text ms-1">Billing</span>
+                    <span class="nav-link-text ms-1">Sản phẩm</span>
                   </a>
                 </li>
 
 
                 <li class="nav-item">
-                  <a class="nav-link text-white " href="./virtual-reality.html">
+                  <a class="nav-link text-white " routerLink="/category">
 
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">view_in_ar</i>
+                      <i class="material-icons opacity-10">category</i>
                     </div>
 
-                    <span class="nav-link-text ms-1">Virtual Reality</span>
-                  </a>
-                </li>
-
-
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="./rtl.html">
-
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-                    </div>
-
-                    <span class="nav-link-text ms-1">RTL</span>
-                  </a>
-                </li>
-
-
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="./notifications.html">
-
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                      <i class="material-icons opacity-10">notifications</i>
-                    </div>
-
-                    <span class="nav-link-text ms-1">Notifications</span>
+                    <span class="nav-link-text ms-1">Danh mục</span>
                   </a>
                 </li>
 
 
                 <li class="nav-item mt-3">
-                  <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+                  <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account</h6>
                 </li>
 
                 <li class="nav-item">
@@ -214,7 +181,7 @@
 
             <div class="sidenav-footer position-absolute w-100 bottom-0 ">
               <div class="mx-3">
-                <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
+                <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Eternal FE Admin</a>
               </div>
 
             </div>
@@ -235,14 +202,16 @@
     <!--    &lt;!&ndash; Copyright &ndash;&gt;-->
     <!--  </div>-->
   </div>
-  <router-outlet class="d-inline p-5"></router-outlet>
+  <div>
+    <router-outlet class="d-inline p-5"></router-outlet>
+  </div>
 </div>
-<div class=" mt-3">
-  <footer class="bg-light text-center text-white ">
+
+  <footer class="fixed-bottom bg-light text-center text-white ">
     <!-- Grid container -->
-    <div class="container p-4 pb-0">
+    <div class="container">
       <!-- Section: Social media -->
-      <section class="mb-4">
+      <section class="">
         <!-- Facebook -->
         <a
           class="btn text-white btn-floating m-1"
@@ -300,5 +269,5 @@
     </div>
     <!-- Grid container -->
   </footer>
-</div>
+
 
