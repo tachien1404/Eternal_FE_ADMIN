@@ -118,24 +118,28 @@
 
 
     <!--              Pagination                -->
-    <nav *ngIf="Page" class="mr-3" aria-label="...">
+    <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">
       <ul class="pagination justify-content-end">
-        <select #selectSize (change)="pageItem(selectSize.value)"   class="page-items mr-1" >
+        <select #selectSize (change)="pageItem(selectSize.value)"   class="page-items mr-1 me-3" >
           <option selected >5</option>
           <option >10</option>
           <option >15</option>
         </select>
         <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
-          <a class="page-link" (click)="preNextPage('pre')">Previous</a>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
+            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+          </svg>
         </li>
 
         <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
             class="page-item" [ngClass]="indexPage == i?'active':''">
-          <a class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+          <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
         </li>
 
         <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
-          <a class="page-link" (click)="preNextPage('next')">Next</a>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
+            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" (click)="preNextPage('next')"/>
+          </svg>
         </li>
       </ul>
     </nav>

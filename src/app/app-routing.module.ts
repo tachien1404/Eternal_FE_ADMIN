@@ -1,19 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.component";
 import {BrandComponent} from "./layouts/brand/brand.component";
 import {CategoryComponent} from "./layouts/category/category.component";
 
 const routes:  Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   pathMatch: 'full',
-  // },
-  // {
-  //   path: '**',
-  //   redirectTo: 'dashboard'
-  // }
+  {
+    path: '',
+    redirectTo: 'product',
+    pathMatch: 'full'
+  },
   {
     path:'product', loadChildren: () => import('./pages/product/product.module').then(m => m.ProductModule)
   }

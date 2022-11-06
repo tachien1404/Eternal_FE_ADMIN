@@ -1,5 +1,4 @@
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { SidebarModule } from './sidebar/sidebar.module';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -24,7 +23,6 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
     BrandComponent,
     CategoryComponent,
     OrderComponent,
@@ -37,7 +35,6 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     Material_module,
     CommonModule,
     BrowserModule,
-    SidebarModule,
     AppRoutingModule,HttpClientModule,
     ReactiveFormsModule,
 FormsModule,

@@ -51,7 +51,7 @@ export class DahuyComponent implements OnInit {
     this.dialog.open(ModalPopupComponent, {
       enterAnimationDuration: enteranimation,
       exitAnimationDuration: exitanimation,
-      width: "70%",
+      width: "100%",
       data:{
         id:id,
         statusname:statusname
