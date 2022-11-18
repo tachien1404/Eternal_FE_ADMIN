@@ -26,7 +26,7 @@
     <div class="col-12 table-responsive" style="border-radius: 15px; height: auto">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
-        <thead class="table-dark" mat-table matSort >
+        <thead class="table-dark"  >
         <tr>
           <th >STT</th>
           <th>Thao tác</th>
@@ -52,7 +52,9 @@
                (click)="OpenDialog('1000ms','500ms',item.id,item.statusName )"><i class="material-icons">visibility</i></a>
 
           </td>
-          <td>{{item.name_acount}}</td>
+          <td>{{item.name_acount}}<br>
+            ( {{item.sdt}})
+          </td>
           <td>{{item.create_date}}</td>
           <td>{{item.price}}</td>
           <th>{{item.address}}</th>

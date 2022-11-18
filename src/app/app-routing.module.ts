@@ -20,7 +20,11 @@ const routes:  Routes = [
   },
   {
     path:'order',loadChildren:()=>import('./layouts/order/order.module').then((m=>m.OrderModule))
+  },
+  {
+    path:'brand',loadChildren:()=>import('./layouts/brand/brand.module').then((m=>m.BrandModule))
   }
+
 ]
 @NgModule({
   imports:[RouterModule.forRoot(routes)],

@@ -14,9 +14,9 @@ const routes:Routes=[{path:'',component:OrderComponent,children:[
     {path:'choxacnhan',component:ChoxacnhanComponent},
     {path:'dahuy',component:DahuyComponent},
     {path:'danggiao',component:DanggiaoComponent},
-    {path:'dagiao',component:DaGiaoComponent},
-]
-}];
+    {path:'dagiao',component:DaGiaoComponent},]},
+
+];
 
 @NgModule({
 imports :[RouterModule.forChild(routes)],

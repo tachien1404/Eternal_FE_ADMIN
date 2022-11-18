@@ -15,36 +15,36 @@ export class ProductService{
   constructor(private http: HttpClient) { }
 
   getAllProduct():Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}rest/products`);
+    return this.http.get<any>(`${environment.apiUrl}public/products`);
   }
 
 
   getPageProduct(indexPage: any, size:any,dto:ProductDTO): Observable<any>{
-    return this.http.put<any>(this.productAPI +"rest/products/sortByKey?page="+indexPage +"&size="+size,dto) ;
+    return this.http.put<any>(this.productAPI +"public/products/sortByKey?page="+indexPage +"&size="+size,dto) ;
   }
 
   public getAllCate():Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}rest/products/getAllCategory`);
+    return this.http.get<any>(`${environment.apiUrl}public/products/getAllCategory`);
   }
 
   public getAllBrand():Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}rest/products/getAllBrand`);
+    return this.http.get<any>(`${environment.apiUrl}public/products/getAllBrand`);
   }
 
   public create(product: Product): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}rest/products`, product);
+    return this.http.post<any>(`${environment.apiUrl}public/products`, product);
   }
 
   public getProductById(id:any):Observable<any>{
-    return this.http.get<any>(`${this.productAPI}rest/products/`+id);
+    return this.http.get<any>(`${this.productAPI}public/products/`+id);
   }
 
   public delete(id:any): Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}rest/products/delete/`+id);
+    return this.http.get<any>(`${environment.apiUrl}public/products/delete/`+id);
   }
 
   public update(id:any,product: Product): Observable<any> {
-    return this.http.put<any>(`${environment.apiUrl}rest/products/`+id, product);
+    return this.http.put<any>(`${environment.apiUrl}public/products/`+id, product);
   }
 
 }
