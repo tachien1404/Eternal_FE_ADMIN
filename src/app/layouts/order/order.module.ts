@@ -9,6 +9,7 @@ import { DaGiaoComponent } from './da-giao/da-giao.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Material_module} from "../../../material_module";
 import { ModalPopupComponent } from './modal-popup/modal-popup.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations:[
@@ -19,12 +20,13 @@ import { ModalPopupComponent } from './modal-popup/modal-popup.component';
     DaGiaoComponent,
     ModalPopupComponent
   ],
-  imports :[
+    imports: [
 
-    CommonModule,
-    OrderRouting,
+        CommonModule,
+        OrderRouting,
 
-    Material_module
-  ]
+        Material_module,
+        ReactiveFormsModule
+    ]
 })
 export class OrderModule{}

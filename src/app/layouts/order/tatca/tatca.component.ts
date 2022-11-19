@@ -1,6 +1,6 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import {OrderService} from "../../../service/order.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalPopupComponent} from "../modal-popup/modal-popup.component";
 import {MatPaginator} from "@angular/material/paginator";
@@ -16,8 +16,7 @@ export class TatcaComponent implements OnInit {
   orderdata:any;
   dataSource: any;
 
-  @ViewChild(MatPaginator) paginator !: MatPaginator;
-  @ViewChild(MatSort) sort !: MatSort;
+
   constructor(private service:OrderService,private dialog: MatDialog) {
     this.loadAll();
   }
@@ -27,16 +26,31 @@ export class TatcaComponent implements OnInit {
 Input=new FormGroup(
   {
     pageIndex:new FormControl('1'),
-    pageSize:new FormControl('10')
+    pageSize:new FormControl('10'),
+    keyword:new FormControl('',Validators.required)
   }
 )
   loadAll(){
-    this.service.getByPage(this.Input.value).subscribe(result =>{
-      this.orderdata=result;
-      this.dataSource = new MatTableDataSource(this.orderdata)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    })
+    if(this.Input.valid){
+      this.service.getByPage(this.Input.value).subscribe(result =>{
+        this.orderdata=result;
+        this.dataSource = new MatTableDataSource(this.orderdata)
+
+      })
+    }else{
+
+      this.Input=new FormGroup({
+        pageIndex:new FormControl('1'),
+        pageSize:new FormControl('10'),
+        keyword:new FormControl()
+      });
+      this.service.getByPage(this.Input.value).subscribe(result =>{
+        this.orderdata=result;
+        this.dataSource = new MatTableDataSource(this.orderdata)
+
+      })
+    }
+
   }
 
   OpenDialog(enteranimation: any, exitanimation: any,id:any,statusname:any) {
@@ -51,5 +65,8 @@ Input=new FormGroup(
       },
 
     })
+  }
+  get keyword(){
+    return this.Input.get('keyword');
   }
 }

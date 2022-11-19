@@ -12,13 +12,14 @@
         </select>
       </div>
 
-      <div class="col-10">
-
-        <input type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển" aria-label="Username"
+      <form class="col-10 form-group" [formGroup]="Input" >
+        <div class="form-group">
+        <input   class="form-control"  formControlName="keyword" type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển"
                aria-describedby="basic-addon1"
                style="border-radius: 10px; height: 40px; border: solid 1px gray;">
-        <button class="col-2 btn btn-success mt-2">Tìm kiếm</button>
-      </div>
+        <button class="col-2 btn btn-success mt-2" (click)="loadAll()">Tìm kiếm</button>
+        </div>
+      </form>
 
 
     </div>
