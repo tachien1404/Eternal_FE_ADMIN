@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
   providedIn :'root'
 })
 export  class BrandService{
-  api='http://localhost:8080/api/brand'
+  api='http://localhost:8080/api/public/brand'
   constructor(private http:HttpClient) {
   }
   getAllBrand():Observable<object>{

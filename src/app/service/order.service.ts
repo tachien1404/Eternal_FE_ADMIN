@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
   providedIn:'root'
 })
 export class OrderService{
-  api='http://localhost:8080/api/order'
+  api='http://localhost:8080/api/public/order'
   constructor(private http:HttpClient) {
   }
   getBy0():Observable<Object>{
@@ -25,7 +25,11 @@ export class OrderService{
 
   }
   updatetrangthai(input:any,id:any):Observable<Object>{
-    return this.http.put(this.api+'/trangthai/'+id,input)
+    return this.http.put(this.api+'/trangthai/'+id,input)//giao hàng
+  }
+  updatetatca(status:any):Observable<Object>{
+
+    return this.http.post(this.api+'/trangthaidon/'+status,status)//giao tất
   }
   getByPage(input:any):Observable<Object>{
     return  this.http.post(this.api+'/search-by-page',input)

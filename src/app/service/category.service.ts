@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
   providedIn:'root'
 })
 export class CategoryService{
-  api='http://localhost:8080/api/category'
+  api='http://localhost:8080/api/public/category'
   constructor(private http:HttpClient) {
   }
   getAllCategory():Observable<object>{

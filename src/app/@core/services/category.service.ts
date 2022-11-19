@@ -16,15 +16,15 @@ export class CategoryService{
   constructor(private http: HttpClient) { }
 
   getPageProduct(indexPage: any, size:any,categorySearch:CategoryDTO): Observable<any>{
-    return this.http.put<any>(this.cateAPI +"api/category/sortByKey?page="+indexPage +"&size="+size,categorySearch) ;
+    return this.http.put<any>(this.cateAPI +"public/category/sortByKey?page="+indexPage +"&size="+size,categorySearch) ;
   }
 
   public create(category: Category): Observable<any> {
-    return this.http.post(`${environment.apiUrl}api/category`, category);
+    return this.http.post(`${environment.apiUrl}public/category`, category);
   }
 
   public delete(id:any): Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}api/category/delete/`+id);
+    return this.http.get<any>(`${environment.apiUrl}public/category/delete/`+id);
   }
 
 

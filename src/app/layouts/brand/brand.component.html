@@ -1,7 +1,7 @@
-<div class="container">
+<div class="card mt-3">
   <div class="row">
     <form [formGroup]="brandFrom" (ngSubmit)="savebrand()">
-      <div class="row" style="text-align: center;display: block;">
+      <div class="row" style="text-align: center;">
         <h2>Hãng Giày</h2>
       </div>
 
@@ -9,7 +9,7 @@
         <div class="offset-lg-3 col-lg-6">
           <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" formControlName="name" />
+            <input type="text" class="form-control" formControlName="name" style="border:solid 1px gray;" />
             <span *ngIf="name && name.invalid && name.touched" class="error">Please enter name</span>
           </div>
         </div>
@@ -28,9 +28,52 @@
       </div>
 
     </form>
+  </div>
+  <div class="row mx-2">
+    <form >
+      <!--      <ng-template #content1 let-modal>-->
+      <div class="row">
+        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm danh mục</h2>
+        <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
+      </div>
+      <div class="row">
 
-    <table class="table table-bordered col-12 " style="background-color: #fcfcfd">
-      <thead>
+        <div class="row ml-3">
+          <div class="col-6">
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Mã danh mục : </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="id" style="border:solid 1px gray;" >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Tên danh mục: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="name"  style="border:solid 1px gray;">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row ml-3">
+        <div class="d-flex mt-2">
+          <button type="button" class="btn btn-success me-2" type="submit" > Tìm kiếm</button>
+          <button class="btn btn-primary  ml-1 ">Thêm mới</button>
+        </div>
+      </div>
+      <!--      </ng-template>-->
+
+    </form>
+  </div>
+</div>
+    <div class="card mt-3">
+    <table class="table table-bordered  table-responsive table-hover mt-2" style="height: 50px ; font-size: 14px">
+      <thead class="table-dark" >
       <tr>
         <th>ID</th>
         <th>Name</th>
@@ -51,7 +94,7 @@
     </table>
 
   </div>
-</div>
+
 
 
 

@@ -12,13 +12,14 @@
         </select>
       </div>
 
-      <div class="col-10">
-
-        <input type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển" aria-label="Username"
+      <form class="col-10 form-group" [formGroup]="Input" >
+        <div class="form-group">
+        <input   class="form-control"  formControlName="keyword" type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển"
                aria-describedby="basic-addon1"
                style="border-radius: 10px; height: 40px; border: solid 1px gray;">
-        <button class="col-2 btn btn-success mt-2">Tìm kiếm</button>
-      </div>
+        <button class="col-2 btn btn-success mt-2" (click)="loadAll()">Tìm kiếm</button>
+        </div>
+      </form>
 
 
     </div>
@@ -26,7 +27,7 @@
     <div class="col-12 table-responsive" style="border-radius: 15px; height: auto">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
-        <thead class="table-dark" mat-table matSort >
+        <thead class="table-dark"  >
         <tr>
           <th >STT</th>
           <th>Thao tác</th>
@@ -52,7 +53,9 @@
                (click)="OpenDialog('1000ms','500ms',item.id,item.statusName )"><i class="material-icons">visibility</i></a>
 
           </td>
-          <td>{{item.name_acount}}</td>
+          <td>{{item.name_acount}}<br>
+            ( {{item.sdt}})
+          </td>
           <td>{{item.create_date}}</td>
           <td>{{item.price}}</td>
           <th>{{item.address}}</th>

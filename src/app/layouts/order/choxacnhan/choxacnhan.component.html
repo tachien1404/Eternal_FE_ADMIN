@@ -24,12 +24,17 @@
 
 
     </div>
+    <div>
+      <button>Giao hàng loạt</button> <button (click)="updatetatca(1)">Giao tất cả</button>
+
+    </div>
     <div class="col-12 table-responsive" style="border-radius: 15px; height: auto">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
         <thead class="table-dark">
         <tr>
-          <th>STT</th>
+          <th>Chọn</th>
+          <th>Mã đơn hàng</th>
           <th>Thao tác</th>
 
           <th>Người đặt</th>
@@ -45,7 +50,11 @@
         </thead>
         <tbody>
         <tr *ngFor="let item of orderdata" let index >
+          <section class="example-section">
 
+            <mat-checkbox   class="example-margin"    ></mat-checkbox>
+
+          </section>
           <td>{{item.id}}</td>
           <td>
             <a class="delete" title="Hủy Đơn hàng" data-toggle="tooltip"(click)="updatetrangthai(item.id,'3')" ><i

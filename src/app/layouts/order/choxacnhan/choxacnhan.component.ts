@@ -11,7 +11,8 @@ import {ModalPopupComponent} from "../modal-popup/modal-popup.component";
 })
 export class ChoxacnhanComponent implements OnInit {
   orderdata: any;
-
+  isActive: boolean = true;
+  private  liste: any [] = [];
   constructor(private service: OrderService,private dialog: MatDialog) {
     this.loadAll0();
   }
@@ -29,7 +30,17 @@ export class ChoxacnhanComponent implements OnInit {
 
 status:new FormControl()
   })
+updatetatca(status:any){
+    this.service.updatetatca(status).subscribe(result =>{
+      this.loadAll0()
+    })
 
+
+}
+
+updatedcchon(){
+
+}
   updatetrangthai(id:any,status:any) {
 
 if(status==1){
