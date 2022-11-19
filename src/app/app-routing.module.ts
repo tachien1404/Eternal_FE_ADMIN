@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BrandComponent} from "./layouts/brand/brand.component";
 import {CategoryComponent} from "./layouts/category/category.component";
+import { UserrRegisterComponent } from './layouts/userr-register/userr-register.component';
+import { AccountComponent } from './layouts/account/account.component';
 
 const routes:  Routes = [
   {
@@ -23,7 +25,11 @@ const routes:  Routes = [
   },
   {
     path:'brand',loadChildren:()=>import('./layouts/brand/brand.module').then((m=>m.BrandModule))
+  },
+  {
+    path:'account',component: AccountComponent
   }
+
 
 ]
 @NgModule({

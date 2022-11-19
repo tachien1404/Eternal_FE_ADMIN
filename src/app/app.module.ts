@@ -17,6 +17,7 @@ import {ProductComponent} from "./pages/product/product.component";
 import {SCDetailsComponent} from "./pages/s-c-details/s-c-details.component";
 import {ToastrModule} from "ngx-toastr";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { AccountComponent } from './layouts/account/account.component';
 
 
 
@@ -28,7 +29,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     OrderComponent,
     AddCateComponent,
     ProductComponent,
-    SCDetailsComponent
+    SCDetailsComponent,
+    AccountComponent
   ],
   imports: [
     BrowserAnimationsModule,
