@@ -1,0 +1,120 @@
+<div class="container-fluid pt-4 px-4">
+  <div class="row g-4">
+    <div class="col-sm-12 col-xl-12">
+      <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Account</h6>
+        <form [formGroup]="accountForm" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Username</label>
+            <input type="text" formControlName="Username" value="{{account.username}}" class="form-control">
+            <span style="color: red;" *ngIf="accountForm.controls['Username'].errors?.['required']">
+              err Username
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input type="email" formControlName="Email" value="{{account.email}}" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span style="color: red;" *ngIf="accountForm.controls['Email'].errors?.['required']">
+              err Email
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Full name</label>
+            <input type="text" formControlName="Fullname" value="{{account.fullname}}" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span style="color: red;" *ngIf="accountForm.controls['Fullname'].errors?.['required']">
+              err Full name
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Birthday</label>
+            <input type="text" formControlName="Birthday" value="{{account.birthday}}" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span style="color: red;" *ngIf="accountForm.controls['Birthday'].errors?.['required']">
+              err Birthday
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Address</label>
+            <input type="text" formControlName="Address" value="{{account.address}}" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span style="color: red;" *ngIf="accountForm.controls['Address'].errors?.['required']">
+              err Address
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Photo</label>
+            <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
+                (change)="onFileSelected($event)">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">SDT</label>
+            <input type="text" formControlName="SDT" value="{{account.sdt}}" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp">
+            <span style="color: red;" *ngIf="accountForm.controls['SDT'].errors?.['required']">
+              err SDT
+            </span>
+          </div>
+
+          <button *ngIf="account.id != ''" (click)="onUpdate(account.id)" class="btn btn-primary m-2"
+            [disabled]="this.accountForm.invalid">Update</button>
+          <button *ngIf="account.id == ''" (click)="onCreate()" class="btn btn-primary m-2"
+            [disabled]="this.accountForm.invalid">Create</button>
+          <button *ngIf="account.id != ''" (click)="onDelete(account.id)" class="btn btn-primary m-2">Delete</button>
+          <button *ngIf="account.id != ''" (click)="clearForm()" class="btn btn-primary m-2">Clear</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+  <div class="row g-4">
+    <div class="col-sm-12 col-xl-12">
+      <div class="bg-light rounded h-100 p-4">
+
+        <div class="row">
+          <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
+            <input class="form-control border-0 ms-3" type="email" formControlName="Email"
+              placeholder="Email">
+            <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
+            <button (click)="clearForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
+          </form>
+        </div>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar p-4">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Fullname</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Address</th>
+                <th scope="col">Photo</th>
+                <th scope="col">SDT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of accounts; index as i">
+                <td>{{i + 1}}</td>
+                <td>{{account.username}}</td>
+                <td>{{account.email}}</td>
+                <td>{{account.fullname}}</td>
+                <td>{{account.birthday}}</td>
+                <td>{{account.address}}</td>
+                <td>{{account.photo}}</td>
+                <td>{{account.sdt}}</td>
+                <td>
+                  <a (click)="onEdit(account.id)" class="btn btn-primary me-1"><i class="fas fa-edit"></i></a>
+                  <a (click)="onDelete(account.id)" class="btn btn-primary me-1"><i class="fas fa-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
