@@ -1,6 +1,6 @@
 <div class="container-fluid pt-4 px-4">
   <div class="row g-4">
-    <div class="col-sm-12 col-xl-12">
+    <div class="col-sm-12 col-xl-6">
       <div class="bg-light rounded h-100 p-4">
         <h6 class="mb-4">Account</h6>
         <form [formGroup]="accountForm" enctype="multipart/form-data">
@@ -29,7 +29,7 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Birthday</label>
-            <input type="text" formControlName="Birthday" value="{{account.birthday}}" class="form-control"
+            <input type="date" formControlName="Birthday" value="{{account.birthday}}" class="form-control"
               id="exampleInputEmail1" aria-describedby="emailHelp">
             <span style="color: red;" *ngIf="accountForm.controls['Birthday'].errors?.['required']">
               err Birthday
@@ -44,17 +44,17 @@
             </span>
           </div>
           <div class="mb-3">
-            <label for="formFile" class="form-label">Photo</label>
-            <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
-                (change)="onFileSelected($event)">
-          </div>
-          <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">SDT</label>
             <input type="text" formControlName="SDT" value="{{account.sdt}}" class="form-control"
               id="exampleInputEmail1" aria-describedby="emailHelp">
-            <span style="color: red;" *ngIf="accountForm.controls['SDT'].errors?.['required']">
-              err SDT
-            </span>
+              <span style="color: red;" *ngIf="accountForm.controls['SDT'].errors?.['required']">
+                err SDT
+              </span>
+          </div>
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Photo</label>
+            <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
+              (change)="onFileSelected($event)">
           </div>
 
           <button *ngIf="account.id != ''" (click)="onUpdate(account.id)" class="btn btn-primary m-2"
@@ -66,39 +66,45 @@
         </form>
       </div>
     </div>
+    <div class="col-sm-12 col-xl-6">
+      <div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
+        <img class="rounded mx-auto d-block" alt="none" style="width: 60%;"
+          src="https://res.cloudinary.com/productenternal/image/upload/v1668928871/IMAGE/image/{{account.photo}}">
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="container-fluid pt-4 px-4">
   <div class="row g-4">
     <div class="col-sm-12 col-xl-12">
-      <div class="bg-light rounded h-100 p-4">
+      <div class=" rounded h-100 pt-3">
 
         <div class="row">
           <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
-            <input class="form-control border-0 ms-3" type="email" formControlName="Email"
-              placeholder="Email">
-            <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
-            <button (click)="clearForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
+            <input class="form-control border-0 ms-3" type="email" formControlName="Email" placeholder="Email">
+            <button type="submit" class="btn btn-primary me-3"><i class="fas fa-filter"></i></button>
+            <button (click)="clearForm()" class="btn btn-primary me-3"><i class="fas fa-times"></i></button>
           </form>
         </div>
-        <div class="table-wrapper-scroll-y my-custom-scrollbar p-4">
-          <table class="table table-hover">
+        <div class="card">
+          <table class="table table-hover table-responsive table-bordered">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col">Fullname</th>
-                <th scope="col">Birthday</th>
-                <th scope="col">Address</th>
-                <th scope="col">Photo</th>
-                <th scope="col">SDT</th>
+                <th>STT</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Fullname</th>
+                <th>Birthday</th>
+                <th>Address</th>
+                <th>Photo</th>
+                <th>SDT</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let account of accounts; index as i">
-                <td>{{i + 1}}</td>
+              <tr *ngFor="let account of accounts">
+                <td>{{account.id}}</td>
                 <td>{{account.username}}</td>
                 <td>{{account.email}}</td>
                 <td>{{account.fullname}}</td>
@@ -107,12 +113,26 @@
                 <td>{{account.photo}}</td>
                 <td>{{account.sdt}}</td>
                 <td>
-                  <a (click)="onEdit(account.id)" class="btn btn-primary me-1"><i class="fas fa-edit"></i></a>
-                  <a (click)="onDelete(account.id)" class="btn btn-primary me-1"><i class="fas fa-trash"></i></a>
+                  <a (click)="onEdit(account.id)" role="button" class="ms-3" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                  </svg></a>
+                  <a (click)="onDelete(account.id)" role="button" class="ms-4" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                  </svg></a>
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+        <div  class="btn-group mb-5 mt-2" role="group" aria-label="Basic example">
+          <button (click)="prev()" type="button" class="btn btn-primary"
+          [disabled]="0 === this.page">Prev</button>
+          <div *ngFor="let page of pages; index as i">
+              <button (click)="viewPage(i)" type="button" class="btn btn-primary">{{i + 1}}</button>
+          </div>
+          <button (click)="next()" type="button" class="btn btn-primary"
+          [disabled]="this.maxPage-1 === this.page">Next</button>
         </div>
       </div>
     </div>

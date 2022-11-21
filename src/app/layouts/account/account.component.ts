@@ -25,10 +25,14 @@ export class AccountComponent implements OnInit {
   account: any
   accounts: any
   filename: any
+  page: any
+  pages: any
+  maxPage: any
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.page = 0
     this.filename = 'null.png'
     this.account = {
       id: '',
@@ -37,10 +41,10 @@ export class AccountComponent implements OnInit {
       fullname:  '',
       birthday:  '',
       address:  '',
-      photo:  '',
+      photo:  'null.png',
       sdt: ''
     }
-    this.accountService.getAll().subscribe(
+    this.accountService.getAll(this.page).subscribe(
       res => {
         this.accounts = res
       },
@@ -48,18 +52,16 @@ export class AccountComponent implements OnInit {
         console.log(err)
       }
     )
+    this.accountService.getSize().subscribe(
+      res => {
+        var length = res
+        this.maxPage = Math.ceil(Number(length) / 5)
+        this.pages = Array(this.maxPage).fill(0)
+      }
+    )
   }
 
   onCreate() {
-    var file = new FormData();
-    if (this.accountForm.controls['Photo'].value != null) {
-      file.append('file', `this.accountForm.controls['Photo'].value`);
-      this.accountService.uploadImage(file).subscribe(
-        error => {
-          console.log(error)
-        }
-      );
-    }
 
     var data = {
       username:  this.accountForm.controls['Username'].value == null ? this.account.username : this.accountForm.controls['Username'].value,
@@ -71,49 +73,119 @@ export class AccountComponent implements OnInit {
       sdt:  this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value
     }
 
-    this.accountService.create(data).subscribe(
-      data => {
-        // this.clearForm()
-      },
-      error => {
-        console.log(error);
-        // this.clearForm()
+    var check: boolean = true
+
+    this.accounts.forEach((item: { username: any; email: any; }) => {
+      if(data.username === item.username || data.email === item.email){
+        check = false;
       }
-    )
+    });
+
+    if(check){
+      var file = new FormData();
+      if (this.accountForm.controls['Photo'].value != null) {
+        file.append('file', this.accountForm.controls['Photo'].value);
+        this.accountService.uploadImage(file).subscribe(
+          error => {
+            console.log(error)
+          }
+        );
+      }
+
+      this.accountService.create(data).subscribe(
+        data => {
+          this.clearForm()
+        },
+        error => {
+          console.log(error);
+          this.clearForm()
+        }
+      )
+      this.accountService.getAll(this.page).subscribe(
+        res => {
+          this.accounts = res
+        },
+        err => {
+          console.log(err)
+        }
+      )
+    } else {
+      window.alert("Email hoặc Username không hợp lệ.");
+    }
+
   }
 
   onUpdate(id: string) {
+
     var data = {
       username:  this.accountForm.controls['Username'].value == null ? this.account.username : this.accountForm.controls['Username'].value,
       email:  this.accountForm.controls['Email'].value == null ? this.account.email : this.accountForm.controls['Email'].value,
       fullname:  this.accountForm.controls['Fullname'].value == null ? this.account.fullname : this.accountForm.controls['Fullname'].value,
       birthday:  this.accountForm.controls['Birthday'].value == null ? this.account.birthday : this.accountForm.controls['Birthday'].value,
       address:  this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
-      photo:  this.accountForm.controls['Photo'].value == null ? this.account.photo : this.accountForm.controls['Photo'].value,
+      photo:  this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ","%20"),
       sdt:  this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value
     }
 
-    this.accountService.update(id ,data).subscribe(
-      res => {
-        console.log(res);
-        this.clearForm()
-      },
-      error => {
-        console.log(error);
-        this.clearForm()
+    var check: boolean = true
+
+    this.accounts.forEach((item: { username: any; email: any; }) => {
+      if(data.username === item.username || data.email === item.email){
+        check = false;
       }
-    )
+    });
+
+    if(data.username === this.account.username) check = true;
+    if(data.email === this.account.email) check = true;
+
+    if(check){
+      var file = new FormData();
+      if (this.accountForm.controls['Photo'].value != null) {
+        file.append('file', this.accountForm.controls['Photo'].value);
+        this.accountService.uploadImage(file).subscribe(
+          error => {
+            console.log(error)
+          }
+        );
+      }
+
+      this.accountService.update(id ,data).subscribe(
+        res => {
+          console.log(res);
+          this.clearForm()
+        },
+        error => {
+          console.log(error);
+          this.clearForm()
+        }
+      )
+      this.accountService.getAll(this.page).subscribe(
+        res => {
+          this.accounts = res
+        },
+        err => {
+          console.log(err)
+        }
+      )
+    } else {
+      window.alert("Email hoặc Username không hợp lệ.");
+    }
   }
 
   onDelete(id: string) {
-    this.accountService.delete(id).subscribe(
-      res => {
-        this.clearForm()
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    var result = confirm("Confirm?");
+    if(result){
+      this.accountService.delete(id).subscribe(
+        res => {
+          this.clearForm()
+          window.alert("Delete succes!!")
+        },
+        err => {
+          console.log(err);
+        }
+      )
+      window.location.reload()
+    }
   }
 
   onEdit(id: string) {
@@ -127,11 +199,22 @@ export class AccountComponent implements OnInit {
           Birthday: this.account.birthday,
           Address: this.account.address,
           Photo: this.account.photo,
-          SDT: this.account.sdt,
+          SDT: this.account.sdt
         })
+        this.accountForm.patchValue({
+          SDT: this.account.sdt
+        });
       },
       err => {
         console.log(err);
+      }
+    )
+    this.accountService.getAll(this.page).subscribe(
+      res => {
+        this.accounts = res
+      },
+      err => {
+        console.log(err)
       }
     )
   }
@@ -158,10 +241,9 @@ export class AccountComponent implements OnInit {
       fullname:  '',
       birthday:  '',
       address:  '',
-      photo:  '',
+      photo:  'null.png',
       sdt: ''
     }
-    window.location.reload()
   }
 
   onFileSelected(event: Event) {
@@ -170,8 +252,45 @@ export class AccountComponent implements OnInit {
       const file = target.files[0];
       this.filename = file.name;
       this.accountForm.patchValue({
-        Image: file
+        Photo: file
       });
     }
   }
+
+  viewPage(number: number) {
+    this.page = number
+    this.accountService.getAll(number).subscribe(
+      res => {
+        this.accounts = res
+      },
+      err => {
+        console.log(err)
+      }
+    )
+  }
+
+  prev() {
+    this.page = this.page - 1;
+    this.accountService.getAll(this.page).subscribe(
+      res => {
+        this.accounts = res
+      },
+      err => {
+        console.log(err)
+      }
+    )
+  }
+
+  next() {
+    this.page = this.page + 1;
+    this.accountService.getAll(this.page).subscribe(
+      res => {
+        this.accounts = res
+      },
+      err => {
+        console.log(err)
+      }
+    )
+  }
+
 }

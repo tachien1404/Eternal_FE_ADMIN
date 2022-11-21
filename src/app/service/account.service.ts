@@ -34,9 +34,9 @@ export class AccountService {
     )
   }
 
-  getAll(): Observable<Array<any>>{
+  getAll(page: number = 0): Observable<Array<any>>{
     return this.http.get<Array<any>>(
-      api
+      api + `?page=${page}`
     )
   }
 
@@ -51,6 +51,12 @@ export class AccountService {
       api + `image`,
       file
       );
+  }
+
+  getSize(): Observable<Array<any>>{
+    return this.http.get<Array<any>>(
+      api + `size`
+    )
   }
 
 }
