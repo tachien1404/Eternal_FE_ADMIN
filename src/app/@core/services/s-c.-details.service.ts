@@ -16,22 +16,22 @@ export class SCDetailsService{
   constructor(private http: HttpClient) {}
 
   getPageSC(indexPage: any, size:any,categorySearch:S_CDetailSearch): Observable<any>{
-    return this.http.put<any>(this.SCDetailAPI +"public/rest/s_c_details/sortByKey?page="+indexPage +"&size="+size,categorySearch) ;
+    return this.http.put<any>(this.SCDetailAPI +"public/s_c_details/sortByKey?page="+indexPage +"&size="+size,categorySearch) ;
   }
 
   public getAllColor():Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}public/rest/s_c_details/getAllColor`);
+    return this.http.get<any>(`${environment.apiUrl}public/s_c_details/getAllColor`);
   }
 
   public getAllSize():Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}public/rest/s_c_details/getAllSize`);
+    return this.http.get<any>(`${environment.apiUrl}public/s_c_details/getAllSize`);
   }
   public getAllProduct():Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}public/rest/s_c_details/getAllProduct`);
+    return this.http.get<any>(`${environment.apiUrl}public/s_c_details/getAllProduct`);
   }
 
   public create(scDetails: S_CDetails): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}public/rest/s_c_details`, scDetails);
+    return this.http.post<any>(`${environment.apiUrl}public/s_c_details`, scDetails);
   }
 
 }
