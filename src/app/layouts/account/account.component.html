@@ -29,7 +29,7 @@
           </div>
           <div class="mb-3">
             <label for="birthday" class="form-label">Birthday</label>
-            <input type="date" formControlName="Birthday" value="{{account.birthday}}" class="form-control"
+            <input type="date" formControlName="Birthday" value="{{account.birthday | date: 'yyyy-MM-dd'}}" class="form-control"
               id="birthday" aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
             <span style="color: red;" *ngIf="accountForm.controls['Birthday'].errors?.['required'] && accountForm.get('Birthday')?.touched">
               Birthday không được để trống!
@@ -53,6 +53,8 @@
           </div>
           <div class="mb-3">
             <label for="formFile" class="form-label">Photo</label>
+            <input type="text" formControlName="" value="{{account.photo}}" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp"  >
             <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
               (change)="onFileSelected($event)" style="border: solid 1px gray; padding-top: 5px;height: 40px;">
           </div>
@@ -111,7 +113,7 @@
                 <td>{{account.username}}</td>
                 <td>{{account.email}}</td>
                 <td>{{account.fullname}}</td>
-                <td>{{account.birthday}}</td>
+                <td>{{account.birthday| date: 'yyyy-MM-dd'}}</td>
                 <td>{{account.address}}</td>
                 <td>{{account.photo}}</td>
                 <td>{{account.sdt}}</td>
@@ -128,14 +130,15 @@
             </tbody>
           </table>
         </div>
-        <div  class="btn-group mb-5 mt-2" role="group" aria-label="Basic example" style="float: right;">
-          <button (click)="prev()" type="button" class="btn btn-primary"
-          [disabled]="0 === this.page">Prev</button>
+        <div  class="btn-group" role="group" aria-label="Basic example"  #btnPageGroup>
+          <!-- <button (click)="prev()" type="button" class="btn btn-primary"
+          [disabled]="0 === this.page" id="btnPrev">Prev</button> -->
           <div *ngFor="let page of pages; index as i">
-              <button (click)="viewPage(i)" type="button" class="btn btn-primary">{{i + 1}}</button>
+              <button (click)="viewPage(i)" type="button" id="btnPage_{{i}}" class="btn btn-primary"
+              [disabled]="i === 0">{{i + 1}}</button>
           </div>
-          <button (click)="next()" type="button" class="btn btn-primary"
-          [disabled]="this.maxPage-1 === this.page">Next</button>
+          <!-- <button (click)="next()" type="button" class="btn btn-primary"
+          [disabled]="this.maxPage-1 === this.page" id="btnNext">Next</button> -->
         </div>
       </div>
     </div>
