@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '../../service/account.service';
-import { Observable } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class AccountComponent implements OnInit {
     Fullname: new FormControl('', Validators.required),
     Birthday: new FormControl('', Validators.required),
     Address: new FormControl('', Validators.required),
-    Photo: new FormControl('', Validators.required),
+    Photo: new FormControl(),
     SDT: new FormControl('', Validators.required),
   })
   filterForm: FormGroup = new FormGroup({
@@ -29,19 +29,19 @@ export class AccountComponent implements OnInit {
   pages: any
   maxPage: any
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, @Inject(DOCUMENT) document: Document) { }
 
   ngOnInit(): void {
     this.page = 0
     this.filename = 'null.png'
     this.account = {
       id: '',
-      username:  '',
-      email:  '',
-      fullname:  '',
-      birthday:  '',
-      address:  '',
-      photo:  'null.png',
+      username: '',
+      email: '',
+      fullname: '',
+      birthday: '',
+      address: '',
+      photo: 'null.png',
       sdt: ''
     }
     this.accountService.getAll(this.page).subscribe(
@@ -59,29 +59,30 @@ export class AccountComponent implements OnInit {
         this.pages = Array(this.maxPage).fill(0)
       }
     )
+
   }
 
   onCreate() {
 
     var data = {
-      username:  this.accountForm.controls['Username'].value == null ? this.account.username : this.accountForm.controls['Username'].value,
-      email:  this.accountForm.controls['Email'].value == null ? this.account.email : this.accountForm.controls['Email'].value,
-      fullname:  this.accountForm.controls['Fullname'].value == null ? this.account.fullname : this.accountForm.controls['Fullname'].value,
-      birthday:  this.accountForm.controls['Birthday'].value == null ? this.account.birthday : this.accountForm.controls['Birthday'].value,
-      address:  this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
-      photo:  this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ","%20"),
-      sdt:  this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value
+      username: this.accountForm.controls['Username'].value == null ? this.account.username : this.accountForm.controls['Username'].value,
+      email: this.accountForm.controls['Email'].value == null ? this.account.email : this.accountForm.controls['Email'].value,
+      fullname: this.accountForm.controls['Fullname'].value == null ? this.account.fullname : this.accountForm.controls['Fullname'].value,
+      birthday: this.accountForm.controls['Birthday'].value == null ? this.account.birthday : this.accountForm.controls['Birthday'].value,
+      address: this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
+      photo: this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ", "%20"),
+      sdt: this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value
     }
 
     var check: boolean = true
 
     this.accounts.forEach((item: { username: any; email: any; }) => {
-      if(data.username === item.username || data.email === item.email){
+      if (data.username === item.username || data.email === item.email) {
         check = false;
       }
     });
 
-    if(check){
+    if (check) {
       var file = new FormData();
       if (this.accountForm.controls['Photo'].value != null) {
         file.append('file', this.accountForm.controls['Photo'].value);
@@ -95,18 +96,11 @@ export class AccountComponent implements OnInit {
       this.accountService.create(data).subscribe(
         data => {
           this.clearForm()
+          this.viewPage(this.page)
         },
         error => {
           console.log(error);
           this.clearForm()
-        }
-      )
-      this.accountService.getAll(this.page).subscribe(
-        res => {
-          this.accounts = res
-        },
-        err => {
-          console.log(err)
         }
       )
     } else {
@@ -118,27 +112,27 @@ export class AccountComponent implements OnInit {
   onUpdate(id: string) {
 
     var data = {
-      username:  this.accountForm.controls['Username'].value == null ? this.account.username : this.accountForm.controls['Username'].value,
-      email:  this.accountForm.controls['Email'].value == null ? this.account.email : this.accountForm.controls['Email'].value,
-      fullname:  this.accountForm.controls['Fullname'].value == null ? this.account.fullname : this.accountForm.controls['Fullname'].value,
-      birthday:  this.accountForm.controls['Birthday'].value == null ? this.account.birthday : this.accountForm.controls['Birthday'].value,
-      address:  this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
-      photo:  this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ","%20"),
-      sdt:  this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value
+      username: this.accountForm.controls['Username'].value == null ? this.account.username : this.accountForm.controls['Username'].value,
+      email: this.accountForm.controls['Email'].value == null ? this.account.email : this.accountForm.controls['Email'].value,
+      fullname: this.accountForm.controls['Fullname'].value == null ? this.account.fullname : this.accountForm.controls['Fullname'].value,
+      birthday: this.accountForm.controls['Birthday'].value == null ? this.account.birthday : this.accountForm.controls['Birthday'].value,
+      address: this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
+      photo: this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ", "%20"),
+      sdt: this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value
     }
 
     var check: boolean = true
 
     this.accounts.forEach((item: { username: any; email: any; }) => {
-      if(data.username === item.username || data.email === item.email){
+      if (data.username === item.username || data.email === item.email) {
         check = false;
       }
     });
 
-    if(data.username === this.account.username) check = true;
-    if(data.email === this.account.email) check = true;
+    if (data.username === this.account.username) check = true;
+    if (data.email === this.account.email) check = true;
 
-    if(check){
+    if (check) {
       var file = new FormData();
       if (this.accountForm.controls['Photo'].value != null) {
         file.append('file', this.accountForm.controls['Photo'].value);
@@ -149,22 +143,15 @@ export class AccountComponent implements OnInit {
         );
       }
 
-      this.accountService.update(id ,data).subscribe(
+      this.accountService.update(id, data).subscribe(
         res => {
           console.log(res);
           this.clearForm()
+          this.viewPage(this.page)
         },
         error => {
           console.log(error);
           this.clearForm()
-        }
-      )
-      this.accountService.getAll(this.page).subscribe(
-        res => {
-          this.accounts = res
-        },
-        err => {
-          console.log(err)
         }
       )
     } else {
@@ -174,17 +161,17 @@ export class AccountComponent implements OnInit {
 
   onDelete(id: string) {
     var result = confirm("Confirm?");
-    if(result){
+    if (result) {
       this.accountService.delete(id).subscribe(
         res => {
           this.clearForm()
           window.alert("Delete succes!!")
+          this.viewPage(this.page)
         },
         err => {
           console.log(err);
         }
       )
-      window.location.reload()
     }
   }
 
@@ -219,7 +206,7 @@ export class AccountComponent implements OnInit {
     )
   }
 
-  onFilter(){
+  onFilter() {
     var email: string = this.filterForm.controls['Email'].value == null ? "" : this.filterForm.controls['Email'].value
     this.accountService.search(email).subscribe(
       res => {
@@ -236,14 +223,30 @@ export class AccountComponent implements OnInit {
     this.accountForm.reset()
     this.account = {
       id: '',
-      username:  '',
-      email:  '',
-      fullname:  '',
-      birthday:  '',
-      address:  '',
-      photo:  'null.png',
+      username: '',
+      email: '',
+      fullname: '',
+      birthday: '',
+      address: '',
+      photo: 'null.png',
       sdt: ''
     }
+    this.fillBtnPageGroup()
+
+
+
+  }
+
+  clearFilter() {
+    this.filterForm.reset()
+    this.accountService.getAll(this.page).subscribe(
+      res => {
+        this.accounts = res
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 
   onFileSelected(event: Event) {
@@ -258,6 +261,8 @@ export class AccountComponent implements OnInit {
   }
 
   viewPage(number: number) {
+    console.log(number);
+
     this.page = number
     this.accountService.getAll(number).subscribe(
       res => {
@@ -267,6 +272,13 @@ export class AccountComponent implements OnInit {
         console.log(err)
       }
     )
+    for (let i = 0; i <= this.maxPage; i++) {
+      if (number === i) {
+        document.getElementById(`btnPage_${i}`)?.setAttribute("disabled", "true")
+      } else {
+        document.getElementById(`btnPage_${i}`)?.removeAttribute("disabled")
+      }
+    }
   }
 
   prev() {
@@ -274,6 +286,7 @@ export class AccountComponent implements OnInit {
     this.accountService.getAll(this.page).subscribe(
       res => {
         this.accounts = res
+        this.fillBtnPageGroup()
       },
       err => {
         console.log(err)
@@ -286,6 +299,7 @@ export class AccountComponent implements OnInit {
     this.accountService.getAll(this.page).subscribe(
       res => {
         this.accounts = res
+        this.fillBtnPageGroup()
       },
       err => {
         console.log(err)
@@ -293,4 +307,53 @@ export class AccountComponent implements OnInit {
     )
   }
 
+  fillBtnPageGroup() {
+    this.accountService.getSize().subscribe(
+      res => {
+        var length = res
+        this.maxPage = Math.ceil(Number(length) / 5)
+        this.pages = Array(this.maxPage).fill(0)
+
+        var newPageGroup =
+          `<button (click)="prev()" type="button" class="btn btn-primary">Prev</button> `
+
+        for (let index = 0; index < this.pages.length; index++) {
+          newPageGroup +=
+            `<div>
+            <button type="button" id="btnPage_${index}" class="btn btn-primary"
+            [disabled]="${index} === 0">${index + 1}</button>
+        </div>`
+        }
+        newPageGroup += `
+      <button (click)="next()" type="button" class="btn btn-primary">Next</button>`
+
+        var div = document.getElementById('btnPageGroup')
+        if (div) div.innerHTML = newPageGroup
+
+        for (let index = 0; index <= this.pages.length; index++) {
+          var div = document.getElementById(`btnPage_${index}`)
+          if (this.page === index) {
+            if (div) div.setAttribute('disabled', 'true')
+            if (div) div.addEventListener('click', this.viewPage.bind(this, index))
+          } else {
+            if (div) div.addEventListener('click', this.viewPage.bind(this, index))
+          }
+        }
+        var btnNext = document.getElementById('btnNext')
+        var btnPrev = document.getElementById('btnPrev')
+        if (btnNext) btnNext.addEventListener('click', (e: Event) => {
+          this.next()
+        })
+        if (btnPrev) btnPrev.addEventListener('click', (e: Event) => {
+          this.prev()
+        })
+        if (this.maxPage - 1 === this.page) {
+          if (btnNext) btnNext.setAttribute('disabled', 'true')
+        }
+        if (0 === this.page) {
+          if (btnPrev) btnPrev.setAttribute('disabled', 'true')
+        }
+      }
+    )
+  }
 }
