@@ -4,3 +4,9 @@
 .table th, td {
   white-space : nowrap;
 }
+.filterByEmail{
+  padding-left: 5px;
+  border: solid 1px gray;
+  height: 40px;
+  margin-right: 10px;
+}
