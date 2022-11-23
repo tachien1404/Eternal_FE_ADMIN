@@ -18,7 +18,7 @@ import {SCDetailsComponent} from "./pages/s-c-details/s-c-details.component";
 import {ToastrModule} from "ngx-toastr";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AccountComponent } from './layouts/account/account.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -42,6 +42,7 @@ import { AccountComponent } from './layouts/account/account.component';
 FormsModule,
     ToastrModule.forRoot(),
     NgbModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
-<div class="container mt-5 text-center">
-  <div class="row ">
+<div class=" mt-5 text-center">
+  <div class="row">
     <h2>Danh sách </h2>
     <hr>
     <div class="row">
@@ -12,24 +12,25 @@
         </select>
       </div>
 
-      <form class="col-10 form-group" [formGroup]="Input" >
+      <form class="col-10 form-group" [formGroup]="Input">
         <div class="form-group">
-        <input   class="form-control"  formControlName="keyword" type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển"
-               aria-describedby="basic-addon1"
-               style="border-radius: 10px; height: 40px; border: solid 1px gray;">
-        <button class="col-2 btn btn-success mt-2" (click)="loadAll()">Tìm kiếm</button>
+          <input class="form-control" formControlName="keyword" type="text" class="col-9 m-md-3"
+                 placeholder="Tính năng này đang đc phát triển"
+                 aria-describedby="basic-addon1"
+                 style="border-radius: 10px; height: 40px; border: solid 1px gray;">
+          <button class="col-2 btn btn-success mt-2" (click)="loadAll()">Tìm kiếm</button>
         </div>
       </form>
 
 
     </div>
     <h4>Đơn hàng</h4>
-    <div class="col-12 table-responsive" style="border-radius: 15px; height: auto">
+    <div class="col-12 card">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
-        <thead class="table-dark"  >
+        <thead class="table-dark">
         <tr>
-          <th >STT</th>
+          <th>STT</th>
           <th>Thao tác</th>
 
           <th>Người đặt</th>
@@ -44,13 +45,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of orderdata.content" let index>
+        <tr *ngFor="let item of orderdata.content | paginate: { itemsPerPage: 5, currentPage: p }">
 
           <td>{{item.id}}</td>
           <td>
 
             <a style="margin-top: 30px;" class="view" title="Chi tiết" data-toggle="tooltip"
-               (click)="OpenDialog('1000ms','500ms',item.id,item.statusName )"><i class="material-icons">visibility</i></a>
+               (click)="openLg(content,item.id,item.statusName)"><i class="material-icons">visibility</i></a>
 
           </td>
           <td>{{item.name_acount}}<br>
@@ -59,7 +60,8 @@
           <td>{{item.create_date}}</td>
           <td>{{item.price}}</td>
           <th>{{item.address}}</th>
-          <th><a class="btn-dark " style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:cadetblue; ">Đang
+          <th><a class="btn-dark "
+                 style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:cadetblue; ">Đang
             phát triển</a></th>
           <td>{{item.note}}</td>
           <td>
@@ -84,15 +86,57 @@
         </tbody>
       </table>
 
+      <pagination-controls class="mr-3 mb-8" (pageChange)="p= $event"></pagination-controls>
+
 
     </div>
 
+
   </div>
 
-  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons>
-
-  </mat-paginator>
 </div>
+//modal
+<ng-template #content>
+  <div class=" m-8">
+
+    <a class=" btn-danger" style="background-color: orangered;margin-right :5px;border-radius: 5px;padding: 10px;">Yêu
+      thích +</a>
+    <b>Săn tìm hàng độc</b>
+    <button type="submit"
+            style="height: 32px ; color: white; margin-left :5px ;background-color: orangered;border: none;border-radius: 5px;">
+      <i class="material-icons">forum</i><b style="padding:10px ;">Chat</b></button>
+    <i style="float: right;color: #0dcaf0"></i>{{this.statusName}}
+    <i class="material-icons " style="float: right; color: #0dcaf0">local_shipping</i>
+    <form class="mt-3">
+      <div>
+        <div *ngFor=" let item of Orderdata">
+          <div>
+            <img src="https://iweb.tatthanh.com.vn/pic/12/news/cach-khu-mui-hoi-giay-da-bong.jpg"
+                 style="float: left ; width: 100px; margin-right: 5px;border-style: groove ; ">
+          </div>
+          <div>
+            <label>{{item.productName}}</label>
+            <br>
+            <label>Phân loại hàng : Danh mục :{{item.category_name}}-Hãng : {{item.brand_name}}  </label>
+            <br>
+            <label> x{{item.quantity}}</label>
+            <label style="color: orangered">
+              <del style="font-size: 14px; color: #5d6c85 "> ₫1.000.000</del>
+              ₫{{item.price}}</label>
+          </div>
+
+
+        </div>
+      </div>
+      <div>
+        <button color="warn">Close</button>
+        <button class="btn btn-info" type="submit" color="primary"
+                style="margin-bottom: 60px;">Ok
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
 
 
 

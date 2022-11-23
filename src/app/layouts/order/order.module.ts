@@ -8,8 +8,9 @@ import { DanggiaoComponent } from './danggiao/danggiao.component';
 import { DaGiaoComponent } from './da-giao/da-giao.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Material_module} from "../../../material_module";
-import { ModalPopupComponent } from './modal-popup/modal-popup.component';
+
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations:[
@@ -18,7 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     DahuyComponent,
     DanggiaoComponent,
     DaGiaoComponent,
-    ModalPopupComponent
+
   ],
     imports: [
 
@@ -26,7 +27,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         OrderRouting,
 
         Material_module,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxPaginationModule
     ]
 })
 export class OrderModule{}

@@ -1,11 +1,11 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {OrderService} from "../../../service/order.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {ModalPopupComponent} from "../modal-popup/modal-popup.component";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {MatTableDataSource} from "@angular/material/table";
+
+
+import {ToastrService} from "ngx-toastr";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+
 
 @Component({
   selector: 'app-tatca',
@@ -13,60 +13,72 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./tatca.component.css']
 })
 export class TatcaComponent implements OnInit {
-  orderdata:any;
+  orderdata: any;
   dataSource: any;
+  Orderdata: any;
+ statusName:any;
+  p: number = 1;
 
-
-  constructor(private service:OrderService,private dialog: MatDialog) {
+  constructor(
+    private service: OrderService,
+    private toastr: ToastrService,
+    private modalService: NgbModal
+  ) {
     this.loadAll();
+
   }
 
   ngOnInit(): void {
   }
-Input=new FormGroup(
-  {
-    pageIndex:new FormControl('1'),
-    pageSize:new FormControl('10'),
-    keyword:new FormControl('',Validators.required)
-  }
-)
-  loadAll(){
-    if(this.Input.valid){
-      this.service.getByPage(this.Input.value).subscribe(result =>{
-        this.orderdata=result;
-        this.dataSource = new MatTableDataSource(this.orderdata)
+
+  Input = new FormGroup(
+    {
+      pageIndex: new FormControl('1'),
+      pageSize: new FormControl('1000'),
+      keyword: new FormControl('', Validators.required)
+    }
+  )
+
+  loadAll() {
+    if (this.Input.valid) {
+      this.service.getByPage(this.Input.value).subscribe(result => {
+        this.orderdata = result;
+        console.log(this.orderdata)
 
       })
-    }else{
+    } else {
 
-      this.Input=new FormGroup({
-        pageIndex:new FormControl('1'),
-        pageSize:new FormControl('10'),
-        keyword:new FormControl()
+      this.Input = new FormGroup({
+        pageIndex: new FormControl('1'),
+        pageSize: new FormControl('1000'),
+        keyword: new FormControl()
       });
-      this.service.getByPage(this.Input.value).subscribe(result =>{
-        this.orderdata=result;
-        this.dataSource = new MatTableDataSource(this.orderdata)
+      this.service.getByPage(this.Input.value).subscribe(result => {
+        this.orderdata = result;
+        console.log(this.orderdata)
 
       })
     }
 
-  }
+  };
 
-  OpenDialog(enteranimation: any, exitanimation: any,id:any,statusname:any) {
 
-    this.dialog.open(ModalPopupComponent, {
-      enterAnimationDuration: enteranimation,
-      exitAnimationDuration: exitanimation,
-      width: "100%",
-      data:{
-        id:id,
-        statusname:statusname
-      },
+
+  openLg(content: any,id:any,status:any) {
+
+    this.service.getOrderId(id).subscribe(result => {
+      this.Orderdata = result;
+      this.statusName=status
+      console.log(this.Orderdata)
+    })
+    this.modalService.open(content, {
+      size: 'lg', centered: true, scrollable: true,
+
 
     })
   }
-  get keyword(){
+
+  get keyword() {
     return this.Input.get('keyword');
   }
 }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {OrderService} from "../../../service/order.service";
-import {ModalPopupComponent} from "../modal-popup/modal-popup.component";
+
 import {MatDialog} from "@angular/material/dialog";
 import {FormControl, FormGroup} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-danggiao',
@@ -11,7 +13,11 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class DanggiaoComponent implements OnInit {
   orderdata:any;
-  constructor( private service:OrderService,private dialog: MatDialog) {
+  p:number=1;
+  Orderdata: any;
+  statusName:any;
+  constructor( private service:OrderService,  private toastr: ToastrService,
+               private modalService: NgbModal) {
     this.loadAll1();
   }
 
@@ -45,16 +51,16 @@ loadAll1(){
       });
     }
   }
-  OpenDialog(enteranimation: any, exitanimation: any,id:any) {
+  openLg(content: any,id:any,status:any) {
 
-    this.dialog.open(ModalPopupComponent, {
-      enterAnimationDuration: enteranimation,
-      exitAnimationDuration: exitanimation,
-      width: "100%",
-      data:{
-        id:id
-
-      },
+    this.service.getOrderId(id).subscribe(result => {
+      this.Orderdata = result;
+      this.statusName=status
+      console.log(this.Orderdata)
+    })
+    this.modalService.open(content, {
+      size: 'xl', centered: true, scrollable: true,
+      fullscreen:'xxl'
 
     })
   }
