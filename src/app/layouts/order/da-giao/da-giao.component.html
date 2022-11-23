@@ -23,7 +23,7 @@
 
 
     </div>
-    <div class="col-12 table-responsive" style="border-radius: 15px; height: auto">
+    <div class="col-12 card" style="border-radius: 15px; height: auto">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
         <thead class="table-dark">
@@ -43,7 +43,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of orderdata" let index>
+        <tr *ngFor="let item of orderdata  | paginate: { itemsPerPage: 5, currentPage: p }" let index>
 
           <td>{{item.id}}</td>
           <td>
@@ -51,7 +51,7 @@
               class="material-icons">&#xE872;</i></a>
 
               <a class="view" title="Chi tiết" data-toggle="tooltip"
-                 (click)="OpenDialog('1000ms','500ms',item.id,item.statusName )"><i
+                 (click)="openLg(content,item.id,item.statusName)"><i
                 class="material-icons">visibility</i></a>
 
           </td>
@@ -67,11 +67,53 @@
         </tr>
         </tbody>
       </table>
+      <pagination-controls  class="mr-3 mb-8" (pageChange)="p= $event"></pagination-controls>
     </div>
 
   </div>
 </div>
+//modal
+<ng-template #content>
+  <div class="">
 
+    <a class=" btn-danger" style="background-color: orangered;margin-right :5px;border-radius: 5px;padding: 10px;">Yêu
+      thích +</a>
+    <b>Săn tìm hàng độc</b>
+    <button type="submit"
+            style="height: 32px ; color: white; margin-left :5px ;background-color: orangered;border: none;border-radius: 5px;">
+      <i class="material-icons">forum</i><b style="padding:10px ;">Chat</b></button>
+    <i style="float: right;color: #0dcaf0"></i>{{this.statusName}}
+    <i class="material-icons " style="float: right; color: #0dcaf0">local_shipping</i>
+    <form class="mt-3">
+      <div>
+        <div *ngFor=" let item of Orderdata">
+          <div>
+            <img src="https://iweb.tatthanh.com.vn/pic/12/news/cach-khu-mui-hoi-giay-da-bong.jpg"
+                 style="float: left ; width: 100px; margin-right: 5px;border-style: groove ; ">
+          </div>
+          <div>
+            <label>{{item.productName}}</label>
+            <br>
+            <label>Phân loại hàng : Danh mục :{{item.category_name}}-Hãng : {{item.brand_name}}  </label>
+            <br>
+            <label> x{{item.quantity}}</label>
+            <label style="color: orangered">
+              <del style="font-size: 14px; color: #5d6c85 "> ₫1.000.000</del>
+              ₫{{item.price}}</label>
+          </div>
+
+
+        </div>
+      </div>
+      <div>
+        <button color="warn">Close</button>
+        <button class="btn btn-info" type="submit" color="primary"
+                style="margin-bottom: 60px;">Ok
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
 
 
 
