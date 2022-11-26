@@ -197,23 +197,6 @@
               </small>
             </div>
           </div>
-        </div>
-        <div class="col-6">
-          <!--         <div class="form-group row">-->
-          <!--           <label class="col-md-2 col-form-label">Tình trạng :</label>-->
-          <!--           <div class="col-md-10 mt-2 ">-->
-          <!--             <select class="form-control" formControlName="status">-->
-          <!--               <option  value="1">Còn hàng</option>-->
-          <!--               <option value="0">Hết hàng</option>-->
-          <!--             </select>-->
-          <!--             <small class="col alert text-danger" role="alert"-->
-          <!--                    *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">-->
-          <!--               Tình trạng chưa được chọn  !-->
-          <!--             </small>-->
-          <!--           </div>-->
-          <!--         </div>-->
-
-
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Danh mục: </label>
             <div class="col-md-10 mt-2">
@@ -264,6 +247,29 @@
               <input  [disabled] ="!hiddeen" class="form-control" type="date" formControlName="updatedate">
             </div>
           </div>
+        </div>
+        <div class="col-6">
+          <!--         <div class="form-group row">-->
+          <!--           <label class="col-md-2 col-form-label">Tình trạng :</label>-->
+          <!--           <div class="col-md-10 mt-2 ">-->
+          <!--             <select class="form-control" formControlName="status">-->
+          <!--               <option  value="1">Còn hàng</option>-->
+          <!--               <option value="0">Hết hàng</option>-->
+          <!--             </select>-->
+          <!--             <small class="col alert text-danger" role="alert"-->
+          <!--                    *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">-->
+          <!--               Tình trạng chưa được chọn  !-->
+          <!--             </small>-->
+          <!--           </div>-->
+          <!--         </div>-->
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Ảnh</label>
+            <input class="form-control" type="file" id="formFile">
+          </div>
+            <div class="card">
+              <img src="/assets/img/products/product-1-min.jpg" alt="">
+            </div>
+
         </div>
       </div>
     </div>
