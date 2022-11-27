@@ -7,6 +7,8 @@ import {DahuyComponent} from "./dahuy/dahuy.component";
 import {DanggiaoComponent} from "./danggiao/danggiao.component";
 import {DaGiaoComponent} from "./da-giao/da-giao.component";
 
+import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
+
 
 
 const routes:Routes=[{path:'',component:OrderComponent,children:[
@@ -15,6 +17,7 @@ const routes:Routes=[{path:'',component:OrderComponent,children:[
     {path:'dahuy',component:DahuyComponent},
     {path:'danggiao',component:DanggiaoComponent},
     {path:'dagiao',component:DaGiaoComponent},]},
+  {path:'orderdetail/:id',component:OrderdetailComponent},
 
 ];
 

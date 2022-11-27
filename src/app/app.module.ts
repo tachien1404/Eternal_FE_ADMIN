@@ -30,7 +30,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AddCateComponent,
     ProductComponent,
     SCDetailsComponent,
-    AccountComponent
+    AccountComponent,
   ],
   imports: [
     BrowserAnimationsModule,

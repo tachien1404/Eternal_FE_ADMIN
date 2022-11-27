@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 })
 export class OrderService{
   api='http://localhost:8080/api/public/order'
+  api2='http://localhost:8080/api/public/order-detail'
   constructor(private http:HttpClient) {
   }
   getBy0():Observable<Object>{
@@ -36,5 +37,11 @@ export class OrderService{
   }
   getOrderId(id:any):Observable<Object>{
     return this.http.get(this.api+'/getOrderId/'+id)
+  }
+  getOrderById(id:any):Observable<Object>{
+    return this.http.get(this.api+'/getOrderById/'+id)
+  }
+  delete(id:any){
+    return this.http.delete(this.api2+'/delete/'+id)
   }
 }
