@@ -75,7 +75,7 @@ export class ChoxacnhanComponent implements OnInit {
     })
     this.modalService.open(content, {
       size: 'lg', centered: true, scrollable: true,
-     
+
 
     })
   }

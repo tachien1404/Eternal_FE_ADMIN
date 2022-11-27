@@ -1,0 +1,91 @@
+<h3>Chi tiết đơn hàng của Tạ Quang Tuấn</h3>
+<div class="card">
+  <h5 class="card-title">Thông tin khách hàng</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class=" col-6">
+        <p>Thông tin cơ bản </p>
+        <div class="card " style="height: 200px;background-color: #dadbdf">
+          <div class="row">
+            <div class="col-6">
+              <label>Tên khách hàng</label><br>
+              <label><b>{{order.name_acount}}</b></label>
+              <br>
+              <label>Email</label><br>
+              <label><b>{{order.email}}</b></label>
+              <br>
+
+              <label>Số điện thoai</label><br>
+              <label><b>{{order.sdt}}</b></label>
+            </div>
+            <div class="col-6">
+              <label>Mã khách hàng</label><br>
+              <label><b>MKH:TQT-00000{{order.account_id}}</b></label>
+              <label>Số lượng đơn hàng nhận thành công trong 60 ngày</label>
+              <label>1</label>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" col-6">
+        <p>Địa chỉ giao hàng </p>
+        <div class="card" style="height: 200px;background-color: #dadbdf">
+        <div class="row">
+          <div class="col-6">
+            <label>Địa chỉ chi tiết</label>
+            <label><b>{{order.address}}</b></label>
+            <br>
+
+            <label>Số điện thoại</label><br>
+            <label><b>{{order.sdtinfo}}</b></label>
+          </div>
+          <div class="col-6">
+            <label>tên người nhận</label><br>
+            <label><b>{{order.nameinfo}}</b></label>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="row mt-3" >
+  <label class="col-4">Sản phẩm</label>
+  <label class="col-1">Giá tiền</label>
+  <label class="col-2">Tình trạng</label>
+  <label class="col-2">Đơn vị vận chuyển</label>
+  <label class="col-2">Thao tac</label>
+</div>
+<div class=" mb-4"  style="height: 500px;">
+  <div class="card " style="margin-bottom: 50px"*ngFor="let item of orderdetail" >
+    <div class="row mt-2">
+      <label class="col-8">Danh mục sản phẩm :{{item.category_name}}</label>
+      <label class="col-3">Hãng:{{item.brand_name}}</label>
+    </div>
+    <hr>
+    <div class="row "style="text-align: center;margin-bottom: 50px" >
+
+      <div class=" col-2 " >
+        <img  src="https://media.ngoisao.vn/resize_580/news/2018/09/02/suzy-3-ngoisao.vn-w580-h871.jpg"
+             alt="" width="60px" height="80">
+      </div>
+      <label class="col-2"><b>{{item.productName}}</b> </label>
+
+      <label class="col-1">x{{item.quantity}} <b>{{item.price}}</b> </label>
+      <label class="col-2"><b>{{item.statusName}}</b></label>
+      <label class="col-2">Đơn vị vận chuyển nhanh</label>
+      <div class="col-2">
+
+        <button (click)="delete(item.id)"> Hủy</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="mb-4" style="margin-bottom: 30px">
+  <button class="btn btn-success"(click)="updatetrangthai(order.id,1)">Xác nhận đơn hàng</button>
+  <button class="btn btn-danger" (click)="updatetrangthai(order.id,3)">Hủy đơn hàng</button>
+</div>
+

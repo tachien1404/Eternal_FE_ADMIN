@@ -11,6 +11,7 @@ import {Material_module} from "../../../material_module";
 
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "ngx-pagination";
+import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
 
 @NgModule({
   declarations:[
@@ -19,7 +20,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     DahuyComponent,
     DanggiaoComponent,
     DaGiaoComponent,
-
+OrderdetailComponent
   ],
     imports: [
 

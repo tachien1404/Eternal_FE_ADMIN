@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {BrandService} from "../../service/brand.service";
 import {FormGroup,FormControl, Validators} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-brand',
@@ -13,8 +15,9 @@ export class BrandComponent implements OnInit {
   messageclass = '';
   message = '';
   EditData: any;
-
-  constructor(private service: BrandService) {
+  p: number = 1;
+  constructor(private service: BrandService,private toastr: ToastrService,
+              private modalService: NgbModal) {
     this.loadAll();
   }
 

@@ -15,8 +15,9 @@
 
       <div class="col-10">
 
-        <input type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển" aria-label="Username" aria-describedby="basic-addon1"
-        style="border-radius: 10px; height: 40px; border: solid 1px gray;">
+        <input type="text" class="col-9 m-md-3" placeholder="Tính năng này đang đc phát triển" aria-label="Username"
+               aria-describedby="basic-addon1"
+               style="border-radius: 10px; height: 40px; border: solid 1px gray;">
 
 
         <button class="col-2 btn btn-success mt-2">Tìm kiếm</button>
@@ -25,10 +26,11 @@
 
     </div>
     <div>
-      <button>Giao hàng loạt</button> <button (click)="updatetatca(1)">Giao tất cả</button>
+      <button>Giao hàng loạt</button>
+      <button (click)="updatetatca(1)">Giao tất cả</button>
 
     </div>
-    <div class="col-12 card" style="border-radius: 15px; height: auto">
+    <div class="col-12 card table-responsive " style="border-radius: 15px; height: auto">
 
       <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
         <thead class="table-dark">
@@ -49,7 +51,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of orderdata | paginate: { itemsPerPage: 5, currentPage: p }"  >
+        <tr *ngFor="let item of orderdata | paginate: { itemsPerPage: 5, currentPage: p }">
           <section class="example-section">
 
             <input type="checkbox">
@@ -57,17 +59,20 @@
           </section>
           <td>{{item.id}}</td>
           <td>
-            <a class="delete" title="Hủy Đơn hàng" data-toggle="tooltip"(click)="updatetrangthai(item.id,'3')" ><i
+            <a class="delete" title="Hủy Đơn hàng" data-toggle="tooltip" (click)="updatetrangthai(item.id,3)"><i
               class="material-icons">&#xE872;</i></a>
-            <a class="add" title="Xác nhận đơn" data-toggle="tooltip" (click)="updatetrangthai(item.id,'1')"><i class="material-icons">check_circle</i></a>
-            <a class="view" title="Chi tiết" data-toggle="tooltip"  (click)="openLg(content,item.id,item.statusName)"><i class="material-icons">visibility</i></a>
+            <a class="add" title="Xác nhận đơn" data-toggle="tooltip" (click)="updatetrangthai(item.id,1)"><i
+              class="material-icons">check_circle</i></a>
+            <a class="view" title="Chi tiết" data-toggle="tooltip" routerLink="/order/orderdetail/{{item.id}}"><i
+              class="material-icons">visibility</i></a>
 
           </td>
           <td>{{item.name_acount}}</td>
           <td>{{item.create_date}}</td>
           <td>{{item.price}}</td>
           <th>{{item.address}}</th>
-          <th><a class="btn-dark " style=" padding: 10px; border-radius: 5px; font-size: 12px; color: white;background-color:cadetblue">Đang
+          <th><a class="btn-dark "
+                 style=" padding: 10px; border-radius: 5px; font-size: 12px; color: white;background-color:cadetblue">Đang
             phát triển</a></th>
           <td>{{item.note}}</td>
           <td><a class="btn-dark "
@@ -76,7 +81,7 @@
         </tr>
         </tbody>
       </table>
-      <pagination-controls  class="mr-3 mb-8" (pageChange)="p= $event"></pagination-controls>
+      <pagination-controls class="mr-3 mb-8" (pageChange)="p= $event"></pagination-controls>
 
     </div>
 
@@ -98,8 +103,9 @@
       <div>
         <div *ngFor=" let item of Orderdata">
           <div>
-            <img src="https://iweb.tatthanh.com.vn/pic/12/news/cach-khu-mui-hoi-giay-da-bong.jpg"
-                 style="float: left ; width: 100px; margin-right: 5px;border-style: groove ; ">
+            <img
+              src="https://res.cloudinary.com/productenternal/image/upload/v1668928871/IMAGE/image/{{Orderdata.photo}}}"
+              style="float: left ; width: 100px; margin-right: 5px;border-style: groove ; ">
           </div>
           <div>
             <label>{{item.productName}}</label>
