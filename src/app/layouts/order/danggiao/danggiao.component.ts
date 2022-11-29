@@ -18,13 +18,13 @@ export class DanggiaoComponent implements OnInit {
   statusName:any;
   constructor( private service:OrderService,  private toastr: ToastrService,
                private modalService: NgbModal) {
-    this.loadAll1();
+    this.loadAll2();
   }
 
   ngOnInit(): void {
   }
-loadAll1(){
-    this.service.getBy1().subscribe(result =>{
+loadAll2(){
+    this.service.getBy2().subscribe(result =>{
       this.orderdata=result;
     })
 }
@@ -39,14 +39,14 @@ loadAll1(){
       this.Input.value.status=status
       this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
 
-        this.loadAll1()
+        this.loadAll2()
 
       });
-    }else if(status==3){
+    }else if(status==4){
       this.Input.value.status=status
       this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
 
-        this.loadAll1()
+        this.loadAll2()
 
       });
     }

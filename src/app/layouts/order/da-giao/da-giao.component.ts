@@ -17,12 +17,12 @@ export class DaGiaoComponent implements OnInit {
   Orderdata: any;
   statusName:any;
   constructor(private service:OrderService,  private toastr: ToastrService,
-              private modalService: NgbModal) { this.loadAll2(); }
+              private modalService: NgbModal) { this.loadAll3(); }
 
   ngOnInit(): void {
   }
-loadAll2(){
-  this.service.getBy2().subscribe(result =>{
+loadAll3(){
+  this.service.getBy3().subscribe(result =>{
     this.orderdata=result;
   })
 }
@@ -37,14 +37,14 @@ loadAll2(){
       this.Input.value.status=status
       this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
 
-        this.loadAll2()
+        this.loadAll3()
 
       });
-    }else if(status==3){
+    }else if(status==4){
       this.Input.value.status=status
       this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
 
-        this.loadAll2()
+        this.loadAll3()
 
       });
     }

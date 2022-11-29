@@ -1,4 +1,27 @@
 <h3>Chi tiết đơn hàng của Tạ Quang Tuấn</h3>
+<div style="float: right">
+  <i style="color:#0dcaf0">{{order.statusName}}</i>
+  <i class="material-icons " style="color: #0dcaf0">local_shipping</i>
+</div>
+<div  style="margin-bottom: 30px">
+
+  <span *ngIf="order.status ==0">
+  <button class="btn btn-success"(click)="updatetrangthai(order.id,1)">Xác nhận đơn hàng</button>
+    </span>
+  <span *ngIf="order.status ==0 || order.status ==1 || order.status ==2">
+  <button class="btn btn-danger"(click)="updatetrangthai(order.id,4)">Hủy đơn hàng</button>
+    </span>
+  <span  *ngIf="order.status ==1">
+  <button class="btn btn-success"(click)="updatetrangthai(order.id,2)">Giao hàng</button>
+    </span>
+  <span *ngIf="order.status ==2">
+  <button class="btn btn-success"(click)="updatetrangthai(order.id,3)">Hoàn thành</button>
+    </span>
+<br>
+  <span  *ngIf="order.status ==1">
+  <button (click)="pdfphieugiaohang(order.id)" class="btn-dark">In phiếu giao</button>
+    </span>
+</div>
 <div class="card">
   <h5 class="card-title">Thông tin khách hàng</h5>
   <div class="card-body">
@@ -20,10 +43,10 @@
             </div>
             <div class="col-6">
               <label>Mã khách hàng</label><br>
-              <label><b>MKH:TQT-00000{{order.account_id}}</b></label>
-              <label>Số lượng đơn hàng nhận thành công trong 60 ngày</label>
-              <label>1</label>
+              <label><b>MKH:TQT-00000{{order.account_id}}</b></label><br>
 
+              <label>Địa chỉ</label><br>
+              <label><b>{{order.address}}</b></label>
             </div>
           </div>
         </div>
@@ -34,7 +57,7 @@
         <div class="row">
           <div class="col-6">
             <label>Địa chỉ chi tiết</label>
-            <label><b>{{order.address}}</b></label>
+            <label><b>{{order.addressinfo}}</b></label>
             <br>
 
             <label>Số điện thoại</label><br>
@@ -56,7 +79,8 @@
   <label class="col-1">Giá tiền</label>
   <label class="col-2">Tình trạng</label>
   <label class="col-2">Đơn vị vận chuyển</label>
-  <label class="col-2">Thao tac</label>
+  <label class="col-2">Thao tác</label>
+
 </div>
 <div class=" mb-4"  style="height: 500px;">
   <div class="card " style="margin-bottom: 50px"*ngFor="let item of orderdetail" >
@@ -65,9 +89,9 @@
       <label class="col-3">Hãng:{{item.brand_name}}</label>
     </div>
     <hr>
-    <div class="row "style="text-align: center;margin-bottom: 50px" >
+    <div class="row "style="margin-bottom: 50px" >
 
-      <div class=" col-2 " >
+      <div class=" col-2 m-2" >
         <img  src="https://media.ngoisao.vn/resize_580/news/2018/09/02/suzy-3-ngoisao.vn-w580-h871.jpg"
              alt="" width="60px" height="80">
       </div>
@@ -77,15 +101,14 @@
       <label class="col-2"><b>{{item.statusName}}</b></label>
       <label class="col-2">Đơn vị vận chuyển nhanh</label>
       <div class="col-2">
-
+<span *ngIf="order.status ==0">
         <button (click)="delete(item.id)"> Hủy</button>
+  </span>
+
       </div>
 
     </div>
   </div>
 </div>
-<div class="mb-4" style="margin-bottom: 30px">
-  <button class="btn btn-success"(click)="updatetrangthai(order.id,1)">Xác nhận đơn hàng</button>
-  <button class="btn btn-danger" (click)="updatetrangthai(order.id,3)">Hủy đơn hàng</button>
-</div>
+
 

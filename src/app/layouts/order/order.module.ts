@@ -12,6 +12,7 @@ import {Material_module} from "../../../material_module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "ngx-pagination";
 import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
+import { ChuanbihangComponent } from './chuanbihang/chuanbihang.component';
 
 @NgModule({
   declarations:[
@@ -20,7 +21,8 @@ import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
     DahuyComponent,
     DanggiaoComponent,
     DaGiaoComponent,
-OrderdetailComponent
+OrderdetailComponent,
+ChuanbihangComponent
   ],
     imports: [
 

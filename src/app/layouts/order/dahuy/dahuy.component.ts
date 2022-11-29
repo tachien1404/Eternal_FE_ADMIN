@@ -18,14 +18,14 @@ export class DahuyComponent implements OnInit {
   statusName:any;
   constructor(private service:OrderService,private toastr: ToastrService,
               private modalService: NgbModal) {
-    this.loadAll3();
+    this.loadAll4();
   }
 
   ngOnInit(): void {
   }
 
-  loadAll3(){
-    this.service.getBy3().subscribe(result =>{
+  loadAll4(){
+    this.service.getBy4().subscribe(result =>{
       this.orderdata=result;
     })
   }
@@ -40,14 +40,14 @@ export class DahuyComponent implements OnInit {
       this.Input.value.status=status
       this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
 
-        this.loadAll3()
+        this.loadAll4()
 
       });
-    }else if(status==3){
+    }else if(status==4){
       this.Input.value.status=status
       this.service.updatetrangthai(this.Input.value,id).subscribe(result => {
 
-        this.loadAll3()
+        this.loadAll4()
 
       });
     }

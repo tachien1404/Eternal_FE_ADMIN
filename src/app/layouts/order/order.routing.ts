@@ -8,6 +8,7 @@ import {DanggiaoComponent} from "./danggiao/danggiao.component";
 import {DaGiaoComponent} from "./da-giao/da-giao.component";
 
 import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
+import {ChuanbihangComponent} from "./chuanbihang/chuanbihang.component";
 
 
 
@@ -16,8 +17,10 @@ const routes:Routes=[{path:'',component:OrderComponent,children:[
     {path:'choxacnhan',component:ChoxacnhanComponent},
     {path:'dahuy',component:DahuyComponent},
     {path:'danggiao',component:DanggiaoComponent},
-    {path:'dagiao',component:DaGiaoComponent},]},
+    {path:'dagiao',component:DaGiaoComponent},
+    {path:'chuanbihang',component:ChuanbihangComponent},]},
   {path:'orderdetail/:id',component:OrderdetailComponent},
+
 
 ];
 

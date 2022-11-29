@@ -14,15 +14,23 @@ export class OrderService{
     return  this.http.get(this.api+'/getAllbystatus/0');//chowf xacs nhaanj
   }
   getBy1():Observable<Object>{
-    return  this.http.get(this.api+'/getAllbystatus/1');//Ddang giAO HANGF
+    return  this.http.get(this.api+'/getAllbystatus/1');//chuẩn bị hàng
   }
 
   getBy2():Observable<Object>{
-    return  this.http.get(this.api+'/getAllbystatus/2');//Hoanf thanhf
+    return  this.http.get(this.api+'/getAllbystatus/2');//đang giao
   }
 
   getBy3():Observable<Object> {
-    return this.http.get(this.api + '/getAllbystatus/3');//Ddax huyr
+    return this.http.get(this.api + '/getAllbystatus/3');//Hoàn thành
+
+  }
+  getBy4():Observable<Object> {
+    return this.http.get(this.api + '/getAllbystatus/4');//Hủy
+
+  }
+  getBy5():Observable<Object> {
+    return this.http.get(this.api + '/getAllbystatus/5');//Trả hàng
 
   }
   updatetrangthai(input:any,id:any):Observable<Object>{

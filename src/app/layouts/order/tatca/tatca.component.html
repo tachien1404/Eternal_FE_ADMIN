@@ -1,36 +1,38 @@
-<div class=" mt-5 text-center">
+<div class=" mt-5 ">
   <div class="row">
     <h2>Danh sách </h2>
     <hr>
     <div class="row">
-      <div class="col-2">
-        <select class="form-select mt-3" aria-label="Default select example">
-          <option selected>Tính năng này đang đc phát triển</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
+      <!--      <div class="col-2">-->
+      <!--        <select class="form-select mt-3" aria-label="Default select example">-->
+      <!--          <option selected>Tính năng này đang đc phát triển</option>-->
+      <!--          <option value="1">One</option>-->
+      <!--          <option value="2">Two</option>-->
+      <!--          <option value="3">Three</option>-->
+      <!--        </select>-->
+      <!--      </div>-->
 
       <form class="col-10 form-group" [formGroup]="Input">
-        <div class="form-group">
-          <input class="form-control" formControlName="keyword" type="text" class="col-9 m-md-3"
-                 placeholder="Tính năng này đang đc phát triển"
+        <div class="form-group row">
+          <input formControlName="keyword" type="text" class="col-4  m-3"
+                 placeholder="tên khách hàng"
                  aria-describedby="basic-addon1"
-                 style="border-radius: 10px; height: 40px; border: solid 1px gray;">
-          <button class="col-2 btn btn-success mt-2" (click)="loadAll()">Tìm kiếm</button>
+                 style="border-radius: 40px; height: 40px; border: solid 1px gray;">
+          <div class="col-2 m-3">
+            <button class=" btn btn-success " (click)="loadAll()">Tìm kiếm</button>
+          </div>
         </div>
       </form>
 
 
     </div>
-    <h4>Đơn hàng</h4>
-    <div class="col-12 card">
 
-      <table class="table table-bordered  table-hover mt-2" style="height: 50px ; font-size: 14px">
-        <thead class="table-dark">
+    <div class="col-12 text-center">
+
+      <table class="table   table-hover mt-2" style="height: 50px ; font-size: 14px">
+        <thead>
         <tr>
-          <th>STT</th>
+          <th>Mã đơn hàng</th>
           <th>Thao tác</th>
 
           <th>Người đặt</th>
@@ -45,13 +47,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of orderdata.content | paginate: { itemsPerPage: 5, currentPage: p }">
+        <tr *ngFor="let item of orderdata.content | paginate: { itemsPerPage: 10, currentPage: p }">
 
           <td>{{item.id}}</td>
           <td>
-
-            <a style="margin-top: 30px;" class="view" title="Chi tiết" data-toggle="tooltip"
-               (click)="openLg(content,item.id,item.statusName)"><i class="material-icons">visibility</i></a>
+            <a class="view" title="Chi tiết" data-toggle="tooltip" routerLink="/order/orderdetail/{{item.id}}"><i
+              class="material-icons">visibility</i></a>
 
           </td>
           <td>{{item.name_acount}}<br>
@@ -67,7 +68,7 @@
           <td>
 <span *ngIf="item.status ==0">
            <a class="btn-dark "
-              style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:orangered">{{item.statusName}}</a>
+              style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:orange">{{item.statusName}}</a>
 </span>
             <span *ngIf="item.status ==1">
            <a class="btn-dark "
@@ -78,6 +79,10 @@
               style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73;">{{item.statusName}}</a>
 </span>
             <span *ngIf="item.status ==3">
+           <a class="btn-dark "
+              style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73">{{item.statusName}}</a>
+</span>
+            <span *ngIf="item.status ==4">
            <a class="btn-dark "
               style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:red">{{item.statusName}}</a>
 </span>
@@ -95,7 +100,7 @@
   </div>
 
 </div>
-//modal
+
 <ng-template #content>
   <div class=" m-8">
 
