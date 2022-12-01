@@ -1,13 +1,5 @@
-.navbar-light .nav .nav-link:focus{
-  color: red;
-  border-bottom: solid 2px red;
-  transition: 1s ease;
-}
-.navbar-light .nav :hover{
-  color: red;
-}
-.navbar-light .nav .nav-link{
-  text-transform: uppercase;
 
-}
+
+
+
 

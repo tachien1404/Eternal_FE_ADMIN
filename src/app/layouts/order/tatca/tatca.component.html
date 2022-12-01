@@ -1,6 +1,6 @@
-<div class=" mt-5 ">
+<div class=" mt-5">
   <div class="row">
-    <h2>Danh sách </h2>
+    <h2 class="text-center">Danh sách </h2>
     <hr>
     <div class="row">
       <!--      <div class="col-2">-->
@@ -12,13 +12,11 @@
       <!--        </select>-->
       <!--      </div>-->
 
-      <form class="col-10 form-group" [formGroup]="Input">
+      <form class="col-12 form-group" [formGroup]="Input">
         <div class="form-group row">
-          <input formControlName="keyword" type="text" class="col-4  m-3"
-                 placeholder="tên khách hàng"
-                 aria-describedby="basic-addon1"
-                 style="border-radius: 40px; height: 40px; border: solid 1px gray;">
-          <div class="col-2 m-3">
+          <input formControlName="keyword" type="text" class="col-4  m-3" placeholder="Tên khách hàng"
+            aria-describedby="basic-addon1" style="border-radius: 10px; height: 40px; border: solid 1px gray;">
+          <div class="col-2" style="margin-top: 18px;">
             <button class=" btn btn-success " (click)="loadAll()">Tìm kiếm</button>
           </div>
         </div>
@@ -29,69 +27,69 @@
 
     <div class="col-12 text-center">
 
-      <table class="table   table-hover mt-2" style="height: 50px ; font-size: 14px">
+      <table class="table table-hover mt-2" style="height: 50px ; font-size: 14px">
         <thead>
-        <tr>
-          <th>Mã đơn hàng</th>
-          <th>Thao tác</th>
+          <tr>
+            <th>Mã đơn hàng</th>
+            <th>Người đặt</th>
+            <th>Ngày đặt</th>
+            <th>Giá</th>
+            <th>Địa chỉ</th>
+            <th>Hình thức thanh toán</th>
+            <th>Ghi chú</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
 
-          <th>Người đặt</th>
-          <th>Ngày đặt</th>
-          <th>Giá</th>
-          <th>Địa chỉ</th>
-          <th>Hình thức thanh toán</th>
-
-          <th>Ghi chú</th>
-          <th>Trạng thái</th>
-
-        </tr>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of orderdata.content | paginate: { itemsPerPage: 10, currentPage: p }">
+          <tr *ngFor="let item of orderdata.content | paginate: { itemsPerPage: 10, currentPage: p }">
 
-          <td>{{item.id}}</td>
-          <td>
-            <a class="view" title="Chi tiết" data-toggle="tooltip" routerLink="/order/orderdetail/{{item.id}}"><i
-              class="material-icons">visibility</i></a>
+            <td>{{item.id}}</td>
+            <td>{{item.name_acount}}<br>
+              ( {{item.sdt}})
+            </td>
+            <td>{{item.create_date}}</td>
+            <td>{{item.price}}</td>
+            <th>{{item.address}}</th>
+            <th><a class="btn-dark "
+                style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:cadetblue; ">Đang
+                phát triển</a></th>
+            <td>{{item.note}}</td>
+            <td>
+              <span *ngIf="item.status ==0">
+                <a class="btn-dark "
+                  style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:orange">{{item.statusName}}</a>
+              </span>
+              <span *ngIf="item.status ==1">
+                <a class="btn-dark "
+                  style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:#0dcaf0">{{item.statusName}}</a>
+              </span>
+              <span *ngIf="item.status ==2">
+                <a class="btn-dark "
+                  style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73;">{{item.statusName}}</a>
+              </span>
+              <span *ngIf="item.status ==3">
+                <a class="btn-dark "
+                  style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73">{{item.statusName}}</a>
+              </span>
+              <span *ngIf="item.status ==4">
+                <a class="btn-dark "
+                  style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:red">{{item.statusName}}</a>
+              </span>
+            </td>
+            <td>
+              <a class="view" title="Chi tiết" data-toggle="tooltip" routerLink="/order/orderdetail/{{item.id}}"><i
+                  class="material-icons" style="color: gray;">visibility</i></a>
 
-          </td>
-          <td>{{item.name_acount}}<br>
-            ( {{item.sdt}})
-          </td>
-          <td>{{item.create_date}}</td>
-          <td>{{item.price}}</td>
-          <th>{{item.address}}</th>
-          <th><a class="btn-dark "
-                 style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:cadetblue; ">Đang
-            phát triển</a></th>
-          <td>{{item.note}}</td>
-          <td>
-<span *ngIf="item.status ==0">
-           <a class="btn-dark "
-              style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:orange">{{item.statusName}}</a>
-</span>
-            <span *ngIf="item.status ==1">
-           <a class="btn-dark "
-              style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:#0dcaf0">{{item.statusName}}</a>
-</span>
-            <span *ngIf="item.status ==2">
-           <a class="btn-dark "
-              style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73;">{{item.statusName}}</a>
-</span>
-            <span *ngIf="item.status ==3">
-           <a class="btn-dark "
-              style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73">{{item.statusName}}</a>
-</span>
-            <span *ngIf="item.status ==4">
-           <a class="btn-dark "
-              style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:red">{{item.statusName}}</a>
-</span>
-          </td>
-        </tr>
+            </td>
+          </tr>
         </tbody>
       </table>
 
-      <pagination-controls class="mr-3 mb-8" (pageChange)="p= $event"></pagination-controls>
+      <div style="margin-bottom: 100px;float: right;">
+        <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
+      </div>
 
 
     </div>
@@ -101,49 +99,44 @@
 
 </div>
 
-<ng-template #content>
-  <div class=" m-8">
+<div class="mb-5">
+  <ng-template #content>
+    <div>
 
-    <a class=" btn-danger" style="background-color: orangered;margin-right :5px;border-radius: 5px;padding: 10px;">Yêu
-      thích +</a>
-    <b>Săn tìm hàng độc</b>
-    <button type="submit"
-            style="height: 32px ; color: white; margin-left :5px ;background-color: orangered;border: none;border-radius: 5px;">
-      <i class="material-icons">forum</i><b style="padding:10px ;">Chat</b></button>
-    <i style="float: right;color: #0dcaf0"></i>{{this.statusName}}
-    <i class="material-icons " style="float: right; color: #0dcaf0">local_shipping</i>
-    <form class="mt-3">
-      <div>
-        <div *ngFor=" let item of Orderdata">
-          <div>
-            <img src="https://iweb.tatthanh.com.vn/pic/12/news/cach-khu-mui-hoi-giay-da-bong.jpg"
-                 style="float: left ; width: 250px; margin-right: 5px;border-style: groove ; ">
+      <a class=" btn-danger" style="background-color: orangered;margin-right :5px;border-radius: 5px;padding: 10px;">Yêu
+        thích +</a>
+      <b>Săn tìm hàng độc</b>
+      <button type="submit"
+        style="height: 32px ; color: white; margin-left :5px ;background-color: orangered;border: none;border-radius: 5px;">
+        <i class="material-icons">forum</i><b style="padding:10px ;">Chat</b></button>
+      <i style="float: right;color: #0dcaf0"></i>{{this.statusName}}
+      <i class="material-icons " style="float: right; color: #0dcaf0">local_shipping</i>
+      <form class="mt-3">
+        <div>
+          <div *ngFor=" let item of Orderdata">
+            <div>
+              <img src="https://iweb.tatthanh.com.vn/pic/12/news/cach-khu-mui-hoi-giay-da-bong.jpg"
+                style="float: left ; width: 250px; margin-right: 5px;border-style: groove ; ">
+            </div>
+            <div>
+              <label>{{item.productName}}</label>
+              <br>
+              <label>Phân loại hàng : Danh mục :{{item.category_name}}-Hãng : {{item.brand_name}} </label>
+              <br>
+              <label> x{{item.quantity}}</label>
+              <label style="color: orangered">
+                <del style="font-size: 14px; color: #5d6c85 "> ₫1.000.000</del>
+                ₫{{item.price}}</label>
+            </div>
+
+
           </div>
-          <div>
-            <label>{{item.productName}}</label>
-            <br>
-            <label>Phân loại hàng : Danh mục :{{item.category_name}}-Hãng : {{item.brand_name}}  </label>
-            <br>
-            <label> x{{item.quantity}}</label>
-            <label style="color: orangered">
-              <del style="font-size: 14px; color: #5d6c85 "> ₫1.000.000</del>
-              ₫{{item.price}}</label>
-          </div>
-
-
         </div>
-      </div>
-      <div>
-        <button color="warn">Close</button>
-        <button class="btn btn-info" type="submit" color="primary"
-                style="margin-bottom: 60px;">Ok
-        </button>
-      </div>
-    </form>
-  </div>
-</ng-template>
-
-
-
-
-
+        <div class="button-bot">
+          <button color="warn" style="margin-bottom: 200px;">Close</button>
+          <button class="btn btn-info" type="submit" color="primary">Ok</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>
