@@ -5,6 +5,7 @@ export interface ProductDTO {
   outputprice?: number,
   // status?:number;
   category?:Category;
+  photo?: string,
   hang?:Brand;
   sortByValues?:SortByValue[]
 

@@ -93,8 +93,9 @@
     <tr>
       <th class="text-center" scope="col" (click)="sortByValue('id')">Mã Sản phẩm</th>
       <th class="text-center" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>
-      <th class="text-center" scope="col" (click)="sortByValue('inportprice')">Giá nhập</th>
+      <!-- <th class="text-center" scope="col" (click)="sortByValue('inportprice')">Giá nhập</th> -->
       <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>
+      <th class="text-center" scope="col" >Ảnh</th>
       <!--      <th class="text-center" scope="col" >Trạng thái</th>-->
       <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>
       <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>
@@ -105,6 +106,8 @@
       <td>{{item.id}}</td>
       <td>{{item.name}}</td>
       <td>{{item.outputprice}}</td>
+      <td>{{item.photo}} </td>
+
       <!--      <td *ngIf ="item.status">Hàng mới</td>-->
       <!--      <td *ngIf ="!item.status">Hết </td>-->
       <td *ngIf="item.category">{{item.category.name}}</td>
@@ -145,7 +148,7 @@
   </div>
 </div>
 
-<form novalidate  [formGroup]="formAdd">
+<form novalidate  [formGroup]="formAdd"  enctype="multipart/form-data">
   <ng-template #content let-modal>
     <div class="modal-header">
       <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">{{message}} sản phẩm</h2>
@@ -153,7 +156,7 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-6">
+        <div class="col-7">
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Tên sản phẩm: </label>
             <div class="col-md-10">
@@ -232,6 +235,12 @@
               </div>
             </div>
           </div>
+          <div class="col-md-10 ">
+            <label for="formFile" class="form-label">Ảnh</label>
+            <input type="text" formControlName="" value="{{product.photo}}" class="form-control" >
+            <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
+              (change)="onFileSelected($event)" >
+          </div>
 
 
           <div *ngIf ="!hiddeen"  class="form-group row"  >
@@ -247,8 +256,9 @@
               <input  [disabled] ="!hiddeen" class="form-control" type="date" formControlName="updatedate">
             </div>
           </div>
+
         </div>
-        <div class="col-6">
+
           <!--         <div class="form-group row">-->
           <!--           <label class="col-md-2 col-form-label">Tình trạng :</label>-->
           <!--           <div class="col-md-10 mt-2 ">-->
@@ -262,17 +272,16 @@
           <!--             </small>-->
           <!--           </div>-->
           <!--         </div>-->
-          <div class="mb-3">
-            <label for="formFile" class="form-label">Ảnh</label>
-            <input class="form-control" type="file" id="formFile">
-          </div>
-            <div class="card">
-              <img src="/assets/img/products/product-1-min.jpg" alt="">
+          <div class="col-5">
+            <div div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
+              <img class="rounded mx-auto d-block" alt="none" style="width: 200px;height: 200px;"
+              src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{product.photo?product.photo:filename}}">
             </div>
+          </div>
 
         </div>
       </div>
-    </div>
+
     <div class="modal-footer">
       <div>
         <button [hidden]="!hiddeen" type="button" class="btn btn-success" type="submit" (click)="create()"  >Thêm mới</button>
