@@ -19,6 +19,7 @@ import {ToastrModule} from "ngx-toastr";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ProductComponent,
     SCDetailsComponent,
     AccountComponent,
+    TaoDonHangComponent,
   ],
   imports: [
     BrowserAnimationsModule,
