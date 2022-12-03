@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {Brand, Category, Product} from "../../@core/models/product";
-import {ToastrService} from "ngx-toastr";
-import {ProductService} from "../../@core/services/products.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {computeStartOfLinePositions} from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/source_file";
-import {ProductDTO, SortByValue} from "../../@core/models/ProductSortDTO";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Brand, Category, Product } from "../../@core/models/product";
+import { ToastrService } from "ngx-toastr";
+import { ProductService } from "../../@core/services/products.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { computeStartOfLinePositions } from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/source_file";
+import { ProductDTO, SortByValue } from "../../@core/models/ProductSortDTO";
 
 @Component({
   selector: 'app-product',
@@ -19,6 +19,7 @@ export class ProductComponent implements OnInit {
   datas: Product[] = [];
   indexPage = 0;
   Page: any;
+  filename: any;
   size = 5;
   productDTO: ProductDTO = {};
   dataCate: Category[] = [];
@@ -37,6 +38,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filename = 'null.png'
     this.productDTO.sortByValues = [];
     this.getAllCategory();
     this.getAllBrand();
@@ -63,6 +65,7 @@ export class ProductComponent implements OnInit {
       inportprice: ['', [Validators.required, Validators.pattern('[0-9]{1,10}')]],
       outputprice: ['', [Validators.required, Validators.pattern('[0-9]{1,10}')]],
       updatedate: '',
+      Photo: 'null.png',
       status: ['', Validators.required],
       category: ['', Validators.required],
       hang: ['', Validators.required],
@@ -70,11 +73,11 @@ export class ProductComponent implements OnInit {
   }
 
   openLg(content: any) {
-    this.product={};
-    this.message="Thêm mới";
+    this.product = {};
+    this.message = "Thêm mới";
     this.initFormAdd();
     this.hiddeen = true;
-    this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
+    this.modalService.open(content, { size: 'lg', centered: true, scrollable: true });
   }
 
   getAllProduct() {
@@ -149,9 +152,9 @@ export class ProductComponent implements OnInit {
 
   sortByValue(sortValues: string) {
     const length = this.productDTO.sortByValues?.length;
-    const sortValue: SortByValue = {name: sortValues, type: "desc"}
+    const sortValue: SortByValue = { name: sortValues, type: "desc" }
     if (!length) {
-      const sortValue: SortByValue = {name: sortValues, type: "desc"}
+      const sortValue: SortByValue = { name: sortValues, type: "desc" }
       this.productDTO.sortByValues?.push(sortValue)
     } else {
       let notContacts = true;
@@ -167,7 +170,19 @@ export class ProductComponent implements OnInit {
     }
     this.pagination(this.indexPage);
   }
+  onFileSelected(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      const file = target.files[0];
+      var tmp = '' + file.name
+      this.filename =file.name
+      console.log(this.filename);
 
+      this.formAdd.patchValue({
+        Photo: file
+      });
+    }
+  }
   onSubmitSearch() {
     this.fillValueSearch();
     console.log(this.productDTO)
@@ -179,7 +194,8 @@ export class ProductComponent implements OnInit {
     this.product.name = this.formAdd.value.name;
     this.product.inportprice = this.formAdd.value.inportprice;
     this.product.outputprice = this.formAdd.value.outputprice;
-    this.product.createDate =this.formAdd.value.createDate;
+    this.product.createDate = this.formAdd.value.createDate;
+    this.product.photo = this.filename.replace(" ", "%20");
     let cateId = this.formAdd.value.category;
     this.product.category = this.dataCate.find(category => {
       return category.id == cateId;
@@ -193,7 +209,15 @@ export class ProductComponent implements OnInit {
 
   create() {
     this.addValueProduct();
-    console.log(this.product)
+    var file = new FormData();
+    file.append('file', this.formAdd.controls['Photo'].value);
+    this.productService.uploadImage(file).subscribe(
+      error => {
+        console.log(error)
+      }
+    );
+    console.log(`hhh ${this.product.photo}`);
+
     this.productService.create(this.product).subscribe(
       (res) => {
         this.toastr.success(res.message);
@@ -208,7 +232,7 @@ export class ProductComponent implements OnInit {
 
   infoProduct(id: any, content: any) {
     this.openLg(content);
-    this.message ="Cập nhật ";
+    this.message = "Cập nhật ";
     this.hiddeen = false;
     const productId = this.datas.find(value => {
       return value.id == id;
@@ -233,12 +257,23 @@ export class ProductComponent implements OnInit {
   }
 
   update() {
+    if (this.filename !== this.product.photo) {
+      var file = new FormData();
+      file.append('file', this.formAdd.controls['Photo'].value);
+      this.productService.uploadImage(file).subscribe(
+        error => {
+          console.log(error)
+        }
+      );
+    }
     this.addValueProduct();
-    this.productService.update(this.product.id,this.product).subscribe(
-      res =>{
+    console.log(this.product);
+
+    this.productService.update(this.product.id, this.product).subscribe(
+      res => {
         this.toastr.success(res.message);
         this.ngOnInit();
-        this.product={};
+        this.product = {};
         this.modalService.dismissAll();
       }, error => {
         this.toastr.error(error.error.message);
@@ -248,10 +283,10 @@ export class ProductComponent implements OnInit {
 
   delete() {
     this.productService.delete(this.product.id).subscribe(
-      res =>{
+      res => {
         this.toastr.success(res.message);
         this.ngOnInit();
-        this.product={};
+        this.product = {};
         this.modalService.dismissAll();
       }, error => {
         this.toastr.error(error.error.message);

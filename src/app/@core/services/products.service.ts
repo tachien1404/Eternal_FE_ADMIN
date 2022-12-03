@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ProductDTO} from "../models/ProductSortDTO";
 import {Product} from "../models/product";
-
+const api = 'http://localhost:8080/api/public/products/'
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +18,12 @@ export class ProductService{
     return this.http.get<any>(`${environment.apiUrl}public/products`);
   }
 
-
+  uploadImage(file: FormData): Observable<any>{
+    return this.http.post<any>(
+      api+ `image`,
+      file
+    );
+  }
   getPageProduct(indexPage: any, size:any,dto:ProductDTO): Observable<any>{
     return this.http.put<any>(this.productAPI +"public/products/sortByKey?page="+indexPage +"&size="+size,dto) ;
   }

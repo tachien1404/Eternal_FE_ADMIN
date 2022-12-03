@@ -4,7 +4,8 @@ export interface Product {
   createDate?:Date;
   inportprice?: number;
   outputprice?: number,
-  updatedate?:Date
+  updatedate?:Date,
+  photo?: string,
   // status?:number;
   category?:Category;
   hang?:Brand;
