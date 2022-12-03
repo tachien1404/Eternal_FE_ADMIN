@@ -28,6 +28,9 @@ const routes:  Routes = [
   },
   {
     path:'account',component: AccountComponent
+  },
+  {
+    path:'tao-don-hang',loadChildren:()=>import('./layouts/tao-don-hang/tao-don-hang.module').then((m=>m.TaoDonHangModule))
   }
 
 
