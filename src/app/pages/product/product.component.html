@@ -87,66 +87,68 @@
     </form>
   </div>
 </div>
-<div style="padding-bottom: 100px;">
-  <div class="card mt-3">
-    <table class="table table-hover table-responsive table-bordered">
-      <thead>
-      <tr>
-        <th class="text-center" scope="col" (click)="sortByValue('id')">Mã Sản phẩm</th>
-        <th class="text-center" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>
-        <th class="text-center" scope="col" (click)="sortByValue('inportprice')">Giá nhập</th>
-        <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>
-        <!--      <th class="text-center" scope="col" >Trạng thái</th>-->
-        <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>
-        <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>
-      </tr>
-      </thead>
-      <tbody *ngIf="datas">
-      <tr  *ngFor="let item of datas" (click)="infoProduct(item.id,content)">
-        <td>{{item.id}}</td>
-        <td>{{item.name}}</td>
-        <td>{{item.outputprice}}</td>
-        <!--      <td *ngIf ="item.status">Hàng mới</td>-->
-        <!--      <td *ngIf ="!item.status">Hết </td>-->
-        <td *ngIf="item.category">{{item.category.name}}</td>
-        <td *ngIf="item.hang">{{item.hang.name}}</td>
-      </tr>
-      </tbody>
-    </table>
+<div class="card mt-3">
+  <table class="table table-hover table-responsive table-bordered">
+    <thead>
+    <tr>
+      <th class="text-center" scope="col" (click)="sortByValue('id')">Mã Sản phẩm</th>
+      <th class="text-center" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>
+      <!-- <th class="text-center" scope="col" (click)="sortByValue('inportprice')">Giá nhập</th> -->
+      <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>
+      <th class="text-center" scope="col" >Ảnh</th>
+      <!--      <th class="text-center" scope="col" >Trạng thái</th>-->
+      <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>
+      <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>
+    </tr>
+    </thead>
+    <tbody *ngIf="datas">
+    <tr  *ngFor="let item of datas" (click)="infoProduct(item.id,content)">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.outputprice}}</td>
+      <td>{{item.photo}} </td>
 
-    <div>
+      <!--      <td *ngIf ="item.status">Hàng mới</td>-->
+      <!--      <td *ngIf ="!item.status">Hết </td>-->
+      <td *ngIf="item.category">{{item.category.name}}</td>
+      <td *ngIf="item.hang">{{item.hang.name}}</td>
+    </tr>
+    </tbody>
+  </table>
 
-      <!--              Pagination                -->
-      <nav *ngIf="Page" class="mr-3" aria-label="...">
-        <ul class="pagination justify-content-end">
-          <select #selectSize (change)="pageItem(selectSize.value)"   class="page-items mr-1 me-3" >
-            <option selected >5</option>
-            <option >10</option>
-            <option >15</option>
-          </select>
-          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
-              <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-            </svg>
-          </li>
+  <div>
 
-          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
-              class="page-item" [ngClass]="indexPage == i?'active':''">
-            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
-          </li>
 
-          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
-              <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" (click)="preNextPage('next')"/>
-            </svg>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <!--              Pagination                -->
+    <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">
+      <ul class="pagination justify-content-end">
+        <select #selectSize (change)="pageItem(selectSize.value)"   class="page-items mr-1 me-3" >
+          <option selected >5</option>
+          <option >10</option>
+          <option >15</option>
+        </select>
+        <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
+            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+          </svg>
+        </li>
+
+        <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index"
+            class="page-item" [ngClass]="indexPage == i?'active':''">
+          <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+        </li>
+
+        <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
+            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" (click)="preNextPage('next')"/>
+          </svg>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
 
-<form novalidate  [formGroup]="formAdd">
+<form novalidate  [formGroup]="formAdd"  enctype="multipart/form-data">
   <ng-template #content let-modal>
     <div class="modal-header">
       <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">{{message}} sản phẩm</h2>
@@ -154,7 +156,7 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-6">
+        <div class="col-7">
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Tên sản phẩm: </label>
             <div class="col-md-10">
@@ -233,6 +235,12 @@
               </div>
             </div>
           </div>
+          <div class="col-md-10 ">
+            <label for="formFile" class="form-label">Ảnh</label>
+            <input type="text" formControlName="" value="{{product.photo}}" class="form-control" >
+            <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
+              (change)="onFileSelected($event)" >
+          </div>
 
 
           <div *ngIf ="!hiddeen"  class="form-group row"  >
@@ -248,8 +256,9 @@
               <input  [disabled] ="!hiddeen" class="form-control" type="date" formControlName="updatedate">
             </div>
           </div>
+
         </div>
-        <div class="col-6">
+
           <!--         <div class="form-group row">-->
           <!--           <label class="col-md-2 col-form-label">Tình trạng :</label>-->
           <!--           <div class="col-md-10 mt-2 ">-->
@@ -263,17 +272,16 @@
           <!--             </small>-->
           <!--           </div>-->
           <!--         </div>-->
-          <div class="mb-3">
-            <label for="formFile" class="form-label">Ảnh</label>
-            <input class="form-control" type="file" id="formFile">
-          </div>
-            <div class="card">
-              <img src="/assets/img/products/product-1-min.jpg" alt="">
+          <div class="col-5">
+            <div div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
+              <img class="rounded mx-auto d-block" alt="none" style="width: 200px;height: 200px;"
+              src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{product.photo?product.photo:filename}}">
             </div>
+          </div>
 
         </div>
       </div>
-    </div>
+
     <div class="modal-footer">
       <div>
         <button [hidden]="!hiddeen" type="button" class="btn btn-success" type="submit" (click)="create()"  >Thêm mới</button>
