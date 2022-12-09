@@ -49,7 +49,23 @@ export class OrderService{
   getOrderById(id:any):Observable<Object>{
     return this.http.get(this.api+'/getOrderById/'+id)
   }
+  save(input:any):Observable<Object>{
+    return this.http.post(this.api+'/save/',input)//start đơn hàng
+  }
+  update(input:any,id:any):Observable<Object>{
+    return this.http.put(this.api+'/update/'+id,input)//end đơn hàng
+  }
+  //api 2
   delete(id:any){
     return this.http.delete(this.api2+'/delete/'+id)
+  }
+  savedeteo(input:any){
+    return this.http.post(this.api2+'/save',input)
+  }
+  getByOrderId(id:any){
+    return this.http.get(this.api2+'/getByOrderId/'+id)//ordedeteo giỏ hàng bên off
+  }
+  sumgiaquantity(id:any){
+    return this.http.get(this.api2+'/sum/'+id)
   }
 }

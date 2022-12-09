@@ -1,3 +1,9 @@
+<span *ngIf="order==null">
+  <div>
+    <button (click)="taodonhang()">Tạo đơn hàng</button>
+  </div>
+</span>
+<span *ngIf="order!=null">
 <div>
   <h3>Thông tin đơn hàng</h3><br>
   <h5>Vui lòng cung cấp thông tin về đơn hàng sẽ tạo</h5>
@@ -11,23 +17,40 @@
       <hr>
       <div class="input-group">
         <div class="form-outline">
-          <input type="search" id="form1" class="form-control"/>
-          <label class="form-label" for="form1">Search</label>
+          <input type="search" id="form1" class="form-control" [(ngModel)]="namesot"/>
+          <label class="form-label" for="form1"></label>
         </div>
         <button type="button" class="btn btn-primary">
-          <i class="fas fa-search"></i>
+          <i class="fas fa-search" (click)="openProduct(product)"></i>
         </button>
 
       </div>
 
+        <hr>
+      <div *ngFor="let item of litorderdeteo">
+          <div class="card mt-2">
+            <div class="row p-3">
+            <label class="col-3">{{item.productName}} {{item.brand_name}} {{item.namecolor}}</label>
+            <label class="col-1">size:{{item.valuesize}}</label>
+            <label class="col-2" [(ngModel)]="price">Giá:{{item.price}}</label>
+              <input class="col-1" type="number"#selectquantity (change)="changeQuantity(selectquantity.value,item.detail_id)" value="{{item.quantity}}">
+              <label class="col-2">Loại:{{item.category_name}}</label>
+              <label class="col-2">Tổng tiền:{{item.quantity*item.price}} VnD</label>
+              <button class="col-1" (click)="delete(item.detail_id)">Hủy</button>
+
+            </div>
+
+          </div>
+      </div>
     </div>
     <div class="card p-4" style="margin-top: 40px">
       <h5>Thanh toán</h5>
       <hr>
-      <div class="row">
+
+        <div class="row">
         <div class="col-5">
           <h5>Ghi chú đơn hàng</h5>
-          <input type="text" placeholder="Ghi chú điều mk muốn ">
+          <input type="text" placeholder="Ghi chú điều mk muốn " [(ngModel)]="note">
         </div>
         <div class="col-5">
           <label>Số lượng sản phẩm</label><br>
@@ -37,22 +60,22 @@
           <label>Tiền khách đưa</label><br>
         </div>
         <div class="col-1">
-          <label>0</label><br>
-          <label>0 </label><br>
-          <label>0</label><br>
-          <label>0 </label><br>
-          <label>0</label><br>
-
+          <label>{{orderdeteogiaquantity.quantity}}</label><br>
+          <label>{{orderdeteogiaquantity.price}}</label><br>
+             <input type="text" placeholder="giäm giá "><br>
+          <label >{{tongthu}}</label><br>
+          <label>{{quantity}}</label><br>
         </div>
         <hr>
 
         <div>
-          <button>
+          <button (click)="enddonhang()">
             Thanh toán
           </button>
           <button>Đã thanh toán</button>
         </div>
       </div>
+
     </div>
   </div>
   <div class="col-4" style="margin-left: 20px">
@@ -60,13 +83,13 @@
     <div class="card p-4">
       <h5>Kênh bán hàng</h5>
       <hr>
-      <select class="form-select " aria-label="Default select example">
+      <select class="form-select " aria-label="Default select example"#selectKenh (change)="laykenh (selectKenh.value)" >
         <option value="0">Website</option>
         <option selected value="1">Tại quầy</option>
         <option value="2">Page</option>
       </select>
     </div>
-
+    <span *ngIf="customer==null">
     <div class="card p-4 " style="margin-top: 53px">
       <h5>Khách hàng</h5>
       <a style="color: #0d6efd" (click)="openLg(content)">Tạo khách hàng</a>
@@ -80,25 +103,110 @@
           <i class="fas fa-search"></i>
         </button>
       </div>
-
     </div>
+</span>
+    <span *ngIf="customer!=null">
+      <div class="card p-4" style="margin-top: 53px">
+         <h5>Thông tin người mua</h5>
+        <label>{{customer.name}}</label>
+         <label>{{customer.email}}</label>
+        <hr>
+        <h5>Thông tin giao hàng</h5>
+         <label>{{customer.name}}</label>
+         <label>{{customer.sdt}}</label>
+        <hr>
+        <h5>Địa chỉ giao hàng</h5>
+         <label>{{customer.address}}</label>
+      </div>
+    </span>
+
   </div>
 </div>
 
-
+</span>
 <ng-template #content>
-  <div class="">
-<h5>Tạo khách hàng</h5>
+  <div class=" p-5">
+    <h5>Tạo khách hàng</h5>
     <hr>
-    <form>
-      <div class="form-group mr-2">
-        <label  for="inputemail">Họ và tên</label>
-        <input class="form-control" type="text" id="inputemail">
+    <form [formGroup]="customerFrom" (ngSubmit)="savecustomer()">
+      <div class="row ">
+        <div class="form-group col-5">
+          <label for="inputten">Họ và tên</label>
+          <input class="form-control" type="text" id="inputten" formControlName="name">
+
+          <span *ngIf="name && name.invalid && name.touched" class="error">Please enter name</span>
+        </div>
+        <div class="form-group col-5 " style="margin-left: 20px">
+          <label for="inputemail">Email</label>
+          <input class="form-control" type="text" id="inputemail" formControlName="email">
+        </div>
+        <div class="form-group col-5">
+          <label for="inputSDT">SDT</label>
+          <input class="form-control" type="text" id="inputSDT" formControlName="sdt">
+        </div>
+        <div class="form-group col-5 " style="margin-left: 20px">
+          <label for="inputdiachi">Địa chỉ</label>
+          <input class="form-control" type="text" id="inputdiachi" formControlName="address">
+        </div>
+        <div class="col-3" style="margin-top: 20px">
+          <button class="btn btn-success" type="submit">Thêm mới</button>
+        </div>
       </div>
     </form>
 
 
   </div>
 </ng-template>
+<ng-template #product>
+  <div class="input-group mt-3">
+    <div class="form-outline">
+      <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
+      <label class="form-label" for="form"></label>
+    </div>
+    <button type="button" class="btn btn-primary">
+      <i class="fas fa-search" (click)="openProduct(product)"></i>
+    </button>
 
+  </div>
+  <hr>
+  <table class="table table-hover p-3">
+    <thead>
+    <tr>
+      <th scope="col">Ảnh</th>
+      <th scope="col">Name</th>
+      <th scope="col">Giá</th>
+      <th scope="col">Size</th>
+      <th scope="col">Màu</th>
+      <th scope="col">Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of litproduct">
+      <th><img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
+               width="120px" height="100"></th>
+      <th>{{item.name}}</th>
+      <th>{{item.outputprice}}</th>
+      <th>
+        <select #selectColor (change)="laycolor(selectColor.value)" class="form-select "
+                aria-label="Default select example">
+          <option selected>Mời chọn</option>
+          <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
+
+        </select>
+      </th>
+      <th>
+        <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
+                aria-label="Default select example">
+          <option selected>Mời chọn</option>
+          <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
+
+        </select>
+      </th>
+      <th>
+        <button (click)=" giohang(order.id,item.id,item.outputprice)">Thêm</button>
+      </th>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>
 
