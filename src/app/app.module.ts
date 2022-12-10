@@ -41,7 +41,7 @@ import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.compone
     BrowserModule,
     AppRoutingModule,HttpClientModule,
     ReactiveFormsModule,
-FormsModule,
+    FormsModule,
     ToastrModule.forRoot(),
     NgbModule,
     NgxPaginationModule
