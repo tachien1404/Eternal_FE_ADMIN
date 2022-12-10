@@ -17,7 +17,7 @@
       <hr>
       <div class="input-group">
         <div class="form-outline">
-          <input type="search" id="form1" class="form-control" [(ngModel)]="namesot"/>
+          <input type="search" id="form1" class="form-control" placeholder="Nhập tên sản phẩm" [(ngModel)]="namesot"/>
           <label class="form-label" for="form1"></label>
         </div>
         <button type="button" class="btn btn-primary">
@@ -26,53 +26,54 @@
 
       </div>
 
-        <hr>
       <div *ngFor="let item of litorderdeteo">
           <div class="card mt-2">
             <div class="row p-3">
-            <label class="col-3">{{item.productName}} {{item.brand_name}} {{item.namecolor}}</label>
-            <label class="col-1">size:{{item.valuesize}}</label>
-            <label class="col-2" [(ngModel)]="price">Giá:{{item.price}}</label>
-              <input class="col-1" type="number"#selectquantity (change)="changeQuantity(selectquantity.value,item.detail_id)" value="{{item.quantity}}">
-              <label class="col-2">Loại:{{item.category_name}}</label>
-              <label class="col-2">Tổng tiền:{{item.quantity*item.price}} VnD</label>
-              <button class="col-1" (click)="delete(item.detail_id)">Hủy</button>
-
+              <label class="col-4">{{item.productName}} {{item.brand_name}} {{item.namecolor}}</label>
+              <label class="col-2">Size:{{item.valuesize}}</label>
+              <label class="col-2" [(ngModel)]="price">Giá:{{item.price}}</label>
+              <input class="col-2" style="height: 20px;width: 70px;" type="number"#selectquantity (change)="changeQuantity(selectquantity.value,item.detail_id)" value="{{item.quantity}}">
+            </div>
+            <div class="row p-3">
+              <label class="col-4">Loại:{{item.category_name}}</label>
+              <label class="col-4">Tổng tiền:{{item.quantity*item.price}} đ</label>
+            </div>
+            <div class="row" style="margin-left: 450px;">
+              <button class="btn btn-danger" style="width: 100px;" (click)="delete(item.detail_id)">Hủy</button>
             </div>
 
           </div>
       </div>
     </div>
-    <div class="card p-4" style="margin-top: 40px">
+    <div class="card p-4" style="margin-top: 40px;margin-bottom: 100px;">
       <h5>Thanh toán</h5>
       <hr>
-
         <div class="row">
         <div class="col-5">
           <h5>Ghi chú đơn hàng</h5>
-          <input type="text" placeholder="Ghi chú điều mk muốn " [(ngModel)]="note">
+          <input type="text" placeholder="Ghi chú" [(ngModel)]="note">
         </div>
-        <div class="col-5">
-          <label>Số lượng sản phẩm</label><br>
-          <label>Tổng tiền hàng </label><br>
-          <label>Giảm giá</label><br>
-          <label>Tạm tính</label><br>
-          <label>Tiền khách đưa</label><br>
+        <div class="col-4">
+          <label>Số lượng sản phẩm: </label><br>
+          <label>Tổng tiền hàng: </label><br>
+          <label>Giảm giá: </label><br>
+          <label>Tạm tính: </label><br>
+          <label>Tiền khách đưa: </label><br>
         </div>
         <div class="col-1">
           <label>{{orderdeteogiaquantity.quantity}}</label><br>
           <label>{{orderdeteogiaquantity.price}}</label><br>
-             <input type="text" placeholder="giäm giá "><br>
+          <input style="width: 40px;" type="text" placeholder=" %"><br>
           <label >{{tongthu}}</label><br>
           <label>{{quantity}}</label><br>
         </div>
         <hr>
 
-        <div>
-          <button (click)="enddonhang()">
+        <div style="margin-left: 300px;">
+          <button class="btn btn-success" (click)="enddonhang()">
             Thanh toán
           </button>
-          <button>Đã thanh toán</button>
+          <button class="btn btn-primary ms-3">Đã thanh toán</button>
         </div>
       </div>
 
@@ -92,12 +93,12 @@
     <span *ngIf="customer==null">
     <div class="card p-4 " style="margin-top: 53px">
       <h5>Khách hàng</h5>
-      <a style="color: #0d6efd" (click)="openLg(content)">Tạo khách hàng</a>
+      <a style="color: #0d6efd" type="button" (click)="openLg(content)">Tạo khách hàng</a>
       <hr>
       <div class="input-group">
         <div class="form-outline">
-          <input type="search" id="form2" class="form-control"/>
-          <label class="form-label" for="form2">Search</label>
+          <input type="search" id="form2"  class="form-control" placeholder="Search"/>
+
         </div>
         <button type="button" class="btn btn-primary">
           <i class="fas fa-search"></i>
@@ -148,7 +149,7 @@
           <label for="inputdiachi">Địa chỉ</label>
           <input class="form-control" type="text" id="inputdiachi" formControlName="address">
         </div>
-        <div class="col-3" style="margin-top: 20px">
+        <div class="col-3" style="margin-top: 20px;">
           <button class="btn btn-success" type="submit">Thêm mới</button>
         </div>
       </div>
@@ -157,56 +158,58 @@
 
   </div>
 </ng-template>
-<ng-template #product>
-  <div class="input-group mt-3">
-    <div class="form-outline">
-      <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
-      <label class="form-label" for="form"></label>
+<div style="width: 80%;">
+  <ng-template #product>
+    <div class="input-group mt-3">
+      <div class="form-outline">
+        <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
+        <label class="form-label" for="form"></label>
+      </div>
+      <button type="button" class="btn btn-primary">
+        <i class="fas fa-search" (click)="openProduct(product)"></i>
+      </button>
+
     </div>
-    <button type="button" class="btn btn-primary">
-      <i class="fas fa-search" (click)="openProduct(product)"></i>
-    </button>
+    <hr>
+    <table class="table table-hover p-3">
+      <thead>
+      <tr>
+        <th scope="col" style="padding-left: 25px;">Ảnh</th>
+        <th scope="col" style="padding-left: 130px;">Name</th>
+        <th scope="col">Giá</th>
+        <th scope="col">Màu</th>
+        <th scope="col">Size</th>
+        <th scope="col">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of litproduct">
+        <th><img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
+                 width="120px" height="100"></th>
+        <th>{{item.name}}</th>
+        <th style="padding-left: 25px;">{{item.outputprice}}</th>
+        <th>
+          <select #selectColor (change)="laycolor(selectColor.value)" class="form-select "
+                  aria-label="Default select example">
+            <option selected>Mời chọn</option>
+            <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
 
-  </div>
-  <hr>
-  <table class="table table-hover p-3">
-    <thead>
-    <tr>
-      <th scope="col">Ảnh</th>
-      <th scope="col">Name</th>
-      <th scope="col">Giá</th>
-      <th scope="col">Size</th>
-      <th scope="col">Màu</th>
-      <th scope="col">Thao tác</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of litproduct">
-      <th><img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
-               width="120px" height="100"></th>
-      <th>{{item.name}}</th>
-      <th>{{item.outputprice}}</th>
-      <th>
-        <select #selectColor (change)="laycolor(selectColor.value)" class="form-select "
-                aria-label="Default select example">
-          <option selected>Mời chọn</option>
-          <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
+          </select>
+        </th>
+        <th>
+          <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
+                  aria-label="Default select example">
+            <option selected>Mời chọn</option>
+            <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
 
-        </select>
-      </th>
-      <th>
-        <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
-                aria-label="Default select example">
-          <option selected>Mời chọn</option>
-          <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
-
-        </select>
-      </th>
-      <th>
-        <button (click)=" giohang(order.id,item.id,item.outputprice)">Thêm</button>
-      </th>
-    </tr>
-    </tbody>
-  </table>
-</ng-template>
+          </select>
+        </th>
+        <th style="padding-left: 25px;">
+          <button class="btn btn-primary" (click)=" giohang(order.id,item.id,item.outputprice)">Thêm</button>
+        </th>
+      </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>
 
