@@ -1,0 +1,31 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Stt</th>
+    <th scope="col">Mã đơn hàng</th>
+    <th scope="col">Tên khách hàng</th>
+    <th scope="col">Ngày tạo</th>
+    <th scope="col">Trạng thái</th>
+    <th scope="col">Ghi chú</th>
+    <th scope="col">Thao tác</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of Order | paginate: { itemsPerPage: 10, currentPage: p }">
+    <th scope="row">1</th>
+    <td>{{item.id}}</td>
+    <td>{{item.nameCustomer}}</td>
+    <td>{{item.create_date| date:'dd-MM-yyyy hh:mm:ss a':'+0530'}}</td>
+    <td>{{item.statusName}}</td>
+    <td>{{item.note}}</td>
+    <td>
+      <button>xóa</button>
+      <button>Sửa</button>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+<div style="margin-bottom: 100px;float: right;">
+  <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
+</div>

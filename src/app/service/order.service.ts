@@ -33,6 +33,10 @@ export class OrderService{
     return this.http.get(this.api + '/getAllbystatus/5');//Trả hàng
 
   }
+  getBy6():Observable<Object> {
+    return this.http.get(this.api + '/getAllbystatus/6');//Đơn nháp
+
+  }
   updatetrangthai(input:any,id:any):Observable<Object>{
     return this.http.put(this.api+'/trangthai/'+id,input)//giao hàng
   }
@@ -46,7 +50,7 @@ export class OrderService{
   getOrderId(id:any):Observable<Object>{
     return this.http.get(this.api+'/getOrderId/'+id)
   }
-  getOrderById(id:any):Observable<Object>{
+  getOrderById(id:any):Observable<Object>{//get order
     return this.http.get(this.api+'/getOrderById/'+id)
   }
   save(input:any):Observable<Object>{

@@ -16,7 +16,7 @@ export class CustomerService {
     return this.http.put(this.api+'/save/'+id,input)//update
   }
   searchName(name:any){
-    return this.http.get(this.api+'/searchName'+name)//lấy theo name
+    return this.http.get(this.api+'/searchName/'+name)//lấy theo name
   }
 
 }
