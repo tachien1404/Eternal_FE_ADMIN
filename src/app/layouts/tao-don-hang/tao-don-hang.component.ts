@@ -22,7 +22,8 @@ export class TaoDonHangComponent implements OnInit {
   quantity: any = 1;//số lượng tsp
   price: any;//giá
   note: any;
-  giamgia: any = 0;
+  khachdua:any=0;
+  giamgia: any=0;
   tongthu: any;
   valuekenh: any;
   valuesize: any;
@@ -31,6 +32,7 @@ export class TaoDonHangComponent implements OnInit {
   mau: any;
   order: any;
   namesot: any;
+  namecus:any;
   litproduct: any;
   message!: String;
   orderdeteo: any;
@@ -95,7 +97,7 @@ export class TaoDonHangComponent implements OnInit {
     if (this.customerFrom.valid) {
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
-
+console.log(this.customer)
         this.toastr.success("Thêm mới thành công");
         this.modalService.dismissAll();
 
@@ -104,7 +106,34 @@ export class TaoDonHangComponent implements OnInit {
       })
     }
   }
+  timkiemcus(){
+    this.service.searchName(this.namecus).subscribe(result => {
+      this.customer = result;
 
+    
+    });
+  }
+timkiemdon(){
+  this.orderService.getByOrderId(this.namesot).subscribe(result => {
+    this.litorderdeteo = result;
+
+    console.log(this.litorderdeteo)
+  });
+  this.orderService.getOrderById(this.namesot).subscribe(result =>{
+    this.order=result;
+    console.log(this.order);
+    this.service.searchName(this.order.nameCustomer).subscribe(result =>{
+      this.customer=result;
+
+    })
+  },error => {
+    this.toastr.success("Đơn hàng không tồn tại");
+  });
+this.service.searchName(this.order.nameCustomer).subscribe(result =>{
+  this.customer=result;
+
+})
+}
   delete(id: any) {
     //xóa đơn chi tiết
     console.log(id)
@@ -212,6 +241,24 @@ export class TaoDonHangComponent implements OnInit {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
     this.orderFrom.value.status = '7';
+    if(this.customer!=null){
+      this.orderFrom.value.customer_id = this.customer.id;
+    }
+
+    this.orderFrom.value.price = this.tongthu;
+    this.orderFrom.value.note=this.note;
+    this.orderService.save(this.orderFrom.value).subscribe(result => {
+      this.order = result;
+      this.toastr.success("Thành công");
+      console.log(this.order)
+    },error => {
+      this.toastr.success("eroooo");
+    })
+  }
+  enddonnhap() {
+    this.orderFrom.value.id = this.order.id;
+    this.orderFrom.value.kenh = this.valuekenh;
+
     if(this.customer!=null){
       this.orderFrom.value.customer_id = this.customer.id;
     }

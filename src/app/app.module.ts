@@ -20,6 +20,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
+import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.compone
     SCDetailsComponent,
     AccountComponent,
     TaoDonHangComponent,
+    HoaDonChoComponent,
   ],
   imports: [
     BrowserAnimationsModule,

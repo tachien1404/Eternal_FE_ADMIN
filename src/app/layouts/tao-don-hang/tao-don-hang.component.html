@@ -3,6 +3,12 @@
     <button (click)="taodonhang()">Tạo đơn hàng</button>
   </div>
 </span>
+<span *ngIf="order==null">
+  <div style="margin-top: 20px">
+    <input type="text"placeholder="Mã đơn hàng"  [(ngModel)]="namesot">
+    <button (click)="timkiemdon()">Tìm kiếm</button>
+  </div>
+</span>
 <span *ngIf="order!=null">
 <div>
   <h3>Thông tin đơn hàng</h3><br>
@@ -59,13 +65,15 @@
           <label>Giảm giá: </label><br>
           <label>Tạm tính: </label><br>
           <label>Tiền khách đưa: </label><br>
+          <label>Trả lại: </label><br>
         </div>
         <div class="col-1">
           <label>{{orderdeteogiaquantity.quantity}}</label><br>
           <label>{{orderdeteogiaquantity.price}}</label><br>
-          <input style="width: 40px;" type="text" placeholder=" %"><br>
-          <label >{{tongthu}}</label><br>
-          <label>{{quantity}}</label><br>
+          <input [(ngModel)]="giamgia" style="width: 40px;" type="text" ><br>
+          <label >{{tongthu-giamgia}}</label><br>
+          <input  [(ngModel)]="khachdua" style="width: 40px;" type="text" ><br>
+           <label>{{khachdua-tongthu-giamgia}}</label><br>
         </div>
         <hr>
 
@@ -73,7 +81,7 @@
           <button class="btn btn-success" (click)="enddonhang()">
             Thanh toán
           </button>
-          <button class="btn btn-primary ms-3">Đã thanh toán</button>
+          <button class="btn btn-primary ms-3" (click)="enddonnhap()">Lưu nháp</button>
         </div>
       </div>
 
@@ -86,7 +94,8 @@
       <hr>
       <select class="form-select " aria-label="Default select example"#selectKenh (change)="laykenh (selectKenh.value)" >
         <option value="0">Website</option>
-        <option selected value="1">Tại quầy</option>
+         <option selected>Mời chọn</option>
+        <option  value="1">Tại quầy</option>
         <option value="2">Page</option>
       </select>
     </div>
@@ -97,10 +106,10 @@
       <hr>
       <div class="input-group">
         <div class="form-outline">
-          <input type="search" id="form2"  class="form-control" placeholder="Search"/>
+          <input type="search" id="form2" [(ngModel)]="namecus" class="form-control" placeholder="Search"/>
 
         </div>
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" (click)="timkiemcus()">
           <i class="fas fa-search"></i>
         </button>
       </div>
