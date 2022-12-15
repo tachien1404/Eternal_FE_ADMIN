@@ -19,7 +19,7 @@
     <td>{{item.statusName}}</td>
     <td>{{item.note}}</td>
     <td>
-      <button>xóa</button>
+      <button (click)="delete(item.id)">xóa</button>
       <button>Sửa</button>
     </td>
   </tr>

@@ -110,7 +110,7 @@ console.log(this.customer)
     this.service.searchName(this.namecus).subscribe(result => {
       this.customer = result;
 
-    
+
     });
   }
 timkiemdon(){
@@ -127,7 +127,7 @@ timkiemdon(){
 
     })
   },error => {
-    this.toastr.success("Đơn hàng không tồn tại");
+    this.toastr.error("Đơn hàng không tồn tại");
   });
 this.service.searchName(this.order.nameCustomer).subscribe(result =>{
   this.customer=result;
