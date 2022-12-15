@@ -59,6 +59,9 @@ export class OrderService{
   update(input:any,id:any):Observable<Object>{
     return this.http.put(this.api+'/update/'+id,input)//end đơn hàng
   }
+  deleteorder(id:any){
+    return this.http.delete(this.api+'/delete/'+id)//end đơn hàng
+  }
   //api 2
   delete(id:any){
     return this.http.delete(this.api2+'/delete/'+id)
