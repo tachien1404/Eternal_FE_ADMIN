@@ -183,11 +183,24 @@ this.service.searchName(this.order.nameCustomer).subscribe(result =>{
     })
 
   }
-
-  openLg(content: any) {
+openthem(content:any){
+  this.modalService.open(content, {
+    size: 'lg', centered: true, scrollable: true,
+  });
+}
+  openedit(content: any,id:any) {
     this.modalService.open(content, {
       size: 'lg', centered: true, scrollable: true,
-    })
+    });
+    if(id!=null){
+      this.service.getById(id).subscribe(result =>{
+        this.customer=result;
+      });
+      this.customerFrom.value.address=this.customer.address;
+      this.customerFrom.value.sdt=this.customer.sdt;
+      this.customerFrom.value.email=this.customer.email;
+      this.customerFrom.value.name=this.customer.name;
+    }
   }
 
   openProduct(product: any) {
@@ -290,4 +303,6 @@ this.service.searchName(this.order.nameCustomer).subscribe(result =>{
   get name() {
     return this.customerFrom.get('name');
   }
+
+
 }

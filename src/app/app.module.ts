@@ -21,6 +21,7 @@ import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
 import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component';
+import { KhuyenmaiComponent } from './layouts/khuyenmai/khuyenmai.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component'
     AccountComponent,
     TaoDonHangComponent,
     HoaDonChoComponent,
+    KhuyenmaiComponent,
   ],
   imports: [
     BrowserAnimationsModule,
