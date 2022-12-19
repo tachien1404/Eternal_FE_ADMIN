@@ -18,5 +18,8 @@ export class CustomerService {
   searchName(name:any){
     return this.http.get(this.api+'/searchName/'+name)//lấy theo name
   }
+  getById(id:any){
+    return this.http.get(this.api+'/getByid/'+id)//lấy theo id
+  }
 
 }
