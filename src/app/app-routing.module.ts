@@ -34,6 +34,12 @@ const routes:  Routes = [
   },
   {
     path:'hoadoncho',loadChildren:()=>import('./layouts/hoa-don-cho/hoa-don-cho.module').then((m=>m.HoaDonChoModule))
+
+  },
+
+  {
+    path:'thongke',loadChildren:()=>import('./layouts/thongke/thongke.module').then((m=>m.ThongkeModule))
+
   }
 
 

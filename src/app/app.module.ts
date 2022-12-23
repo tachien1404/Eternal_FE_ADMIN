@@ -21,6 +21,9 @@ import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
 import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component';
+import {NgChartsModule} from "ng2-charts";
+import {ThongkeComponent} from "./layouts/thongke/thongke.component";
+
 
 
 @NgModule({
@@ -35,19 +38,23 @@ import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component'
     AccountComponent,
     TaoDonHangComponent,
     HoaDonChoComponent,
+
+
+    ThongkeComponent,
+
   ],
-  imports: [
-    BrowserAnimationsModule,
-    Material_module,
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    ToastrModule.forRoot(),
-    NgbModule,
-    NgxPaginationModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        Material_module,
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule, HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ToastrModule.forRoot(),
+        NgbModule,
+        NgxPaginationModule, NgChartsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
