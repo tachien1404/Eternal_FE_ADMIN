@@ -102,7 +102,7 @@
     <span *ngIf="customer==null">
     <div class="card p-4 " style="margin-top: 53px">
       <h5>Khách hàng</h5>
-      <a style="color: #0d6efd" type="button" (click)="openLg(content)">Tạo khách hàng</a>
+      <a style="color: #0d6efd" type="button" (click)="openthem(content)">Tạo khách hàng</a>
       <hr>
       <div class="input-group">
         <div class="form-outline">
@@ -118,6 +118,7 @@
     <span *ngIf="customer!=null">
       <div class="card p-4" style="margin-top: 53px">
          <h5>Thông tin người mua</h5>
+        <button (click)="openedit(content,customer.id)">Sửa</button>
         <label>{{customer.name}}</label>
          <label>{{customer.email}}</label>
         <hr>
@@ -134,6 +135,7 @@
 </div>
 
 </span>
+
 <ng-template #content>
   <div class=" p-5">
     <h5>Tạo khách hàng</h5>

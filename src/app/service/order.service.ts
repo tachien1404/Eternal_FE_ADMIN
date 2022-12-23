@@ -37,6 +37,10 @@ export class OrderService{
     return this.http.get(this.api + '/getAllbystatus/6');//Đơn nháp
 
   }
+  getBy7():Observable<Object> {
+    return this.http.get(this.api + '/getAllbystatus/7');//Đơn nháp
+
+  }
   updatetrangthai(input:any,id:any):Observable<Object>{
     return this.http.put(this.api+'/trangthai/'+id,input)//giao hàng
   }

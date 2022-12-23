@@ -9,6 +9,7 @@ import {DaGiaoComponent} from "./da-giao/da-giao.component";
 
 import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
 import {ChuanbihangComponent} from "./chuanbihang/chuanbihang.component";
+import {DonOffComponent} from "./don-off/don-off.component";
 
 
 
@@ -18,7 +19,8 @@ const routes:Routes=[{path:'',component:OrderComponent,children:[
     {path:'dahuy',component:DahuyComponent},
     {path:'danggiao',component:DanggiaoComponent},
     {path:'dagiao',component:DaGiaoComponent},
-    {path:'chuanbihang',component:ChuanbihangComponent},]},
+    {path:'chuanbihang',component:ChuanbihangComponent},
+    {path:'donoff',component:DonOffComponent}]},
   {path:'orderdetail/:id',component:OrderdetailComponent},
 
 
