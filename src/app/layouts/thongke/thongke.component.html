@@ -1,0 +1,75 @@
+<h5>Báo cáo doanh thu</h5>
+<hr>
+<button>Theo thời gian</button>
+<button>Theo sản phẩm</button>
+<hr>
+<div>
+  <b>Loại thời gian</b>
+  <select class="form-select" aria-label="Default select example" #selectloai (change)="loaithoigian(selectloai.value)">
+    <option selected>Chọn</option>
+    <option value="1">Theo ngày</option>
+    <option value="2">Theo tháng</option>
+
+  </select>
+  <b>Lọc tất cả</b>
+  <select class="form-select" aria-label="Default select example">
+    <option selected>Chưa làm</option>
+    <option value="1" (change)="tatca()">Tất cả</option>
+
+  </select>
+  <!-- theo ngày-->
+  <span *ngIf="loai==1">
+    <b>Ngày bắt đầu</b>
+  <input type="date" [(ngModel)]="start">
+
+     <b>Ngày kết thúc</b>
+  <input type="date" [(ngModel)]="end">
+    <button (click)="theoday()">Tìm kiếm</button>
+  </span >
+  <!-- end theo ngày-->
+
+  <!-- theo tháng-->
+  <span *ngIf="loai==2">
+    <b>Tháng bắt đầu</b>
+  <input type="month" [(ngModel)]="start">
+
+     <b>Tháng kết thúc</b>
+  <input type="month" [(ngModel)]="end">
+    <button (click)="theothang()">Tìm kiếm</button>
+  </span>
+  <!-- end theo tháng-->
+
+
+</div>
+<hr>
+<div>
+  <p>Doanh thu</p> {{tongdoanhthu}}
+</div>
+<hr>
+<div>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+              role="tab" aria-controls="nav-home" aria-selected="true">Home
+      </button>
+      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+              role="tab" aria-controls="nav-profile" aria-selected="false">Profile
+      </button>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="card p-3">
+        <b><h5>Doanh thu theo thời gian</h5></b>
+        <div class="card-body">
+          <canvas id="barchart" >
+          </canvas>
+        </div>
+      </div>
+
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+
+  </div>
+</div>
+

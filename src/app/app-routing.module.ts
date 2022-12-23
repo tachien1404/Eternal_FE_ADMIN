@@ -31,10 +31,18 @@ const routes:  Routes = [
     path:'tao-don-hang',loadChildren:()=>import('./layouts/tao-don-hang/tao-don-hang.module').then((m=>m.TaoDonHangModule))
   },
   {
-    path:'hoadoncho',loadChildren:()=>import('./layouts/hoa-don-cho/hoa-don-cho.module').then((m=>m.HoaDonChoModule))
+    path:'hoadoncho',loadChildren:()=>import('./layouts/hoa-don-cho/hoa-don-cho.module').then((m=>m.HoaDonChoModule)
+
+  },
+
+  {
+    path:'thongke',loadChildren:()=>import('./layouts/thongke/thongke.module').then((m=>m.ThongkeModule))
+
+
   },
   {
     path:'khuyenmai',loadChildren:()=>import('./layouts/khuyenmai/khuyenmai.module').then((m=>m.KhuyenmaiModule))
+
   }
 
 

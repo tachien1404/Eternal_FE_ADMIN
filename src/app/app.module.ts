@@ -21,7 +21,13 @@ import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
 import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component';
+
+import {NgChartsModule} from "ng2-charts";
+import {ThongkeComponent} from "./layouts/thongke/thongke.component";
+
+=======
 import { KhuyenmaiComponent } from './layouts/khuyenmai/khuyenmai.component';
+
 
 
 @NgModule({
@@ -36,20 +42,27 @@ import { KhuyenmaiComponent } from './layouts/khuyenmai/khuyenmai.component';
     AccountComponent,
     TaoDonHangComponent,
     HoaDonChoComponent,
+
+
+
+    ThongkeComponent,
+
+
     KhuyenmaiComponent,
+
   ],
-  imports: [
-    BrowserAnimationsModule,
-    Material_module,
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    ToastrModule.forRoot(),
-    NgbModule,
-    NgxPaginationModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        Material_module,
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule, HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ToastrModule.forRoot(),
+        NgbModule,
+        NgxPaginationModule, NgChartsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
