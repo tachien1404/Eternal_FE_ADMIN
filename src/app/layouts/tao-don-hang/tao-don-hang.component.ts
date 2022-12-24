@@ -107,7 +107,7 @@ console.log(this.customer)
     }
   }
   timkiemcus(){
-    this.service.searchName(this.namecus).subscribe(result => {
+    this.service.searchSdt(this.namecus).subscribe(result => {
       this.customer = result;
 
 
@@ -122,14 +122,14 @@ timkiemdon(){
   this.orderService.getOrderById(this.namesot).subscribe(result =>{
     this.order=result;
     console.log(this.order);
-    this.service.searchName(this.order.nameCustomer).subscribe(result =>{
+    this.service.searchSdt(this.order.sdtCustomer).subscribe(result =>{
       this.customer=result;
 
     })
   },error => {
     this.toastr.error("Đơn hàng không tồn tại");
   });
-this.service.searchName(this.order.nameCustomer).subscribe(result =>{
+this.service.searchSdt(this.order.sdtCustomer).subscribe(result =>{
   this.customer=result;
 
 })

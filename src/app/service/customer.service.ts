@@ -18,5 +18,7 @@ export class CustomerService {
   searchName(name:any){
     return this.http.get(this.api+'/searchName/'+name)//lấy theo name
   }
-
+  searchSdt(sdt:any){
+    return this.http.get(this.api+'/searchSdt/'+sdt)//lấy theo name
+  }
 }
