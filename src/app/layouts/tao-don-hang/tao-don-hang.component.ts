@@ -275,7 +275,7 @@ openthem(content:any){
     if(this.customer!=null){
       this.orderFrom.value.customer_id = this.customer.id;
     }
-
+this.orderFrom.value.status='6';
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note=this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
