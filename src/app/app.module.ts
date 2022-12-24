@@ -25,8 +25,8 @@ import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component'
 import {NgChartsModule} from "ng2-charts";
 import {ThongkeComponent} from "./layouts/thongke/thongke.component";
 
-=======
-import { KhuyenmaiComponent } from './layouts/khuyenmai/khuyenmai.component';
+
+
 
 
 
@@ -48,7 +48,7 @@ import { KhuyenmaiComponent } from './layouts/khuyenmai/khuyenmai.component';
     ThongkeComponent,
 
 
-    KhuyenmaiComponent,
+
 
   ],
     imports: [
