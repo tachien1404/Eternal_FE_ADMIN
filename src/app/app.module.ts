@@ -21,8 +21,12 @@ import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
 import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component';
+
 import {NgChartsModule} from "ng2-charts";
 import {ThongkeComponent} from "./layouts/thongke/thongke.component";
+
+=======
+import { KhuyenmaiComponent } from './layouts/khuyenmai/khuyenmai.component';
 
 
 
@@ -40,7 +44,11 @@ import {ThongkeComponent} from "./layouts/thongke/thongke.component";
     HoaDonChoComponent,
 
 
+
     ThongkeComponent,
+
+
+    KhuyenmaiComponent,
 
   ],
     imports: [
