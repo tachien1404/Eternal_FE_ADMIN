@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Chart, ChartConfiguration} from "chart.js";
 import {ReportService} from "../../service/report.service";
 import {SalesReport} from "../../@core/models/salesReport";
+import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-thongke',

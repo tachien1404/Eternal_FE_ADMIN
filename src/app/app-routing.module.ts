@@ -40,10 +40,7 @@ const routes:  Routes = [
 
 
   },
-  {
-    path:'khuyenmai',loadChildren:()=>import('./layouts/khuyenmai/khuyenmai.module').then((m=>m.KhuyenmaiModule))
 
-  }
 
 
 ]
