@@ -1,41 +1,62 @@
 <h5>Báo cáo doanh thu</h5>
 <hr>
-<button>Theo thời gian</button>
-<button>Theo sản phẩm</button>
+<button class="btn" style="border: solid 1px gray;">Theo thời gian</button>
+<button class="btn ms-3" style="border: solid 1px gray;">Theo sản phẩm</button>
 <hr>
 <div>
-  <b>Loại thời gian</b>
-  <select class="form-select" aria-label="Default select example" #selectloai (change)="loaithoigian(selectloai.value)">
-    <option selected>Chọn</option>
-    <option value="1">Theo ngày</option>
-    <option value="2">Theo tháng</option>
-
-  </select>
-  <b>Lọc tất cả</b>
-  <select class="form-select" aria-label="Default select example">
-    <option selected>Chưa làm</option>
-    <option value="1" (change)="tatca()">Tất cả</option>
-
-  </select>
+  <div class="row">
+    <div class="col-6">
+      <b>Loại thời gian</b>
+      <select class="form-select" aria-label="Default select example" #selectloai
+        (change)="loaithoigian(selectloai.value)">
+        <option selected>Chọn</option>
+        <option value="1">Theo ngày</option>
+        <option value="2">Theo tháng</option>
+      </select>
+    </div>
+    <div class="col-6">
+      <b>Lọc tất cả</b>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Chưa làm</option>
+        <option value="1" (change)="tatca()">Tất cả</option>
+      </select>
+    </div>
+  </div>
   <!-- theo ngày-->
   <span *ngIf="loai==1">
-    <b>Ngày bắt đầu</b>
-  <input type="date" [(ngModel)]="start">
+    <div class="row mt-3">
+      <div class="col-3">
+        <b>Ngày bắt đầu</b>
+        <input class="ms-2" type="date" [(ngModel)]="start">
+      </div>
 
-     <b>Ngày kết thúc</b>
-  <input type="date" [(ngModel)]="end">
-    <button (click)="theoday()">Tìm kiếm</button>
-  </span >
+      <div class="col-3">
+        <b>Ngày kết thúc</b>
+        <input class="ms-2" type="date" [(ngModel)]="end">
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-success mt-3" (click)="theoday()">Tìm kiếm</button>
+    </div>
+  </span>
   <!-- end theo ngày-->
 
   <!-- theo tháng-->
   <span *ngIf="loai==2">
-    <b>Tháng bắt đầu</b>
-  <input type="month" [(ngModel)]="start">
+    <div class="row mt-3">
+      <div class="col-3">
+        <b>Tháng bắt đầu</b>
+        <input class="ms-2" type="month" [(ngModel)]="start">
+      </div>
 
-     <b>Tháng kết thúc</b>
-  <input type="month" [(ngModel)]="end">
-    <button (click)="theothang()">Tìm kiếm</button>
+      <div class="col-3">
+        <b>Tháng kết thúc</b>
+        <input class="ms-2" type="month" [(ngModel)]="end">
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-success mt-3" (click)="theothang()">Tìm kiếm</button>
+    </div>
   </span>
   <!-- end theo tháng-->
 
@@ -50,19 +71,21 @@
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-              role="tab" aria-controls="nav-home" aria-selected="true">Home
+        role="tab" aria-controls="nav-home" aria-selected="true">Home
       </button>
       <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
-              role="tab" aria-controls="nav-profile" aria-selected="false">Profile
+        role="tab" aria-controls="nav-profile" aria-selected="false">Profile
       </button>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <div class="card p-3">
-        <b><h5>Doanh thu theo thời gian</h5></b>
+        <b>
+          <h5>Doanh thu theo thời gian</h5>
+        </b>
         <div class="card-body">
-          <canvas id="barchart" >
+          <canvas id="barchart">
           </canvas>
         </div>
       </div>
@@ -72,4 +95,3 @@
 
   </div>
 </div>
-
