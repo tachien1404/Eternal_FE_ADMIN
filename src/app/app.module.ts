@@ -27,6 +27,7 @@ import {ThongkeComponent} from "./layouts/thongke/thongke.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {CookieModule} from "ngx-cookie";
 import { SideBarComponent } from './layouts/side-bar/side-bar.component';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
 
 
 
@@ -45,6 +46,7 @@ import { SideBarComponent } from './layouts/side-bar/side-bar.component';
     ThongkeComponent,
     LoginComponent,
     SideBarComponent,
+    NavbarComponent,
   ],
     imports: [
         BrowserAnimationsModule,
