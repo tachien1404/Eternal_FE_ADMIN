@@ -26,6 +26,7 @@ import {NgChartsModule} from "ng2-charts";
 import {ThongkeComponent} from "./layouts/thongke/thongke.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {CookieModule} from "ngx-cookie";
+import { SideBarComponent } from './layouts/side-bar/side-bar.component';
 
 
 
@@ -43,6 +44,7 @@ import {CookieModule} from "ngx-cookie";
     HoaDonChoComponent,
     ThongkeComponent,
     LoginComponent,
+    SideBarComponent,
   ],
     imports: [
         BrowserAnimationsModule,
