@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../../../@core/services/Token-storage.service';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderService} from "../../../service/order.service";
@@ -19,7 +20,8 @@ export class OrderdetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: OrderService,
-    private toastr: ToastrService,private router: Router,private exportService :ExportService) {
+    private toastr: ToastrService,private router: Router,private exportService :ExportService,
+    private tokenService: TokenStorageService,) {
     this.Orderid = this.route.snapshot.paramMap.get('id');
     console.log(this.Orderid)
     if (this.Orderid != null && this.Orderid >= 0) {
@@ -29,6 +31,11 @@ export class OrderdetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+  logout(){
+    this.tokenService.logout();
+    this.toastr.success("Đã đăng xuất")
+    this.router.navigate(['/login']);
   }
   delete(id:any){
     //xóa đơn chi tiết

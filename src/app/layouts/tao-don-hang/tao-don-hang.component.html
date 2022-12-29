@@ -1,22 +1,23 @@
+<app-navbar></app-navbar>
 <app-side-bar></app-side-bar>
 <span *ngIf="order==null">
-  <div>
+  <div style="margin-left: 295px;">
     <button (click)="taodonhang()">Tạo đơn hàng</button>
   </div>
 </span>
 <span *ngIf="order==null">
-  <div style="margin-top: 20px">
+  <div style="margin-top: 20px;margin-left: 295px;">
     <input type="text"placeholder="Mã đơn hàng"  [(ngModel)]="namesot">
     <button (click)="timkiemdon()">Tìm kiếm</button>
   </div>
 </span>
 <span *ngIf="order!=null">
-<div>
+<div style="margin-left: 295px;">
   <h3>Thông tin đơn hàng</h3><br>
   <h5>Vui lòng cung cấp thông tin về đơn hàng sẽ tạo</h5>
 </div>
 
-<div class="row" style="margin: 20px">
+<div class="row" style="margin: 20px;"style="margin-left: 270px;">
   <div class="col-7">
     <div class="card p-4 ">
 
@@ -137,7 +138,7 @@
 
 </span>
 
-<ng-template #content>
+<ng-template #content style="margin-left: 270px;">
   <div class=" p-5">
     <h5>Tạo khách hàng</h5>
     <hr>
@@ -170,7 +171,7 @@
 
   </div>
 </ng-template>
-<div style="width: 80%;">
+<div style="width: 80%;"style="margin-left: 270px;">
   <ng-template #product>
     <div class="input-group mt-3">
       <div class="form-outline">
