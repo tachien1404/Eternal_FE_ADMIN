@@ -9,7 +9,7 @@ import { DaGiaoComponent } from './da-giao/da-giao.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {Material_module} from "../../../material_module";
 
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "ngx-pagination";
 import {OrderdetailComponent} from "./orderdetail/orderdetail.component";
 import { ChuanbihangComponent } from './chuanbihang/chuanbihang.component';
@@ -33,7 +33,8 @@ DonOffComponent
 
         Material_module,
         ReactiveFormsModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        FormsModule
     ]
 })
 export class OrderModule{}
