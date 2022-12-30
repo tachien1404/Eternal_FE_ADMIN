@@ -12,24 +12,30 @@ import {ChuanbihangComponent} from "./chuanbihang/chuanbihang.component";
 import {DonOffComponent} from "./don-off/don-off.component";
 
 
+const routes: Routes = [{
+  path: '', component: OrderComponent, children: [
+    {path: 'tatca', component: TatcaComponent},
+    {path: 'choxacnhan', component: ChoxacnhanComponent},
+    {path: 'dahuy', component: DahuyComponent},
+    {path: 'danggiao', component: DanggiaoComponent},
+    {path: 'dagiao', component: DaGiaoComponent},
+    {path: 'chuanbihang', component: ChuanbihangComponent},
+    {path: 'donoff', component: DonOffComponent},
 
-const routes:Routes=[{path:'',component:OrderComponent,children:[
-    {path:'tatca',component:TatcaComponent},
-    {path:'choxacnhan',component:ChoxacnhanComponent},
-    {path:'dahuy',component:DahuyComponent},
-    {path:'danggiao',component:DanggiaoComponent},
-    {path:'dagiao',component:DaGiaoComponent},
-    {path:'chuanbihang',component:ChuanbihangComponent},
-    {path:'donoff',component:DonOffComponent}]},
-  {path:'orderdetail/:id',component:OrderdetailComponent},
+  ]
+
+}
+, {path: 'orderdetail/:id', component: OrderdetailComponent},
+
 
 
 ];
 
 @NgModule({
-imports :[RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)],
 
 
-  exports :[RouterModule]
+  exports: [RouterModule]
 })
-export class OrderRouting{}
+export class OrderRouting {
+}
