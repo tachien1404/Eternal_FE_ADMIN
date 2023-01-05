@@ -3,9 +3,11 @@ export interface ProductDTO {
   name?: string;
   inportprice?: number;
   outputprice?: number,
-  // status?:number;
+  status?:number;
   category?:Category;
   hang?:Brand;
+  sole?:Sole;
+  shoeLine?:ShoeLine;
   sortByValues?:SortByValue[]
 
 }
@@ -16,6 +18,15 @@ export interface Category {
 }
 
 export interface Brand{
+  id?:number;
+  name?: string;
+}
+export interface Sole {
+  id?:number;
+  name?: string;
+}
+
+export interface ShoeLine {
   id?:number;
   name?: string;
 }
