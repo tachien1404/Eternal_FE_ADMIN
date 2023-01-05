@@ -36,6 +36,14 @@ export class ProductService{
     return this.http.get<any>(`${environment.apiUrl}public/products/getAllBrand`);
   }
 
+  public getAllSole():Observable<any>{
+    return this.http.get<any>(`${environment.apiUrl}public/products/getAllSole`);
+  }
+
+  public getAllShoeLine():Observable<any>{
+    return this.http.get<any>(`${environment.apiUrl}public/products/getAllShoeLine`);
+  }
+
   public create(product: Product): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}public/products`, product);
   }
