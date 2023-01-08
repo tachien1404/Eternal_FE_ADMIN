@@ -16,59 +16,80 @@ export class TatcaComponent implements OnInit {
   orderdata: any;
   dataSource: any;
   Orderdata: any;
- statusName:any;
+  statusName: any;
   p: number = 1;
+  status: any;
 
   constructor(
     private service: OrderService,
     private toastr: ToastrService,
     private modalService: NgbModal
   ) {
-    this.loadAll();
+
 
   }
 
   ngOnInit(): void {
+    this.loadAll(this.status);
   }
 
   Input = new FormGroup(
     {
       pageIndex: new FormControl('1'),
       pageSize: new FormControl('1000'),
-      keyword: new FormControl('', Validators.required)
+      keyword: new FormControl('', Validators.required),
+      status: new FormControl('')
     }
   )
 
-  loadAll() {
+  loadAll(status: any) {
     if (this.Input.valid) {
-      this.service.getByPage(this.Input.value).subscribe(result => {
-        this.orderdata = result;
-        console.log(this.orderdata)
+      if (status != 100) {
+        this.Input.value.status = status;
+        this.service.getByPage(this.Input.value).subscribe(result => {
+          this.orderdata = result;
+        })
+      }else{
+        this.service.getByPage(this.Input.value).subscribe(result => {
+          this.orderdata = result;
+        })
+      }
 
-      })
     } else {
+      if (status != 100) {
+        this.Input = new FormGroup({
+          pageIndex: new FormControl('1'),
+          pageSize: new FormControl('1000'),
+          keyword: new FormControl(),
+          status: new FormControl()
+        });
+        this.Input.value.status = status;
+        this.service.getByPage(this.Input.value).subscribe(result => {
+          this.orderdata = result;
+        })
+      }else{
+        this.Input = new FormGroup({
+          pageIndex: new FormControl('1'),
+          pageSize: new FormControl('1000'),
+          keyword: new FormControl(),
+          status: new FormControl()
+        });
 
-      this.Input = new FormGroup({
-        pageIndex: new FormControl('1'),
-        pageSize: new FormControl('1000'),
-        keyword: new FormControl()
-      });
-      this.service.getByPage(this.Input.value).subscribe(result => {
-        this.orderdata = result;
-        console.log(this.orderdata)
+        this.service.getByPage(this.Input.value).subscribe(result => {
+          this.orderdata = result;
+        })
+      }
 
-      })
     }
 
   };
 
 
-
-  openLg(content: any,id:any,status:any) {
+  openLg(content: any, id: any, status: any) {
 
     this.service.getOrderId(id).subscribe(result => {
       this.Orderdata = result;
-      this.statusName=status
+      this.statusName = status
       console.log(this.Orderdata)
     })
     this.modalService.open(content, {

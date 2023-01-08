@@ -51,7 +51,7 @@ export class ProductService{
   public update(id:any,product: Product): Observable<any> {
     return this.http.put<any>(`${environment.apiUrl}public/products/`+id, product);
   }
-public serchName(name:String):Observable<any>{
-    return this.http.get<any>(`${this.productAPI}public/products/serchName/`+name);
+public serchName(input:any):Observable<any>{
+    return this.http.post<any>(`${this.productAPI}public/products/serchName`,input);
 }
 }

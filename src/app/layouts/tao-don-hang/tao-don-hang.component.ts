@@ -9,6 +9,7 @@ import {SCDetailsService} from "../../@core/services/s-c.-details.service";
 import {OrderService} from "../../service/order.service";
 import {OrderDeteo} from "../../@core/models/OrderDeteo.";
 import {combineLatestAll} from "rxjs";
+import {Cart} from "../../@core/models/cart";
 
 @Component({
   selector: 'app-tao-don-hang',
@@ -22,21 +23,23 @@ export class TaoDonHangComponent implements OnInit {
   quantity: any = 1;//số lượng tsp
   price: any;//giá
   note: any;
-  khachdua:any=0;
-  giamgia: any=0;
+  khachdua: any = 0;
+  giamgia: any = 0;
   tongthu: any;
-  valuekenh: any;
+  valuekenh: any=1;
   valuesize: any;
   valuecolor: any;
   size: any;
   mau: any;
   order: any;
   namesot: any;
-  namecus:any;
+  namecus: any;
   litproduct: any;
   message!: String;
   orderdeteo: any;
-  litorderdeteo: any;
+  litorderdeteo:any;
+  listhoadoncho: any;
+  p: number = 1;
 
   constructor(private saimauService: SCDetailsService, private orderService: OrderService,
               private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
@@ -67,9 +70,12 @@ export class TaoDonHangComponent implements OnInit {
     price: new FormControl(''),
     quantity: new FormControl('1')
   })
+  productFrom = new FormGroup({
+    name: new FormControl(''),
+  })
 
   ngOnInit(): void {
-
+    this.getAll();
   }
 
   sumquantitygia() {
@@ -85,19 +91,22 @@ export class TaoDonHangComponent implements OnInit {
     this.orderdetail.detail_id = id;
     this.orderdetail.quantity = quantity;
     this.orderService.savedeteo(this.orderdetail).subscribe(result => {
-      this.orderdeteo
-        = result;
+
       this.getByOrderId();
       this.sumquantitygia()
     })
 
   }
-
+back(){
+    this.order=null;
+  this.namesot="";
+  this.getAll();
+}
   savecustomer() {
     if (this.customerFrom.valid) {
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
-console.log(this.customer)
+        console.log(this.customer)
         this.toastr.success("Thêm mới thành công");
         this.modalService.dismissAll();
 
@@ -106,34 +115,39 @@ console.log(this.customer)
       })
     }
   }
-  timkiemcus(){
+
+  timkiemcus() {
     this.service.searchSdt(this.namecus).subscribe(result => {
       this.customer = result;
 
 
+    }, error => {
+      this.toastr.success("Không có thông tin kahch hàng");
     });
   }
-timkiemdon(){
-  this.orderService.getByOrderId(this.namesot).subscribe(result => {
-    this.litorderdeteo = result;
 
-    console.log(this.litorderdeteo)
-  });
-  this.orderService.getOrderById(this.namesot).subscribe(result =>{
-    this.order=result;
-    console.log(this.order);
-    this.service.searchSdt(this.order.sdtCustomer).subscribe(result =>{
-      this.customer=result;
+  timkiemdon() {
+    this.orderService.getByOrderId(this.namesot).subscribe(result => {
+      this.litorderdeteo = result;
+    });
+
+    this.orderService.getOrderById(this.namesot).subscribe(result => {
+      this.order = result;
+      console.log(this.order);
+      this.service.searchSdt(this.order.sdtCustomer).subscribe(result => {
+        this.customer = result;
+
+      })
+    }, error => {
+      this.toastr.error("Đơn hàng không tồn tại");
+    });
+    this.service.searchSdt(this.order.sdtCustomer).subscribe(result => {
+      this.customer = result;
 
     })
-  },error => {
-    this.toastr.error("Đơn hàng không tồn tại");
-  });
-this.service.searchSdt(this.order.sdtCustomer).subscribe(result =>{
-  this.customer=result;
 
-})
-}
+  }
+
   delete(id: any) {
     //xóa đơn chi tiết
     console.log(id)
@@ -183,23 +197,25 @@ this.service.searchSdt(this.order.sdtCustomer).subscribe(result =>{
     })
 
   }
-openthem(content:any){
-  this.modalService.open(content, {
-    size: 'lg', centered: true, scrollable: true,
-  });
-}
-  openedit(content: any,id:any) {
+
+  openthem(content: any) {
     this.modalService.open(content, {
       size: 'lg', centered: true, scrollable: true,
     });
-    if(id!=null){
-      this.service.getById(id).subscribe(result =>{
-        this.customer=result;
+  }
+
+  openedit(content: any, id: any) {
+    this.modalService.open(content, {
+      size: 'lg', centered: true, scrollable: true,
+    });
+    if (id != null) {
+      this.service.getById(id).subscribe(result => {
+        this.customer = result;
       });
-      this.customerFrom.value.address=this.customer.address;
-      this.customerFrom.value.sdt=this.customer.sdt;
-      this.customerFrom.value.email=this.customer.email;
-      this.customerFrom.value.name=this.customer.name;
+      this.customerFrom.value.address = this.customer.address;
+      this.customerFrom.value.sdt = this.customer.sdt;
+      this.customerFrom.value.email = this.customer.email;
+      this.customerFrom.value.name = this.customer.name;
     }
   }
 
@@ -215,78 +231,94 @@ openthem(content:any){
   getAllmau() {
     this.saimauService.getAllColor().subscribe(result => {
       this.mau = result;
-      console.log(this.mau);
+
     })
   }
 
   getByOrderId() {
     this.orderService.getByOrderId(this.order.id).subscribe(result => {
       this.litorderdeteo = result;
-      console.log(this.litorderdeteo)
     })
   }
 
   getAllsize() {
     this.saimauService.getAllSize().subscribe(result => {
       this.size = result;
-      console.log(this.size);
+
     })
   }
 
   serchNameProduct() {
-    if (this.namesot != null) {
-      this.productService.serchName(this.namesot).subscribe(result => {
-        this.litproduct = result;
-        console.log(this.litproduct);
-      })
-    }
-    console.log(this.namesot)
+this.productFrom.value.name=this.namesot
+    this.productService.serchName(this.productFrom.value).subscribe(result => {
+      this.litproduct = result;
+      console.log(this.namesot);
+    })
+
+
   }
 
   taodonhang() {
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
-      console.log(this.order)
+      this.namesot = '';
     })
   }
 
   enddonhang() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-    this.orderFrom.value.status = '7';
-    if(this.customer!=null){
+    this.orderFrom.value.status = '3';
+    if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
 
     this.orderFrom.value.price = this.tongthu;
-    this.orderFrom.value.note=this.note;
+    this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
       console.log(this.order)
-    },error => {
+    }, error => {
       this.toastr.success("eroooo");
     })
   }
+
   enddonnhap() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
 
-    if(this.customer!=null){
+    if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-this.orderFrom.value.status='6';
+    this.orderFrom.value.status = '6';
     this.orderFrom.value.price = this.tongthu;
-    this.orderFrom.value.note=this.note;
+    this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
       console.log(this.order)
-    },error => {
+    }, error => {
       this.toastr.success("eroooo");
     })
   }
 
+  getAll() {
+    this.orderService.getBy6().subscribe(result => {
+      this.listhoadoncho = result;
+
+    })
+  }
+
+  deletehoadoncho(id: any) {
+    this.orderService.deleteorder(id).subscribe(result => {
+
+      this.toastr.success("Xóa thành công");
+      this.getAll();
+    }, error => {
+      this.toastr.error("Xóa thất bại");
+    })
+  }
 
   get email() {
     return this.customerFrom.get('email');

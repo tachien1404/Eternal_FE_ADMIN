@@ -7,17 +7,57 @@
 </span>
 <span *ngIf="order==null">
   <div style="margin-top: 20px;margin-left: 295px;">
-    <input type="text"placeholder="Mã đơn hàng"  [(ngModel)]="namesot">
+    <input type="text" placeholder="Mã đơn hàng" [(ngModel)]="namesot">
     <button (click)="timkiemdon()">Tìm kiếm</button>
   </div>
 </span>
+
+<!--hoadoncho-->
+<span *ngIf="order==null">
+  <table class="table table-hover table-responsive" style="margin-left: 270px;">
+  <thead>
+  <tr>
+    <th scope="col">Stt</th>
+    <th scope="col">Mã đơn hàng</th>
+    <th scope="col">Tên khách hàng</th>
+    <th scope="col">Ngày tạo</th>
+    <th scope="col">Trạng thái</th>
+    <th scope="col">Ghi chú</th>
+    <th scope="col">Thao tác</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of listhoadoncho | paginate: { itemsPerPage: 10, currentPage: p }">
+    <th scope="row">1</th>
+    <td>{{item.id}}</td>
+    <td>{{item.nameCustomer}}</td>
+    <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>
+    <td>{{item.statusName}}</td>
+    <td>{{item.note}}</td>
+    <td>
+      <button (click)="deletehoadoncho(item.id)">xóa</button>
+      <button>Sửa</button>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+<div style="margin-bottom: 100px;float: right;">
+  <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
+</div></span>
 <span *ngIf="order!=null">
-<div style="margin-left: 295px;">
-  <h3>Thông tin đơn hàng</h3><br>
+<div class="row" style="margin-left: 295px;">
+ <div class="col-8">
+    <h3>Thông tin đơn hàng</h3><br>
   <h5>Vui lòng cung cấp thông tin về đơn hàng sẽ tạo</h5>
+ </div>
+  <div class="col-4">
+    <button class="btn btn-success" (click)="back()">Tạo đơn hàng</button>
+  </div>
 </div>
 
-<div class="row" style="margin: 20px;"style="margin-left: 270px;">
+  <!--thêm sản phẩm-->
+<div class="row" style="margin: 20px;" style="margin-left: 270px;">
   <div class="col-7">
     <div class="card p-4 ">
 
@@ -39,12 +79,13 @@
             <div class="row p-3">
               <label class="col-4">{{item.productName}} {{item.brand_name}} {{item.namecolor}}</label>
               <label class="col-2">Size:{{item.valuesize}}</label>
-              <label class="col-2" [(ngModel)]="price">Giá:{{item.price}}</label>
-              <input class="col-2" style="height: 20px;width: 70px;" type="number"#selectquantity (change)="changeQuantity(selectquantity.value,item.detail_id)" value="{{item.quantity}}">
+              <label class="col-2">Giá:{{item.price| currency :'VND' }}</label>
+              <input class="col-2" style="height: 20px;width: 70px;" type="number" #selectquantity
+                     (change)="changeQuantity(selectquantity.value,item.detail_id)" value="{{item.quantity}}">
             </div>
             <div class="row p-3">
               <label class="col-4">Loại:{{item.category_name}}</label>
-              <label class="col-4">Tổng tiền:{{item.quantity*item.price}} đ</label>
+              <label class="col-4">Tổng tiền:{{item.quantity * item.price| currency :'VND' }} </label>
             </div>
             <div class="row" style="margin-left: 450px;">
               <button class="btn btn-danger" style="width: 100px;" (click)="delete(item.detail_id)">Hủy</button>
@@ -71,11 +112,11 @@
         </div>
         <div class="col-1">
           <label>{{orderdeteogiaquantity.quantity}}</label><br>
-          <label>{{orderdeteogiaquantity.price}}</label><br>
-          <input [(ngModel)]="giamgia" style="width: 40px;" type="text" ><br>
-          <label >{{tongthu-giamgia}}</label><br>
-          <input  [(ngModel)]="khachdua" style="width: 40px;" type="text" ><br>
-           <label>{{khachdua-tongthu-giamgia}}</label><br>
+          <label>{{orderdeteogiaquantity.price| currency :'VND' }}</label><br>
+          <input [(ngModel)]="giamgia" style="width: 40px;" type="text"><br>
+          <label>{{tongthu - giamgia| currency :'VND' }}</label><br>
+          <input [(ngModel)]="khachdua" style="width: 40px;" type="text"><br>
+           <label>{{khachdua - tongthu - giamgia| currency :'VND' }}</label><br>
         </div>
         <hr>
 
@@ -83,7 +124,7 @@
           <button class="btn btn-success" (click)="enddonhang()">
             Thanh toán
           </button>
-          <button class="btn btn-primary ms-3" (click)="enddonnhap()">Lưu nháp</button>
+          <!--          <button class="btn btn-primary ms-3" (click)="enddonnhap()">Lưu nháp</button>-->
         </div>
       </div>
 
@@ -94,10 +135,11 @@
     <div class="card p-4">
       <h5>Kênh bán hàng</h5>
       <hr>
-      <select class="form-select " aria-label="Default select example"#selectKenh (change)="laykenh (selectKenh.value)" >
+      <select class="form-select " aria-label="Default select example" #selectKenh
+              (change)="laykenh (selectKenh.value)">
         <option value="0">Website</option>
          <option selected>Mời chọn</option>
-        <option  value="1">Tại quầy</option>
+        <option value="1">Tại quầy</option>
         <option value="2">Page</option>
       </select>
     </div>
@@ -171,7 +213,7 @@
 
   </div>
 </ng-template>
-<div style="width: 80%;"style="margin-left: 270px;">
+<div style="width: 80%;" style="margin-left: 270px;">
   <ng-template #product>
     <div class="input-group mt-3">
       <div class="form-outline">
@@ -200,7 +242,7 @@
         <th><img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
                  width="120px" height="100"></th>
         <th>{{item.name}}</th>
-        <th style="padding-left: 25px;">{{item.outputprice}}</th>
+        <th style="padding-left: 25px;">{{item.outputprice| currency :'VND' }}</th>
         <th>
           <select #selectColor (change)="laycolor(selectColor.value)" class="form-select "
                   aria-label="Default select example">
