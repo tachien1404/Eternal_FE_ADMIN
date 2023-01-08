@@ -15,6 +15,10 @@ const routes:  Routes = [
   {
     path:'product', loadChildren: () => import('./pages/product/product.module').then(m => m.ProductModule),
     canActivate:[AuthGuard]
+  },
+  {
+    path:'configProduct', loadChildren: () => import('./pages/config-product/configProduct.module').then(m => m.ConfigProductModule),
+    canActivate:[AuthGuard]
   }
   ,{
     path :'category',loadChildren:()=> import('./pages/category/add-cate/cate.module').then((m =>m.CateModule)),

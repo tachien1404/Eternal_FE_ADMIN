@@ -6,10 +6,11 @@ export interface Product {
   outputprice?: number,
   updatedate?:Date,
   photo?: string,
-  // status?:number;
+  status?:number;
   category?:Category;
   hang?:Brand;
-
+  sole?:Sole;
+  shoeLine?:ShoeLine;
 }
 
 export interface Category {
@@ -21,3 +22,15 @@ export interface Brand{
   id?:number;
   name?: string;
 }
+
+export interface Sole {
+  id?:number;
+  name?: string;
+}
+
+export interface ShoeLine {
+  id?:number;
+  name?: string;
+}
+
+

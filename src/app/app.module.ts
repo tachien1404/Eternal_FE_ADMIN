@@ -28,6 +28,7 @@ import {LoginComponent} from "./pages/login/login.component";
 import {CookieModule} from "ngx-cookie";
 import { SideBarComponent } from './layouts/side-bar/side-bar.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { ConfigProductComponent } from './pages/config-product/config-product.component';
 
 
 
@@ -47,6 +48,7 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
     LoginComponent,
     SideBarComponent,
     NavbarComponent,
+    ConfigProductComponent,
   ],
     imports: [
         BrowserAnimationsModule,

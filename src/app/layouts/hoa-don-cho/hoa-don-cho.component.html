@@ -1,33 +1,35 @@
 <app-navbar></app-navbar>
 <app-side-bar></app-side-bar>
-<table class="table table-hover" style="margin-left: 270px;">
-  <thead>
-  <tr>
-    <th scope="col">Stt</th>
-    <th scope="col">Mã đơn hàng</th>
-    <th scope="col">Tên khách hàng</th>
-    <th scope="col">Ngày tạo</th>
-    <th scope="col">Trạng thái</th>
-    <th scope="col">Ghi chú</th>
-    <th scope="col">Thao tác</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let item of Order | paginate: { itemsPerPage: 10, currentPage: p }">
-    <th scope="row">1</th>
-    <td>{{item.id}}</td>
-    <td>{{item.nameCustomer}}</td>
-    <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>
-    <td>{{item.statusName}}</td>
-    <td>{{item.note}}</td>
-    <td>
-      <button (click)="delete(item.id)">xóa</button>
-      <button>Sửa</button>
-    </td>
-  </tr>
+<div  style="margin-left: 270px;overflow-x: hidden;">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Stt</th>
+      <th scope="col">Mã đơn hàng</th>
+      <th scope="col">Tên khách hàng</th>
+      <th scope="col">Ngày tạo</th>
+      <th scope="col">Trạng thái</th>
+      <th scope="col">Ghi chú</th>
+      <th scope="col">Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of Order | paginate: { itemsPerPage: 10, currentPage: p }">
+      <th scope="row">1</th>
+      <td>{{item.id}}</td>
+      <td>{{item.nameCustomer}}</td>
+      <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>
+      <td>{{item.statusName}}</td>
+      <td>{{item.note}}</td>
+      <td>
+        <button (click)="delete(item.id)">xóa</button>
+        <button>Sửa</button>
+      </td>
+    </tr>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 <div style="margin-bottom: 100px;float: right;">
   <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
 </div>
