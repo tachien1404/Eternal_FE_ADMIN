@@ -3,11 +3,12 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderService} from "../../../service/order.service";
 import {ToastrService} from "ngx-toastr";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ExportService} from "../../../service/export.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OrderTimeline} from "../../../@core/models/OrderTimeline";
 import {OrdertimlineService} from "../../../service/ordertimline.service";
+import {CustomerinfoService} from "../../../service/customerinfo.service";
 
 @Component({
   selector: 'app-orderdetail',
@@ -21,10 +22,14 @@ export class OrderdetailComponent implements OnInit {
   status: any;
   username: any;
   type: any;
-  description?:String;
+  description?: String;
   ordertimeline: OrderTimeline = {};
-listordertimeline:any;
+  listordertimeline: any;
+sdt4:any;
+name4:any;
+diachi4:any;
   constructor(private modalService: NgbModal,
+              private cus4: CustomerinfoService,
               private ordertimelineservice: OrdertimlineService,
               private tokenservice: TokenStorageService,
               private route: ActivatedRoute,
@@ -41,6 +46,13 @@ listordertimeline:any;
 
   ngOnInit(): void {
   }
+
+  customerinfoFrom = new FormGroup({
+    name: new FormControl('', Validators.required),
+    id: new FormControl('', Validators.required),
+    sdt: new FormControl('', Validators.required),
+    address: new FormControl('')
+  })
 
   logout() {
     this.tokenService.logout();
@@ -62,7 +74,7 @@ listordertimeline:any;
   }
 
   getByOrderId(id: any) {//lấy ra chi tiết đơn
-    this.service.getOrderId(id).subscribe(result => {
+    this.service.getByOrderId(id).subscribe(result => {
       this.orderdetail = result;
 
       console.log(this.orderdetail)
@@ -134,8 +146,7 @@ listordertimeline:any;
         this.ordertimeline.type = this.type;
 
         this.ordertimeline.description = this.description;
-        console.log(this.description)
-        console.log(this.ordertimeline)
+
         this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
           this.ordertimeline = result;
           console.log(this.ordertimeline)
@@ -164,6 +175,43 @@ listordertimeline:any;
     }
   }
 
+  editcustomerinfo(id: any) {
+    this.customerinfoFrom.value.id = id;
+    this.customerinfoFrom.value.name=this.name4;
+    this.customerinfoFrom.value.sdt=this.sdt4;
+    this.customerinfoFrom.value.address=this.diachi4;
+    this.username = this.tokenservice.getUser();
+    this.ordertimeline.account_name = this.username;
+    this.ordertimeline.order_id = this.order.id;
+    this.cus4.edit(this.customerinfoFrom.value).subscribe(result => {
+      this.type = 'Sửa thông tin đơn hàng';
+      this.ordertimeline.type = this.type;
+
+      this.ordertimeline.description = 'Sửa thông tin giao hàng';
+
+      this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+        this.ordertimeline = result;
+        console.log(this.ordertimeline)
+      })
+      this.Orderid = this.route.snapshot.paramMap.get('id');
+      this.getOrderById(this.Orderid);
+      this.toastr.success("Thay đổi thành công")
+      this.modalService.dismissAll();
+    })
+  }
+
+  opencustomerinfo(content: any) {
+    this.diachi4=this.order.addressinfo;
+    this.name4=this.order.nameinfo;
+    this.sdt4=this.order.sdtinfo;
+    this.modalService.open(content, {
+        size: 'lg', centered: true, scrollable: true,
+
+
+      }
+    );
+  }
+
   openmadal(content: any, status: any) {
     this.status = status;
     this.modalService.open(content, {
@@ -174,12 +222,13 @@ listordertimeline:any;
     );
 
   }
-  openmodaltimeline(timeline:any){
+
+  openmodaltimeline(timeline: any) {
     this.username = this.tokenservice.getUser();
     this.ordertimeline.account_name = this.username;
     this.ordertimeline.order_id = this.order.id;
-    this.ordertimelineservice.getby(this.ordertimeline).subscribe(data=>{
-      this.listordertimeline=data;
+    this.ordertimelineservice.getby(this.ordertimeline).subscribe(data => {
+      this.listordertimeline = data;
     })
     this.modalService.open(timeline, {
         size: 'xl', centered: true, scrollable: true,
@@ -187,5 +236,17 @@ listordertimeline:any;
 
       }
     );
+  }
+
+  get sdt() {
+    return this.customerinfoFrom.get('sdt');
+  }
+
+  get address() {
+    return this.customerinfoFrom.get('address');
+  }
+
+  get name() {
+    return this.customerinfoFrom.get('name');
   }
 }

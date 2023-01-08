@@ -17,7 +17,7 @@
           <input formControlName="keyword" type="text" class="col-4  m-3" placeholder="Tên khách hàng"
             aria-describedby="basic-addon1" style="border-radius: 10px; height: 40px; border: solid 1px gray;">
           <div class="col-2" style="margin-top: 18px;">
-            <button class=" btn btn-success " (click)="loadAll()">Tìm kiếm</button>
+            <button class=" btn btn-success " (click)="loadAll('100')">Tìm kiếm</button>
           </div>
         </div>
       </form>
@@ -46,12 +46,12 @@
           <tr *ngFor="let item of orderdata.content | paginate: { itemsPerPage: 10, currentPage: p }">
 
             <td>{{item.id}}</td>
-            <td>{{item.name_acount}}<br>
-              ( {{item.sdt}})
+            <td>{{item.nameinfo}}<br>
+              ( {{item.sdtinfo}})
             </td>
             <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>
             <td>{{item.price}}</td>
-            <th>{{item.address}}</th>
+            <th>{{item.addressinfo}}</th>
             <th><a class="btn-dark "
                 style="border-radius: 5px; padding: 10px; font-size: 12px; color: white;background-color:cadetblue; ">Đang
                 phát triển</a></th>

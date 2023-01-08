@@ -215,9 +215,12 @@
               <label>Số điện thoại</label><br>
               <label><b>{{order.sdtinfo}}</b></label>
             </div>
-            <div class="col-6">
+            <div class="col-5">
               <label>Tên người nhận</label><br>
               <label><b>{{order.nameinfo}}</b></label>
+            </div>
+            <div class="col-1">
+              <button (click)="opencustomerinfo(customerinfo)">sửa</button>
             </div>
           </div>
         </div>
@@ -249,10 +252,10 @@
         <img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
           width="60px" height="80">
       </div>
-      <label class="col-2 mt-4"><b>{{item.productName}}</b> </label>
+      <label class="col-2 mt-4"><b>{{item.productName}} {{item.brand_name}} {{item.namecolor}}</b> </label>
 
-      <label class="col-1 mt-4">x{{item.quantity}}</label>
-      <label  class="col-1 mt-4"><b>{{item.price}}</b></label>
+      <label class="col-1 mt-4">x{{item.quantity}},Size:{{item.valuesize}}</label>
+      <label  class="col-1 mt-4"><b>{{item.price| currency :'VND'}}</b></label>
       <label class="col-2 mt-4"><b>{{item.statusName}}</b></label>
       <label class="col-2 mt-4">Đơn vị vận chuyển nhanh</label>
       <div class="col-1 mt-4">
@@ -269,7 +272,7 @@
   <ng-template #content>
     <div>
       <h4>Xác nhận</h4>
-      <label for="" style="display: block;">Ghi chú:</label>
+      <label  style="display: block;">Ghi chú:</label>
       <textarea [(ngModel)]="description">
 
       </textarea>
@@ -305,5 +308,31 @@
 
 </div>
 </div>
+<!--modale customerinfo-->
+  <ng-template #customerinfo>
+    <div>
+      <h5>Thông tin giao hàng</h5>
+      <hr>
 
+        <div class="row ">
+          <div class="form-group col-5">
+            <label for="inputten">Họ và tên</label>
+            <input class="form-control" type="text" id="inputten" [(ngModel)]="name4">
+          </div>
+          <div class="form-group col-5">
+            <label for="inputSDT">SDT</label>
+            <input class="form-control" type="text" id="inputSDT" [(ngModel)]="sdt4" >
+          </div>
+          <div class="form-group col-5 " style="margin-left: 20px">
+            <label for="inputdiachi">Địa chỉ</label>
+            <input class="form-control" type="text" id="inputdiachi"  [(ngModel)]="diachi4">
+          </div>
+          <div class="col-3" style="margin-top: 20px;">
+            <button class="btn btn-success" (click)=editcustomerinfo(order.customerinfo_id)>Thêm mới</button>
+          </div>
+        </div>
+
+
+    </div>
+  </ng-template>
 </div>

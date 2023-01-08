@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import { AccountComponent } from './layouts/account/account.component';
 import {AuthGuard} from "./auth/auth.guard";
 import {AdminGuard} from "./auth/admin.guard";
+import {OrderdetailComponent} from "./layouts/order/orderdetail/orderdetail.component";
 
 const routes:  Routes = [
   {
@@ -54,8 +55,10 @@ const routes:  Routes = [
   },
   {
     path:'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
-  }
-
+  },
+  {
+    path:'', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+  },
 
 ]
 @NgModule({
