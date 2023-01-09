@@ -34,4 +34,10 @@ export class SCDetailsService{
     return this.http.post<any>(`${environment.apiUrl}public/s_c_details`, scDetails);
   }
 
+  findConfigProduct(indexPage: any, size:any,product_id:any): Observable<any>{
+    return this.http.put<any>(this.SCDetailAPI +"public/s_c_details/configProduct?page="+indexPage +"&size="+size+"&product_id="+product_id,null) ;
+  }
+
+
+
 }

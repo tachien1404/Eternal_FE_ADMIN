@@ -17,7 +17,7 @@ const routes:  Routes = [
     canActivate:[AuthGuard]
   },
   {
-    path:'configProduct', loadChildren: () => import('./pages/config-product/configProduct.module').then(m => m.ConfigProductModule),
+    path:'configProduct/:id', loadChildren: () => import('./pages/config-product/configProduct.module').then(m => m.ConfigProductModule),
     canActivate:[AuthGuard]
   }
   ,{

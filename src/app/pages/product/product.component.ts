@@ -7,6 +7,7 @@ import {ProductService} from "../../@core/services/products.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {computeStartOfLinePositions} from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/source_file";
 import {ProductDTO, SortByValue} from "../../@core/models/ProductSortDTO";
+import {SCDetailsService} from "../../@core/services/s-c.-details.service";
 
 @Component({
   selector: 'app-product',
@@ -53,9 +54,7 @@ export class ProductComponent implements OnInit {
 
   initFormSearch() {
     this.formSearch = this.fb.group({
-      id: '',
       name: '',
-      inportprice: '',
       outputprice: '',
       category: '',
       hang: '',
@@ -67,10 +66,9 @@ export class ProductComponent implements OnInit {
   initFormAdd() {
     this.formAdd = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(20)]],
-      createDate: '',
-      inportprice: ['', [Validators.required, Validators.pattern('[0-9]{1,10}')]],
+     // createDate: '',
       outputprice: ['', [Validators.required, Validators.pattern('[0-9]{1,10}')]],
-      updatedate: '',
+      //updatedate: '',
       Photo: 'null.png',
       status: ['', Validators.required],
       category: ['', Validators.required],
@@ -342,6 +340,11 @@ export class ProductComponent implements OnInit {
         this.toastr.error(error.error.message);
       }
     );
+  }
+
+  config(id: any) {
+    const url = "configProduct/" + id;
+    this.router.navigate([url]);
   }
 
 
