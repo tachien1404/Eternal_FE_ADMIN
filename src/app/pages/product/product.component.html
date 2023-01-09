@@ -30,7 +30,7 @@
               <label class="col-md-4 col-form-label">Đinh giày: </label>
               <div class="col-md-10 mt-2">
                 <div>
-                  <select class="form-control" formControlName="category" style="border: solid 1px gray;">
+                  <select class="form-control" formControlName="sole" style="border: solid 1px gray;">
                     <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}
                     </option>
 
@@ -71,7 +71,7 @@
               <label class="col-md-4 col-form-label">Dòng giày: </label>
               <div class="col-md-10 mt-2">
                 <div>
-                  <select class="form-control" formControlName="category" style="border: solid 1px gray;">
+                  <select class="form-control" formControlName="shoeLine" style="border: solid 1px gray;">
                     <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}
                     </option>
 
@@ -104,20 +104,27 @@
       <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>
       <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>
       <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>
-      <th class="text-center" scope="col" (click)="sortByValue('hang')">Loại đinh</th>
-      <th class="text-center" scope="col" (click)="sortByValue('hang')">Dòng giày</th>
+      <th class="text-center" scope="col" (click)="sortByValue('sole')">Loại đinh</th>
+      <th class="text-center" scope="col" (click)="sortByValue('shoeLine')">Dòng giày</th>
+      <th class="text-center" scope="col">Ngày tạo</th>
       <th class="text-center" scope="col">Ảnh</th>
+      <th class="text-center" scope="col">Thao tác</th>
     </tr>
     </thead>
     <tbody *ngIf="datas">
-    <tr *ngFor="let item of datas; let i = index" (click)="infoProduct(item.id,content)">
+    <tr *ngFor="let item of datas; let i = index" >
       <td>{{item.name}}</td>
       <td>{{item.outputprice}}</td>
       <td *ngIf="item.category">{{item.category.name}}</td>
       <td *ngIf="item.hang">{{item.hang.name}}</td>
       <td *ngIf="item.sole">{{item.sole.name}}</td>
       <td *ngIf="item.shoeLine">{{item.shoeLine.name}}</td>
-      <td>{{item.photo}} </td>
+      <td>{{item.createDate}}</td>
+      <td><img class="img-fluid img"  src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}"></td>
+      <td>
+        <a (click)="infoProduct(item.id,content)">Sửa</a>
+        <a (click)="config(item.id)" >Cấu hình</a>
+      </td>
     </tr>
     </tbody>
   </table>
@@ -269,15 +276,15 @@
             <label class="col-md-2 col-form-label">Tình trạng :</label>
             <div class="col-md-10 mt-2 ">
               <div class="form-check form-check-inline col-12 col-sm-12">
-                <input class="form-check-input" formControlName="status" [value]="1" type="radio"
-                       name="readyOnProject" id="inlineRadio1-readyOnProject">
-                <label class="form-check-label col-12" for="inlineRadio1-readyOnProject">Đang kinh doanh</label>
+                <input class="form-check-input" formControlName="status"  [value]="1" type="radio"
+                       name="status" id="active">
+                <label class="form-check-label col-12" for="active">Đang kinh doanh</label>
               </div>
 
               <div class="form-check form-check-inline col-12 col-sm-12">
                 <input class="form-check-input" formControlName="status" [value]="0" type="radio"
-                       name="readyOnProject" id="inlineRadio2-readyOnProject">
-                <label class="form-check-label col-12" for="inlineRadio2-readyOnProject">Ngừng kinh doanh</label>
+                       name="status" id="notActive">
+                <label class="form-check-label col-12" for="notActive">Ngừng kinh doanh</label>
               </div>
               <small class="col alert text-danger" role="alert"
                      *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">
@@ -293,17 +300,17 @@
           </div>
 
 
-          <div *ngIf="!hiddeen" class="form-group row">
-            <label class="col-md-4 col-form-label">Ngày tạo: </label>
-            <div class="col-md-10">
-              <input [disabled]="true" class="form-control" type="text" formControlName="createDate">
-            </div>
-          </div>
+<!--          <div *ngIf="!hiddeen" class="form-group row">-->
+<!--            <label class="col-md-4 col-form-label">Ngày tạo: </label>-->
+<!--            <div class="col-md-10">-->
+<!--              <input [disabled]="true" class="form-control" type="text" formControlName="createDate">-->
+<!--            </div>-->
+<!--          </div>-->
 
 <!--          <div *ngIf="!hiddeen" class="form-group row">-->
 <!--            <label class="col-md-4 col-form-label">Ngày cập nhật: </label>-->
 <!--            <div class="col-md-10">-->
-<!--              <input [disabled]="true" class="form-control" type="text" formControlName="updatedate">-->
+<!--              <input [disabled]="!hiddeen" class="form-control" type="text" formControlName="updatedate">-->
 <!--            </div>-->
 <!--          </div>-->
 

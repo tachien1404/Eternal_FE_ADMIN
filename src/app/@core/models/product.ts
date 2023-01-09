@@ -2,7 +2,6 @@ export interface Product {
   id?: number;
   name?: string;
   createDate?:Date;
-  inportprice?: number;
   outputprice?: number,
   updatedate?:Date,
   photo?: string,
