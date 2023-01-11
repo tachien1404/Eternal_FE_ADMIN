@@ -83,13 +83,17 @@ export class TaoDonHangComponent implements OnInit {
       this.orderdeteogiaquantity = result;
       this.price = this.orderdeteogiaquantity.price;
       this.tongthu = this.price - this.giamgia;
-      console.log(this.orderdeteogiaquantity);
+
     })
   }
 
-  changeQuantity(quantity: any, id: any) {
+  changeQuantity(quantity: any, id: any,quantitysaimau:any) {
     this.orderdetail.detail_id = id;
     this.orderdetail.quantity = quantity;
+    if(quantity>quantitysaimau){
+      this.orderdetail.quantity=quantitysaimau;
+      this.toastr.success("Số lượng sản phẩm vượt quá số lượng hàng có sẵn");
+    }
     this.orderService.savedeteo(this.orderdetail).subscribe(result => {
 
       this.getByOrderId();
@@ -252,7 +256,7 @@ back(){
 this.productFrom.value.name=this.namesot
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
-      console.log(this.namesot);
+
     })
 
 
