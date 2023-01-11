@@ -9,6 +9,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OrderTimeline} from "../../../@core/models/OrderTimeline";
 import {OrdertimlineService} from "../../../service/ordertimline.service";
 import {CustomerinfoService} from "../../../service/customerinfo.service";
+import {S_CDetails} from "../../../@core/models/SCDetails";
+import {SaimauService} from "../../../service/saimau.service";
 
 @Component({
   selector: 'app-orderdetail',
@@ -17,7 +19,7 @@ import {CustomerinfoService} from "../../../service/customerinfo.service";
 })
 export class OrderdetailComponent implements OnInit {
   Orderid: any;
-  orderdetail: any;
+  litorderdetail: any;
   order: any;
   status: any;
   username: any;
@@ -28,7 +30,9 @@ export class OrderdetailComponent implements OnInit {
 sdt4:any;
 name4:any;
 diachi4:any;
+tru:S_CDetails[]=[];
   constructor(private modalService: NgbModal,
+              private saimauservice:SaimauService,
               private cus4: CustomerinfoService,
               private ordertimelineservice: OrdertimlineService,
               private tokenservice: TokenStorageService,
@@ -75,10 +79,17 @@ diachi4:any;
 
   getByOrderId(id: any) {//lấy ra chi tiết đơn
     this.service.getByOrderId(id).subscribe(result => {
-      this.orderdetail = result;
+      this.litorderdetail = result;
+      for (let item of this.litorderdetail){
+        this.tru.push({
+          id:item.scId,
+          quantity:item.quantity
+        })
+      }
 
-      console.log(this.orderdetail)
     })
+
+    console.log(this.tru)
   }
 
   pdfphieugiaohang(id: any) {
@@ -131,10 +142,14 @@ diachi4:any;
         this.ordertimeline.description = this.description;
         console.log(this.description)
         console.log(this.ordertimeline)
+        this.saimauservice.congsl(this.tru).subscribe(result =>{
+          this.toastr.success("Thay đổi thành công")
+        })
         this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
           this.ordertimeline = result;
           console.log(this.ordertimeline)
         })
+
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           this.router.navigate(['/order/dahuy'])
         });

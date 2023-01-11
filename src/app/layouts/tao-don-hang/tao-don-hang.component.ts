@@ -10,6 +10,11 @@ import {OrderService} from "../../service/order.service";
 import {OrderDeteo} from "../../@core/models/OrderDeteo.";
 import {combineLatestAll} from "rxjs";
 import {Cart} from "../../@core/models/cart";
+import {OrderTimeline} from "../../@core/models/OrderTimeline";
+import {TokenStorageService} from "../../@core/services/Token-storage.service";
+import {OrdertimlineService} from "../../service/ordertimline.service";
+import {S_CDetails} from "../../@core/models/SCDetails";
+import {SaimauService} from "../../service/saimau.service";
 
 @Component({
   selector: 'app-tao-don-hang',
@@ -17,6 +22,7 @@ import {Cart} from "../../@core/models/cart";
   styleUrls: ['./tao-don-hang.component.css']
 })
 export class TaoDonHangComponent implements OnInit {
+  tru:S_CDetails[]=[];//mảng trừ sl
   orderdetail: OrderDeteo = {};
   orderdeteogiaquantity: OrderDeteo = {};
   customer: any;
@@ -26,7 +32,7 @@ export class TaoDonHangComponent implements OnInit {
   khachdua: any = 0;
   giamgia: any = 0;
   tongthu: any;
-  valuekenh: any=1;
+  valuekenh: any = 1;
   valuesize: any;
   valuecolor: any;
   size: any;
@@ -37,12 +43,17 @@ export class TaoDonHangComponent implements OnInit {
   litproduct: any;
   message!: String;
   orderdeteo: any;
-  litorderdeteo:any;
+  litorderdeteo: any;
   listhoadoncho: any;
   p: number = 1;
+  username: any;
+  type: any;
+  description?: String;
+  ordertimeline: OrderTimeline = {};
+  listordertimeline: any;
 
-  constructor(private saimauService: SCDetailsService, private orderService: OrderService,
-              private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
+  constructor(private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
+              private saimauservice:SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
   ) {
   }
 
@@ -97,11 +108,13 @@ export class TaoDonHangComponent implements OnInit {
     })
 
   }
-back(){
-    this.order=null;
-  this.namesot="";
-  this.getAll();
-}
+
+  back() {
+    this.order = null;
+    this.namesot = "";
+    this.getAll();
+  }
+
   savecustomer() {
     if (this.customerFrom.valid) {
       this.service.save(this.customerFrom.value).subscribe(result => {
@@ -238,6 +251,12 @@ back(){
   getByOrderId() {
     this.orderService.getByOrderId(this.order.id).subscribe(result => {
       this.litorderdeteo = result;
+      for (let item of this.litorderdeteo){
+        this.tru.push({
+          id:item.scId,
+          quantity:item.quantity
+        })
+      }
     })
   }
 
@@ -249,7 +268,7 @@ back(){
   }
 
   serchNameProduct() {
-this.productFrom.value.name=this.namesot
+    this.productFrom.value.name = this.namesot
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
       console.log(this.namesot);
@@ -262,6 +281,18 @@ this.productFrom.value.name=this.namesot
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.namesot = '';
+      this.username = this.tokenservice.getUser();
+      this.ordertimeline.account_name = this.username;
+      this.ordertimeline.order_id = this.order.id;
+      this.type = 'Tạo đơn hàng';
+      this.ordertimeline.type = this.type;
+
+      this.ordertimeline.description = this.username + " tạo đơn hàng";
+
+      this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+
+
+      })
     })
   }
 
@@ -278,9 +309,27 @@ this.productFrom.value.name=this.namesot
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-      console.log(this.order)
+
+
     }, error => {
       this.toastr.success("eroooo");
+    })
+    //trừ sl sai màu
+    this.saimauservice.trusl(this.tru).subscribe(result =>{
+      this.toastr.success("Thay đổi thành công")
+    })
+    //tham lai
+    this.username = this.tokenservice.getUser();
+    this.ordertimeline.account_name = this.username;
+    this.ordertimeline.order_id = this.order.id;
+    this.type = 'Hoàn thành đơn hàng';
+    this.ordertimeline.type = this.type;
+
+    this.ordertimeline.description = this.username + " hoàn thành đơn hàng";
+
+    this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+      this.ordertimeline = result;
+
     })
   }
 
