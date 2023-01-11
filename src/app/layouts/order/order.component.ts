@@ -11,11 +11,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class OrderComponent implements OnInit {
   orderdata: any;
-
+  start?: any=null;
+  end?: any=null;
   Orderdata: any;
   statusName: any;
   p: number = 1;
-  status: any;
+  status: any=null;
+  keyword: any=null;
 
   constructor(private service: OrderService,
               private toastr: ToastrService,
@@ -30,27 +32,43 @@ export class OrderComponent implements OnInit {
 
   Input = new FormGroup(
     {
-
+      start: new FormControl(),
+      end: new FormControl(),
       keyword: new FormControl(),
       status: new FormControl()
     }
   )
+timkiem(){
+  this.Input.value.status = this.status;
+  if(this.keyword==""){
+    this.Input.value.keyword=null;
+  }else{
+    this.Input.value.keyword=this.keyword;
+  }
 
+  this.Input.value.end=this.end;
+  this.Input.value.start=this.start;
+  this.service.timkiem(this.Input.value).subscribe(result =>{
+    this.orderdata=result
+  })
+}
   loadAll(status: any) {
     //trường hợp getall
-   if(status==''){
-     this.Input.value.status=null;
-     this.service.getByPage(this.Input.value).subscribe(data=>{
-       this.orderdata=data;
-     })
+    if (status == '') {
+      this.Input.value.status = null;
 
-   }else {
-     //trường hợp get theo trạng thái
-     this.Input.value.status=status;
-     this.service.getByPage(this.Input.value).subscribe(data=>{
-       this.orderdata=data;
-     })
-   }
+      this.service.getByPage(this.Input.value).subscribe(data => {
+        this.orderdata = data;
+      })
+
+    } else {
+      //trường hợp get theo trạng thái
+      this.Input.value.status = status;
+      this.status=status;
+      this.service.getByPage(this.Input.value).subscribe(data => {
+        this.orderdata = data;
+      })
+    }
   };
 
 
@@ -68,7 +86,5 @@ export class OrderComponent implements OnInit {
     })
   }
 
-  get keyword() {
-    return this.Input.get('keyword');
-  }
+
 }
