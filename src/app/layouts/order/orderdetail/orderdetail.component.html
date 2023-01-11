@@ -229,6 +229,7 @@
 
   </div>
 </div>
+
 <div class="row mt-3" style="margin-left: 295px;">
   <label class="col-1">Ảnh</label>
   <label class="col-2 ms-3">Tên sản phẩm</label>
@@ -241,11 +242,6 @@
 </div>
 <div style="height: auto;padding-bottom: 100px;margin-left: 295px;">
   <div class="card mb-2" *ngFor="let item of litorderdetail">
-    <!-- <div class="row mt-2">
-      <label class="col-8">Danh mục sản phẩm :{{item.category_name}}</label>
-      <label class="col-3">Hãng:{{item.brand_name}}</label>
-    </div> -->
-    <!-- <hr> -->
     <div class="row ">
 
       <div class=" col-1 m-2">
@@ -260,13 +256,18 @@
       <label class="col-2 mt-4">Đơn vị vận chuyển nhanh</label>
       <div class="col-1 mt-4">
         <span *ngIf="order.status ==0">
-          <button class="btn btn-danger" (click)="delete(item.id)"> Hủy</button>
+          <button class="btn btn-danger" (click)="delete(item.detail_id)"> Xóa</button>
         </span>
 
       </div>
 
     </div>
   </div>
+  <span *ngIf="order.status ==0">
+  <div>
+    <button class="btn btn-success" (click)="openProduct(product)">Thêm sản phẩm</button>
+  </div>
+    </span>
 </div>
 <div>
   <ng-template #content>
@@ -334,5 +335,58 @@
 
 
     </div>
+  </ng-template>
+<!--  modal thêm sản phẩm-->
+  <ng-template #product>
+    <div class="input-group mt-3">
+      <div class="form-outline">
+        <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
+        <label class="form-label" for="form"></label>
+      </div>
+      <button type="button" class="btn btn-primary">
+        <i class="fas fa-search" (click)="openProduct(product)"></i>
+      </button>
+
+    </div>
+    <hr>
+    <table class="table table-hover p-3">
+      <thead>
+      <tr>
+        <th scope="col" style="padding-left: 25px;">Ảnh</th>
+        <th scope="col" style="padding-left: 130px;">Name</th>
+        <th scope="col">Giá</th>
+        <th scope="col">Màu</th>
+        <th scope="col">Size</th>
+        <th scope="col">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of litproduct">
+        <th><img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
+                 width="120px" height="100"></th>
+        <th>{{item.name}}</th>
+        <th style="padding-left: 25px;">{{item.outputprice| currency :'VND' }}</th>
+        <th>
+          <select #selectColor (change)="laycolor(selectColor.value)" class="form-select "
+                  aria-label="Default select example">
+            <option selected>Mời chọn</option>
+            <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
+
+          </select>
+        </th>
+        <th>
+          <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
+                  aria-label="Default select example">
+            <option selected>Mời chọn</option>
+            <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
+
+          </select>
+        </th>
+        <th style="padding-left: 25px;">
+          <button class="btn btn-primary" (click)=" giohang(order.id,item.id,item.outputprice)">Thêm</button>
+        </th>
+      </tr>
+      </tbody>
+    </table>
   </ng-template>
 </div>

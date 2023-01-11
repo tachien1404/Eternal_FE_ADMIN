@@ -9,8 +9,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {OrderTimeline} from "../../../@core/models/OrderTimeline";
 import {OrdertimlineService} from "../../../service/ordertimline.service";
 import {CustomerinfoService} from "../../../service/customerinfo.service";
-import {S_CDetails} from "../../../@core/models/SCDetails";
-import {SaimauService} from "../../../service/saimau.service";
+import {SCDetailsService} from "../../../@core/services/s-c.-details.service";
+import {ProductService} from "../../../@core/services/products.service";
 
 @Component({
   selector: 'app-orderdetail',
@@ -19,6 +19,7 @@ import {SaimauService} from "../../../service/saimau.service";
 })
 export class OrderdetailComponent implements OnInit {
   Orderid: any;
+  orderdetail: any;
   litorderdetail: any;
   order: any;
   status: any;
@@ -27,18 +28,25 @@ export class OrderdetailComponent implements OnInit {
   description?: String;
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
-sdt4:any;
-name4:any;
-diachi4:any;
-tru:S_CDetails[]=[];
+  sdt4: any;
+  name4: any;
+  diachi4: any;
+  size: any;
+  mau: any;
+  litproduct: any;
+  namesot: any=null;
+  valuesize: any;
+  valuecolor: any;
+
   constructor(private modalService: NgbModal,
-              private saimauservice:SaimauService,
+              private saimauService: SCDetailsService,
               private cus4: CustomerinfoService,
               private ordertimelineservice: OrdertimlineService,
               private tokenservice: TokenStorageService,
               private route: ActivatedRoute,
               private service: OrderService,
               private toastr: ToastrService, private router: Router, private exportService: ExportService,
+              private productService: ProductService,
               private tokenService: TokenStorageService,) {
     this.Orderid = this.route.snapshot.paramMap.get('id');
     console.log(this.Orderid)
@@ -51,6 +59,17 @@ tru:S_CDetails[]=[];
   ngOnInit(): void {
   }
 
+  productFrom = new FormGroup({
+    name: new FormControl(''),
+  })
+  orderdeteoFrom = new FormGroup({
+    productId: new FormControl(''),
+    sizeId: new FormControl(''),
+    colorId: new FormControl(''),
+    orderId: new FormControl(''),
+    price: new FormControl(''),
+    quantity: new FormControl('1')
+  })
   customerinfoFrom = new FormGroup({
     name: new FormControl('', Validators.required),
     id: new FormControl('', Validators.required),
@@ -66,13 +85,12 @@ tru:S_CDetails[]=[];
 
   delete(id: any) {
     //xóa đơn chi tiết
-    console.log(id)
-
     this.Orderid = this.route.snapshot.paramMap.get('id');
     console.log(this.Orderid)
-    if (confirm("Do you want remove?")) {
+    if (confirm("bnaj có chắc muốn xóa sản phẩm này khói giỏ hàng?")) {
       this.service.delete(id).subscribe(result => {
         this.getByOrderId(this.Orderid);
+        this.toastr.success("Xóa thành công")
       });
     }
   }
@@ -80,16 +98,9 @@ tru:S_CDetails[]=[];
   getByOrderId(id: any) {//lấy ra chi tiết đơn
     this.service.getByOrderId(id).subscribe(result => {
       this.litorderdetail = result;
-      for (let item of this.litorderdetail){
-        this.tru.push({
-          id:item.scId,
-          quantity:item.quantity
-        })
-      }
+
 
     })
-
-    console.log(this.tru)
   }
 
   pdfphieugiaohang(id: any) {
@@ -142,14 +153,10 @@ tru:S_CDetails[]=[];
         this.ordertimeline.description = this.description;
         console.log(this.description)
         console.log(this.ordertimeline)
-        this.saimauservice.congsl(this.tru).subscribe(result =>{
-          this.toastr.success("Thay đổi thành công")
-        })
         this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
           this.ordertimeline = result;
           console.log(this.ordertimeline)
         })
-
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           this.router.navigate(['/order/dahuy'])
         });
@@ -192,9 +199,9 @@ tru:S_CDetails[]=[];
 
   editcustomerinfo(id: any) {
     this.customerinfoFrom.value.id = id;
-    this.customerinfoFrom.value.name=this.name4;
-    this.customerinfoFrom.value.sdt=this.sdt4;
-    this.customerinfoFrom.value.address=this.diachi4;
+    this.customerinfoFrom.value.name = this.name4;
+    this.customerinfoFrom.value.sdt = this.sdt4;
+    this.customerinfoFrom.value.address = this.diachi4;
     this.username = this.tokenservice.getUser();
     this.ordertimeline.account_name = this.username;
     this.ordertimeline.order_id = this.order.id;
@@ -214,11 +221,45 @@ tru:S_CDetails[]=[];
       this.modalService.dismissAll();
     })
   }
+//thêm sp
+  laysize(sizevalue: any) {
+    this.valuesize = sizevalue;
+    console.log(this.valuesize)
+  }
+
+  laycolor(colorvalue: any) {
+    this.valuecolor = colorvalue;
+    console.log(this.valuecolor)
+  }
+
+  giohang(order_id: any, product_id: any, gia: any) {
+    this.Orderid = this.route.snapshot.paramMap.get('id');
+    this.orderdeteoFrom.value.productId = product_id;
+    this.orderdeteoFrom.value.colorId = this.valuecolor;
+    this.orderdeteoFrom.value.sizeId = this.valuesize;
+    this.orderdeteoFrom.value.orderId = this.order.id;
+    this.orderdeteoFrom.value.price = gia;
+    this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
+      this.orderdetail = result;
+
+      if (this.orderdetail != null) {
+        this.toastr.success("Đã thêm vào giỏ");
+        this.getByOrderId(this.Orderid);
+
+      } else {
+        this.toastr.success("ko có màu size phù hợp ");
+      }
+
+    }, error => {
+      this.toastr.success("ko có màu size phù hợp ");
+    })
+
+  }
 
   opencustomerinfo(content: any) {
-    this.diachi4=this.order.addressinfo;
-    this.name4=this.order.nameinfo;
-    this.sdt4=this.order.sdtinfo;
+    this.diachi4 = this.order.addressinfo;
+    this.name4 = this.order.nameinfo;
+    this.sdt4 = this.order.sdtinfo;
     this.modalService.open(content, {
         size: 'lg', centered: true, scrollable: true,
 
@@ -252,6 +293,40 @@ tru:S_CDetails[]=[];
       }
     );
   }
+
+  openProduct(product: any) {
+    this.serchNameProduct();
+    this.getAllsize();
+    this.getAllmau();
+    this.modalService.open(product, {
+      size: 'xl', centered: true
+    })
+  }
+
+  getAllmau() {
+    this.saimauService.getAllColor().subscribe(result => {
+      this.mau = result;
+
+    })
+  }
+
+  getAllsize() {
+    this.saimauService.getAllSize().subscribe(result => {
+      this.size = result;
+
+    })
+  }
+
+  serchNameProduct() {
+    this.productFrom.value.name = this.namesot;
+    this.productService.serchName(this.productFrom.value).subscribe(result => {
+      this.litproduct = result;
+
+    })
+
+
+  }
+
 
   get sdt() {
     return this.customerinfoFrom.get('sdt');

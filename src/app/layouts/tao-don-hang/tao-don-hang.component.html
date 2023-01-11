@@ -81,7 +81,8 @@
               <label class="col-2">Size:{{item.valuesize}}</label>
               <label class="col-2">Giá:{{item.price| currency :'VND' }}</label>
               <input class="col-2" style="height: 20px;width: 70px;" type="number" #selectquantity
-                     (change)="changeQuantity(selectquantity.value,item.detail_id)" value="{{item.quantity}}">
+                     (change)="changeQuantity(selectquantity.value,item.detail_id,item.quantitysaimau)" value="{{item.quantity}}">
+            <label class="col-2 "style="color: red">Số lượng hàng còn :{{item.quantitysaimau}}</label>
             </div>
             <div class="row p-3">
               <label class="col-4">Loại:{{item.category_name}}</label>
