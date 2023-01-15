@@ -2,7 +2,7 @@
 <app-side-bar></app-side-bar>
 <div class="container-fluid pt-4 px-4" style="margin-left: 270px;">
   <div class="row g-4">
-    <div class="col-sm-12 col-xl-6">
+    <div class="col-sm-12 col-xl-5 width: auto height:auto">
       <div class="bg-light rounded h-100 p-4">
         <h6 class="mb-4">Account</h6>
         <form [formGroup]="accountForm" enctype="multipart/form-data">
@@ -71,16 +71,16 @@
         </form>
       </div>
     </div>
-    <div class="col-sm-12 col-xl-6">
+    <div class="col-sm-12 col-xl-7">
       <div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
-        <img class="rounded mx-auto d-block" alt="none" style="width: 60%;"
+        <img class="rounded mx-auto d-block" alt="none"
           src="https://res.cloudinary.com/productenternal/image/upload/v1668928871/IMAGE/image/{{account.photo}}">
       </div>
     </div>
   </div>
 </div>
 
-<div class="container-fluid pt-4 px-4" style="margin-left: 270px;">
+<div class="card mt-3" style="margin-left: 260px;">
   <div class="row g-4">
     <div class="col-sm-12 col-xl-12">
       <div class=" rounded h-100 pt-3">
@@ -98,7 +98,7 @@
           <table class="table table-hover table-responsive table-bordered">
             <thead>
               <tr>
-                <th>STT</th>
+
                 <th>Username</th>
                 <th>Email</th>
                 <th>Fullname</th>
@@ -111,7 +111,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let account of accounts">
-                <td>{{account.id}}</td>
+
                 <td>{{account.username}}</td>
                 <td>{{account.email}}</td>
                 <td>{{account.fullname}}</td>

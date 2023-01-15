@@ -18,7 +18,7 @@ const routes:  Routes = [
   },
   {
     path:'configProduct/:id', loadChildren: () => import('./pages/config-product/configProduct.module').then(m => m.ConfigProductModule),
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   }
   ,{
     path :'category',loadChildren:()=> import('./pages/category/add-cate/cate.module').then((m =>m.CateModule)),

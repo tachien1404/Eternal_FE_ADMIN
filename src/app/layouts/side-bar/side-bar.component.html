@@ -31,8 +31,58 @@
 
                   <span class="nav-link-text ms-1">Thống Kê</span>
                 </a>
-              </li>
 
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white " routerLink="/account">
+
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Zm9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"/>
+                    </svg>
+                  </div>
+
+                  <span class="nav-link-text ms-1">Account</span>
+                </a>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white " routerLink="/colors">
+
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
+                      <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                      <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"/>
+                    </svg>
+                  </div>
+
+                  <span class="nav-link-text ms-1">Color</span>
+                </a>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white " routerLink="/soles">
+
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fas fa-shoe-prints"></i>
+                  </div>
+
+                  <span class="nav-link-text ms-1">Sole</span>
+                </a>
+
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white " routerLink="/sizes">
+
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-rulers" viewBox="0 0 16 16">
+                      <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1H1z"/>
+                    </svg>
+                  </div>
+
+                  <span class="nav-link-text ms-1">Size</span>
+                </a>
+              </li>
 
               <li class="nav-item">
                 <a class="nav-link text-white " [routerLink]="['/order']">
@@ -76,17 +126,21 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a class="nav-link text-white " routerLink="/product">
 
-                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    <i class="material-icons opacity-10">inventory</i>
-                  </div>
-
-                  <span class="nav-link-text ms-1">Sản phẩm</span>
+               <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
                 </a>
-              </li>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
+                    </div>
+                </div>
+            </li>
 
               <li class="nav-item">
                 <a class="nav-link text-white " routerLink="/khuyenmai">
