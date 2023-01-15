@@ -29,6 +29,9 @@ import {CookieModule} from "ngx-cookie";
 import { SideBarComponent } from './layouts/side-bar/side-bar.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { ConfigProductComponent } from './pages/config-product/config-product.component';
+import { MauSacComponent } from './layouts/mau-sac/mau-sac.component';
+import { SizeGiayComponent } from './layouts/size-giay/size-giay.component';
+import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
 
 
 
@@ -49,6 +52,9 @@ import { ConfigProductComponent } from './pages/config-product/config-product.co
     SideBarComponent,
     NavbarComponent,
     ConfigProductComponent,
+    MauSacComponent,
+    SizeGiayComponent,
+    DeGiayComponent
   ],
     imports: [
         BrowserAnimationsModule,
