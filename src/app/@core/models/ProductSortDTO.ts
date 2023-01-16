@@ -35,3 +35,9 @@ export interface SortByValue{
   name?:string,
   type?:string
 }
+
+export interface Color {
+  id?:number;
+  value?: string;
+  name?: string;
+}

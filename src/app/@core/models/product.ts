@@ -32,4 +32,15 @@ export interface ShoeLine {
   name?: string;
 }
 
+export interface Color {
+  id?:number;
+  value?: string;
+  name?: string;
+}
+
+export interface Size {
+  id?:number;
+  value?: string;
+}
+
 

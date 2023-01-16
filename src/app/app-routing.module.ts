@@ -5,6 +5,9 @@ import { AccountComponent } from './layouts/account/account.component';
 import {AuthGuard} from "./auth/auth.guard";
 import {AdminGuard} from "./auth/admin.guard";
 import {OrderdetailComponent} from "./layouts/order/orderdetail/orderdetail.component";
+import { SizeGiayComponent } from './layouts/size-giay/size-giay.component';
+import { MauSacComponent } from './layouts/mau-sac/mau-sac.component';
+import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
 
 const routes:  Routes = [
   {
@@ -14,7 +17,7 @@ const routes:  Routes = [
   },
   {
     path:'product', loadChildren: () => import('./pages/product/product.module').then(m => m.ProductModule),
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   },
   {
     path:'configProduct/:id', loadChildren: () => import('./pages/config-product/configProduct.module').then(m => m.ConfigProductModule),
@@ -38,8 +41,20 @@ const routes:  Routes = [
   },
   {
     path:'account',component: AccountComponent,
-    canActivate:[AdminGuard]
+    // canActivate:[AdminGuard]
   },
+  {
+    path:'sizes',component: SizeGiayComponent,
+    // canActivate:[AdminGuard]
+  },  {
+    path:'colors',component: MauSacComponent,
+    // canActivate:[AdminGuard]
+  },
+  {
+    path:'soles',component: DeGiayComponent,
+    // canActivate:[AdminGuard]
+  },
+
   {
     path:'tao-don-hang',loadChildren:()=>import('./layouts/tao-don-hang/tao-don-hang.module').then((m=>m.TaoDonHangModule)),
     canActivate:[AuthGuard]

@@ -1,0 +1,147 @@
+<div style="overflow-x: hidden;">
+  <app-navbar></app-navbar>
+  <app-side-bar></app-side-bar>
+  <div class="card" style="margin-left: 260px;">
+    <div class="row mx-2">
+      <form [formGroup]="formSearch">
+        <!--      <ng-template #content1 let-modal>-->
+        <div class="row">
+          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm</h2>
+          <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
+        </div>
+
+        <div class="row">
+
+          <div class="row ml-3">
+            <div class="col-6">
+              <div class="form-group row">
+                <label class="col-md-4 col-form-label">Tên loại đế: </label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text" formControlName="keyword" style="border: solid 1px gray;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ml-3 mt-5">
+          <div>
+            <button type="button" class="btn btn-success me-2" type="submit" (click)="onSubmitSearch()"> Tìm
+              kiếm</button>
+            <button class="btn btn-primary  ml-1 " (click)="openLg(content)">Thêm mới</button>
+          </div>
+        </div>
+        <!--      </ng-template>-->
+
+      </form>
+    </div>
+  </div>
+  <div class="card mt-3" style="margin-left: 260px;">
+    <table class="table table-hover table-responsive ">
+      <thead>
+        <tr>
+          <th class="text-center col-1" scope="col">STT</th>
+          <th class="text-center col-1" scope="col">ID</th>
+          <th class="text-center" scope="col">Tên loại đế</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="soles">
+        <tr *ngFor="let item of soles; let i = index">
+          <td class="text-center" style="padding-top: 30px;">{{i + 1}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.id}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
+          <td class="text-center" style="padding-top: 30px;">
+            <a (click)="info(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                <path
+                  d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+              </svg></a>
+            <!-- <a (click)="config(item.id)" role="button" style="padding-top: 30px;" title="Chi tiết"><svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear ms-2"
+                viewBox="0 0 16 16">
+                <path
+                  d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                <path
+                  d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+              </svg></a> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+
+
+      <!--              Pagination                -->
+      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">
+        <ul class="pagination justify-content-end">
+          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">
+            <option selected>5</option>
+            <option>10</option>
+            <option>15</option>
+          </select>
+          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
+              <path
+                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+            </svg>
+          </li>
+
+          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"
+            [ngClass]="indexPage == i?'active':''">
+            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+          </li>
+
+          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
+              <path
+                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                (click)="preNextPage('next')" />
+            </svg>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <form novalidate [formGroup]="formAdd" enctype="multipart/form-data">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">{{message}} đế giày</h2>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-7">
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Tên đế giày: </label>
+              <div class="col-md-10">
+                <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+                <small class="col alert text-danger" role="alert"
+                  *ngIf="formAdd.get('name')?.errors?.required && formAdd.get('name')?.touched">
+                  Tên đế giày không được để trống !
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div>
+          <button [hidden]="!hiddeen" type="button" class="btn btn-success" type="submit" (click)="create()">Thêm mới
+          </button>
+        </div>
+        <div *ngIf="!hiddeen">
+          <button type="button" class="btn btn-success" type="submit" (click)="update()">Cập nhật</button>
+        </div>
+        <div *ngIf="!hiddeen">
+          <button type="button" class="btn btn-danger" type="submit" (click)="delete()">Xóa</button>
+        </div>
+      </div>
+    </ng-template>
+  </form>
+
+</div>
