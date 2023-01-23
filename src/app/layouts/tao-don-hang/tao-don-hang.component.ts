@@ -15,6 +15,7 @@ import {TokenStorageService} from "../../@core/services/Token-storage.service";
 import {OrdertimlineService} from "../../service/ordertimline.service";
 import {S_CDetails} from "../../@core/models/SCDetails";
 import {SaimauService} from "../../service/saimau.service";
+import {AdminunitService} from "../../service/adminunit.service";
 
 @Component({
   selector: 'app-tao-don-hang',
@@ -22,7 +23,8 @@ import {SaimauService} from "../../service/saimau.service";
   styleUrls: ['./tao-don-hang.component.css']
 })
 export class TaoDonHangComponent implements OnInit {
-  tru:S_CDetails[]=[];//mảng trừ sl
+  tru: S_CDetails[] = [];//mảng trừ sl
+  fordon: any[] = [1];//ra các hóa đơn chờ
   orderdetail: OrderDeteo = {};
   orderdeteogiaquantity: OrderDeteo = {};
   customer: any;
@@ -36,6 +38,13 @@ export class TaoDonHangComponent implements OnInit {
   valuesize: any;
   valuecolor: any;
   size: any;
+  litthanhpho: any;
+  lithuyen: any;
+  litxa: any
+  tp_id: any;
+  huyen_id: any;
+  xa_id: any;
+  addres: any = "";
   mau: any;
   order: any;
   namesot: any;
@@ -52,16 +61,20 @@ export class TaoDonHangComponent implements OnInit {
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
 
-  constructor(private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
-              private saimauservice:SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
+  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
+              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
   ) {
   }
 
+  adminunitFrom = new FormGroup({
+    parentId: new FormControl()
+  })
+
   customerFrom = new FormGroup({
     name: new FormControl('', Validators.required),
-    email: new FormControl(''),
+
     sdt: new FormControl('', Validators.required),
-    address: new FormControl('')
+    address: new FormControl('', Validators.required)
   })
   orderFrom = new FormGroup({
     id: new FormControl(''),
@@ -87,6 +100,8 @@ export class TaoDonHangComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+    this.tinh();
+
   }
 
   sumquantitygia() {
@@ -98,11 +113,11 @@ export class TaoDonHangComponent implements OnInit {
     })
   }
 
-  changeQuantity(quantity: any, id: any,quantitysaimau:any) {
+  changeQuantity(quantity: any, id: any, quantitysaimau: any) {
     this.orderdetail.detail_id = id;
     this.orderdetail.quantity = quantity;
-    if(quantity>quantitysaimau){
-      this.orderdetail.quantity=quantitysaimau;
+    if (quantity > quantitysaimau) {
+      this.orderdetail.quantity = quantitysaimau;
       this.toastr.success("Số lượng sản phẩm vượt quá số lượng hàng có sẵn");
     }
     this.orderService.savedeteo(this.orderdetail).subscribe(result => {
@@ -119,8 +134,75 @@ export class TaoDonHangComponent implements OnInit {
     this.getAll();
   }
 
+  tinh() {
+    if (this.adminunitFrom.value.parentId == null) {
+      this.adminunitservice.gettinhhuyenxa(this.adminunitFrom.value).subscribe(result => {
+        this.litthanhpho = result;
+      })
+    }
+
+  }
+
+  xa() {
+
+    if (this.adminunitFrom.value.parentId != null) {
+      this.adminunitservice.gettinhhuyenxa(this.adminunitFrom.value).subscribe(result => {
+        this.litxa = result;
+      })
+    }
+
+  }
+
+  huyen() {
+
+    if (this.adminunitFrom.value.parentId != null) {
+      this.adminunitservice.gettinhhuyenxa(this.adminunitFrom.value).subscribe(result => {
+        this.lithuyen = result;
+      })
+    }
+  }
+
+  laytp(value: any) {
+    this.tp_id = value;
+    this.adminunitFrom.value.parentId = this.tp_id;
+    for (let item of this.litthanhpho) {
+      if (item.id == this.tp_id) {
+        this.addres += item.name;
+      }
+    }
+
+    this.huyen()
+  }
+
+  layhuyen(value: any) {
+    this.huyen_id = value;
+    this.adminunitFrom.value.parentId = this.huyen_id;
+    for (let item of this.lithuyen) {
+      if (item.id == this.huyen_id) {
+        this.addres=item.name +" "+ this.addres ;
+      }
+    }
+    this.xa()
+  }
+
+  layxa(value: any) {
+    this.xa_id = value
+    for (let item of this.litxa) {
+      if (item.id == this.xa_id) {
+        this.addres=item.name +" "+ this.addres ;
+      }
+    }
+console.log(this.addres)
+  }
+
+  laykenh(kenhvalue: any) {
+    this.valuekenh = kenhvalue;
+
+  }
+
   savecustomer() {
     if (this.customerFrom.valid) {
+      this.customerFrom.value.address+= " "+this.addres;
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
         console.log(this.customer)
@@ -187,10 +269,6 @@ export class TaoDonHangComponent implements OnInit {
     console.log(this.valuecolor)
   }
 
-  laykenh(kenhvalue: any) {
-    this.valuekenh = kenhvalue;
-    console.log(this.valuekenh)
-  }
 
   giohang(order_id: any, product_id: any, gia: any) {
     this.orderdeteoFrom.value.productId = product_id;
@@ -231,7 +309,7 @@ export class TaoDonHangComponent implements OnInit {
       });
       this.customerFrom.value.address = this.customer.address;
       this.customerFrom.value.sdt = this.customer.sdt;
-      this.customerFrom.value.email = this.customer.email;
+
       this.customerFrom.value.name = this.customer.name;
     }
   }
@@ -240,6 +318,7 @@ export class TaoDonHangComponent implements OnInit {
     this.serchNameProduct();
     this.getAllsize();
     this.getAllmau();
+    this.modalService.dismissAll();
     this.modalService.open(product, {
       size: 'xl', centered: true
     })
@@ -255,10 +334,10 @@ export class TaoDonHangComponent implements OnInit {
   getByOrderId() {
     this.orderService.getByOrderId(this.order.id).subscribe(result => {
       this.litorderdeteo = result;
-      for (let item of this.litorderdeteo){
+      for (let item of this.litorderdeteo) {
         this.tru.push({
-          id:item.scId,
-          quantity:item.quantity
+          id: item.scId,
+          quantity: item.quantity
         })
       }
     })
@@ -319,7 +398,7 @@ export class TaoDonHangComponent implements OnInit {
       this.toastr.success("eroooo");
     })
     //trừ sl sai màu
-    this.saimauservice.trusl(this.tru).subscribe(result =>{
+    this.saimauservice.trusl(this.tru).subscribe(result => {
       this.toastr.success("Thay đổi thành công")
     })
     //tham lai

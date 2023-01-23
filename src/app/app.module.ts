@@ -20,7 +20,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AccountComponent } from './layouts/account/account.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TaoDonHangComponent } from './layouts/tao-don-hang/tao-don-hang.component';
-import { HoaDonChoComponent } from './layouts/hoa-don-cho/hoa-don-cho.component';
+
 
 import {NgChartsModule} from "ng2-charts";
 import {ThongkeComponent} from "./layouts/thongke/thongke.component";
@@ -46,7 +46,7 @@ import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
     SCDetailsComponent,
     AccountComponent,
     TaoDonHangComponent,
-    HoaDonChoComponent,
+
     ThongkeComponent,
     LoginComponent,
     SideBarComponent,

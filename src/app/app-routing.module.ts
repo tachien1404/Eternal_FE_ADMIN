@@ -59,10 +59,7 @@ const routes:  Routes = [
     path:'tao-don-hang',loadChildren:()=>import('./layouts/tao-don-hang/tao-don-hang.module').then((m=>m.TaoDonHangModule)),
     canActivate:[AuthGuard]
   },
-  {
-    path:'hoadoncho',loadChildren:()=>import('./layouts/hoa-don-cho/hoa-don-cho.module').then((m=>m.HoaDonChoModule)),
-    canActivate:[AuthGuard]
-  },
+
 
   {
     path:'thongke',loadChildren:()=>import('./layouts/thongke/thongke.module').then((m=>m.ThongkeModule)),

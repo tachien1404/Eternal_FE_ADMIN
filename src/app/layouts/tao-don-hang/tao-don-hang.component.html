@@ -1,5 +1,6 @@
 <app-navbar></app-navbar>
 <app-side-bar></app-side-bar>
+
 <span *ngIf="order==null">
   <div style="margin-left: 295px;">
     <button (click)="taodonhang()">Tạo đơn hàng</button>
@@ -17,7 +18,6 @@
   <table class="table table-hover table-responsive" style="margin-left: 270px;">
   <thead>
   <tr>
-    <th scope="col">Stt</th>
     <th scope="col">Mã đơn hàng</th>
     <th scope="col">Tên khách hàng</th>
     <th scope="col">Ngày tạo</th>
@@ -45,6 +45,9 @@
 <div style="margin-bottom: 100px;float: right;">
   <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
 </div></span>
+
+
+<!--thông tin đơn -->
 <span *ngIf="order!=null">
 <div class="row" style="margin-left: 295px;">
  <div class="col-8">
@@ -52,8 +55,9 @@
   <h5>Vui lòng cung cấp thông tin về đơn hàng sẽ tạo</h5>
  </div>
   <div class="col-4">
-    <button class="btn btn-success" (click)="back()">Tạo đơn hàng</button>
+    <button class="btn btn-success" (click)="back()">Đơn mới</button>
   </div>
+
 </div>
 
   <!--thêm sản phẩm-->
@@ -81,8 +85,9 @@
               <label class="col-2">Size:{{item.valuesize}}</label>
               <label class="col-2">Giá:{{item.price| currency :'VND' }}</label>
               <input class="col-2" style="height: 20px;width: 70px;" type="number" #selectquantity
-                     (change)="changeQuantity(selectquantity.value,item.detail_id,item.quantitysaimau)" value="{{item.quantity}}">
-            <label class="col-2 "style="color: red">Số lượng hàng còn :{{item.quantitysaimau}}</label>
+                     (change)="changeQuantity(selectquantity.value,item.detail_id,item.quantitysaimau)"
+                     value="{{item.quantity}}">
+            <label class="col-2 " style="color: red">Số lượng hàng còn :{{item.quantitysaimau}}</label>
             </div>
             <div class="row p-3">
               <label class="col-4">Loại:{{item.category_name}}</label>
@@ -138,10 +143,9 @@
       <hr>
       <select class="form-select " aria-label="Default select example" #selectKenh
               (change)="laykenh (selectKenh.value)">
-        <option value="0">Website</option>
          <option selected>Mời chọn</option>
         <option value="1">Tại quầy</option>
-        <option value="2">Page</option>
+        <option value="2">Giao hàng</option>
       </select>
     </div>
     <span *ngIf="customer==null">
@@ -187,23 +191,45 @@
     <hr>
     <form [formGroup]="customerFrom" (ngSubmit)="savecustomer()">
       <div class="row ">
-        <div class="form-group col-5">
+        <div class="form-group col-6 mb-2">
           <label for="inputten">Họ và tên</label>
           <input class="form-control" type="text" id="inputten" formControlName="name">
 
-          <span *ngIf="name && name.invalid && name.touched" class="error">Please enter name</span>
+          <span *ngIf="name && name.invalid && name.touched" class="error" style="color: red">Mời nhập tên </span>
         </div>
-        <div class="form-group col-5 " style="margin-left: 20px">
-          <label for="inputemail">Email</label>
-          <input class="form-control" type="text" id="inputemail" formControlName="email">
-        </div>
-        <div class="form-group col-5">
+        <div class="form-group col-6 mb-3">
           <label for="inputSDT">SDT</label>
           <input class="form-control" type="text" id="inputSDT" formControlName="sdt">
+          <span *ngIf="sdt && sdt.invalid && sdt.touched" class="error" style="color: red">Mời nhập SDT</span>
         </div>
-        <div class="form-group col-5 " style="margin-left: 20px">
+        <div class="col-6 mb-3">
+          <select #selectTp (change)="laytp(selectTp.value)" class="form-select "
+                  aria-label="Default select example">
+            <option selected>Mời chọn thành phố</option>
+            <option *ngFor="let itemtp of litthanhpho" [value]="itemtp.id">{{itemtp.name}}</option>
+
+          </select>
+        </div>
+        <div class="col-6 mb-3">
+          <select #selecthuyen (change)="layhuyen(selecthuyen.value)" class="form-select "
+                  aria-label="Default select example">
+            <option selected>Mời chọn huyện</option>
+            <option *ngFor="let itemtp of lithuyen" [value]="itemtp.id">{{itemtp.name}}</option>
+
+          </select>
+        </div>
+        <div class="col-6 mb-3">
+          <select class="form-select "
+                  aria-label="Default select example"#selectxa (change)="layxa(selectxa.value)">
+            <option selected>Mời chọn xã</option>
+            <option *ngFor="let itemtp of litxa" [value]="itemtp.id">{{itemtp.name}}</option>
+
+          </select>
+        </div>
+        <div class="form-group col-12" >
           <label for="inputdiachi">Địa chỉ</label>
           <input class="form-control" type="text" id="inputdiachi" formControlName="address">
+          <span *ngIf="address && address.invalid && address.touched" class="error" style="color: red">Mời nhập địa chỉ </span>
         </div>
         <div class="col-3" style="margin-top: 20px;">
           <button class="btn btn-success" type="submit">Thêm mới</button>
@@ -268,4 +294,5 @@
     </table>
   </ng-template>
 </div>
+
 
