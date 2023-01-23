@@ -144,7 +144,9 @@ export class OrderdetailComponent implements OnInit {
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           this.router.navigate(['/order/chuanbihang'])
         });
+        this.modalService.dismissAll();
       }
+
     } else if (this.status == 4) {
       if (confirm("Xác nhân hủy đơn hàng")) {
         this.Input.value.status = this.status
@@ -160,6 +162,7 @@ export class OrderdetailComponent implements OnInit {
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           this.router.navigate(['/order/dahuy'])
         });
+        this.modalService.dismissAll();
       }
     } else if (this.status == 2) {
       if (confirm("Xác nhân giao đơn hàng")) {
@@ -176,6 +179,7 @@ export class OrderdetailComponent implements OnInit {
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           location.reload()
         });
+        this.modalService.dismissAll();
       }
     } else if (this.status == 3) {
       if (confirm("Hoàn thành đơn hàng")) {
@@ -193,6 +197,7 @@ export class OrderdetailComponent implements OnInit {
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           location.reload()
         });
+        this.modalService.dismissAll();
       }
     }
   }
