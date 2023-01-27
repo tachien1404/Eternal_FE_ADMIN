@@ -32,6 +32,7 @@
                 <div class="col-md-10 mt-2">
                   <div>
                     <select class="form-control" formControlName="sole" style="border: solid 1px gray;">
+                      <option value="">All</option>
                       <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}
                       </option>
 
@@ -47,6 +48,7 @@
                 <div class="col-md-10 mt-2">
                   <div>
                     <select class="form-control" formControlName="category" style="border: solid 1px gray;">
+                      <option value="">All</option>
                       <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
                       </option>
 
@@ -60,6 +62,7 @@
                 <div class="col-md-10 mt-2">
                   <div>
                     <select class="form-control" formControlName="hang" style="border: solid 1px gray;">
+                      <option value="">All</option>
                       <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
                       </option>
 
@@ -73,6 +76,7 @@
                 <div class="col-md-10 mt-2">
                   <div>
                     <select class="form-control" formControlName="shoeLine" style="border: solid 1px gray;">
+                      <option value="">All</option>
                       <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}
                       </option>
 

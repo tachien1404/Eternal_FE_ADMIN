@@ -135,7 +135,6 @@ export class ProductComponent implements OnInit {
     const formSearchValue = this.formSearch.value;
     this.productDTO.id = formSearchValue.id;
     this.productDTO.name = formSearchValue.name;
-    this.productDTO.inportprice = formSearchValue.inportprice;
     this.productDTO.outputprice = formSearchValue.outputprice;
     let categoryId = formSearchValue.category;
     this.productDTO.category = this.dataCate.find(category => {
@@ -224,7 +223,6 @@ export class ProductComponent implements OnInit {
     this.fillValueSearch();
     console.log(this.productDTO)
     this.pagination(0);
-    this.initFormSearch();
   }
 
   addValueProduct() {

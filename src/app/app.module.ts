@@ -32,6 +32,8 @@ import { ConfigProductComponent } from './pages/config-product/config-product.co
 import { MauSacComponent } from './layouts/mau-sac/mau-sac.component';
 import { SizeGiayComponent } from './layouts/size-giay/size-giay.component';
 import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
+import { PromotionComponent } from './pages/promotion/promotion.component';
+import { ConfigPromotionComponent } from './pages/config-promotion/config-promotion.component';
 
 
 
@@ -54,7 +56,9 @@ import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
     ConfigProductComponent,
     MauSacComponent,
     SizeGiayComponent,
-    DeGiayComponent
+    DeGiayComponent,
+    PromotionComponent,
+    ConfigPromotionComponent
   ],
     imports: [
         BrowserAnimationsModule,

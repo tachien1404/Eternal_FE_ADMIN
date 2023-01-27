@@ -1,7 +1,6 @@
 export interface ProductDTO {
   id?: number;
   name?: string;
-  inportprice?: number;
   outputprice?: number,
   status?:number;
   category?:Category;

@@ -74,6 +74,14 @@ const routes:  Routes = [
   {
     path:'', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
+  {
+    path:'promotion', loadChildren: () => import('./pages/promotion/promotion.module').then(m => m.PromotionModule),
+     canActivate:[AuthGuard]
+  },
+  {
+    path:'configPromotion/:id', loadChildren: () => import('./pages/config-promotion/configPromotion.module').then(m => m.ConfigPromotionModule),
+     canActivate:[AuthGuard]
+  }
 
 ]
 @NgModule({
