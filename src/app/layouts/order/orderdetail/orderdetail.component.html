@@ -36,7 +36,7 @@
 
 
               <li class="nav-item">
-                <a class="nav-link text-white " [routerLink]="['/order/tatca']">
+                <a class="nav-link text-white " [routerLink]="['/order']">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="material-icons opacity-10">receipt_long</i>
@@ -76,16 +76,14 @@
                   <span class="nav-link-text ms-1">Tạo Đơn Hàng </span>
                 </a>
               </li>
-
               <li class="nav-item">
                 <a class="nav-link text-white " routerLink="/product">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    <i class="material-icons opacity-10">inventory</i>
+                    <i class="material-icons opacity-10">post_add</i>
                   </div>
 
-                  <span class="nav-link-text ms-1">Sản phẩm</span>
+                  <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
                 </a>
               </li>
 
@@ -246,7 +244,7 @@
 
       <div class=" col-1 m-2">
         <img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
-          width="60px" height="80">
+             width="120px" height="100">
       </div>
       <label class="col-2 mt-4"><b>{{item.productName}} {{item.brand_name}} {{item.namecolor}}</b> </label>
 

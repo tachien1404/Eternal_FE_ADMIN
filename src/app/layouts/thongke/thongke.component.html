@@ -5,7 +5,7 @@
     <h5 style="margin-left: 290px;">Báo cáo doanh thu</h5>
   <hr>
   <button class="btn"  style="border: solid 1px gray;margin-left: 290px;">Theo thời gian</button>
-  <button class="btn ms-3" style="border: solid 1px gray;margin-left: 290px;">Theo sản phẩm</button>
+<!--  <button class="btn ms-3" style="border: solid 1px gray;margin-left: 290px;">Theo sản phẩm</button>-->
   <hr style="margin-left: 290px;">
   <div style="margin-left: 290px;">
     <div class="row">
@@ -18,13 +18,13 @@
           <option value="2">Theo tháng</option>
         </select>
       </div>
-      <div class="col-6">
-        <b>Lọc tất cả</b>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Chưa làm</option>
-          <option value="1" (change)="tatca()">Tất cả</option>
-        </select>
-      </div>
+<!--      <div class="col-6">-->
+<!--        <b>Lọc tất cả</b>-->
+<!--        <select class="form-select" aria-label="Default select example">-->
+<!--          <option selected>Chưa làm</option>-->
+<!--          <option value="1" (change)="tatca()">Tất cả</option>-->
+<!--        </select>-->
+<!--      </div>-->
     </div>
     <!-- theo ngày-->
     <span *ngIf="loai==1">
@@ -75,11 +75,11 @@
     <nav>
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-          role="tab" aria-controls="nav-home" aria-selected="true">Home
+          role="tab" aria-controls="nav-home" aria-selected="true">Doanh thu
         </button>
-        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
-          role="tab" aria-controls="nav-profile" aria-selected="false">Profile
-        </button>
+<!--        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"-->
+<!--          role="tab" aria-controls="nav-profile" aria-selected="false">Profile-->
+<!--        </button>-->
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -95,7 +95,7 @@
         </div>
 
       </div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+
 
     </div>
   </div>
