@@ -15,4 +15,7 @@ export class SaimauService{
   trusl(input:any):Observable<Object>{
     return this.http.post(this.api+'/trusl',input)
   }
+  getsize(input:any):Observable<Object>{
+    return this.http.post(this.api+'/getsize',input)
+  }
 }

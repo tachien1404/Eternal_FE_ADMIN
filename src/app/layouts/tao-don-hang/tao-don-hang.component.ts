@@ -8,8 +8,6 @@ import {ProductService} from "../../@core/services/products.service";
 import {SCDetailsService} from "../../@core/services/s-c.-details.service";
 import {OrderService} from "../../service/order.service";
 import {OrderDeteo} from "../../@core/models/OrderDeteo.";
-import {combineLatestAll} from "rxjs";
-import {Cart} from "../../@core/models/cart";
 import {OrderTimeline} from "../../@core/models/OrderTimeline";
 import {TokenStorageService} from "../../@core/services/Token-storage.service";
 import {OrdertimlineService} from "../../service/ordertimline.service";
@@ -129,7 +127,8 @@ export class TaoDonHangComponent implements OnInit {
   }
 
   back() {
-    this.order = null;
+
+    location.reload()
     this.namesot = "";
     this.getAll();
   }
@@ -261,12 +260,26 @@ console.log(this.addres)
 
   laysize(sizevalue: any) {
     this.valuesize = sizevalue;
-    console.log(this.valuesize)
-  }
 
-  laycolor(colorvalue: any) {
+  }
+  saimauform = new FormGroup({
+    product_id: new FormControl(''),
+    size_id: new FormControl(''),
+    color_id: new FormControl(''),
+
+  })
+  laycolor(colorvalue: any,id:any) {
     this.valuecolor = colorvalue;
-    console.log(this.valuecolor)
+    console.log(id)
+this.saimauform.value.color_id=colorvalue;
+this.saimauform.value.product_id=id;
+    console.log(this.saimauform.value)
+    console.log(colorvalue)
+    this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
+      this.size = result;
+
+    })
+console.log(this.size)
   }
 
 
@@ -316,7 +329,7 @@ console.log(this.addres)
 
   openProduct(product: any) {
     this.serchNameProduct();
-    this.getAllsize();
+
     this.getAllmau();
     this.modalService.dismissAll();
     this.modalService.open(product, {
@@ -344,10 +357,7 @@ console.log(this.addres)
   }
 
   getAllsize() {
-    this.saimauService.getAllSize().subscribe(result => {
-      this.size = result;
 
-    })
   }
 
   serchNameProduct() {
@@ -361,6 +371,7 @@ console.log(this.addres)
   }
 
   taodonhang() {
+    this.order=null;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.namesot = '';
@@ -399,7 +410,7 @@ console.log(this.addres)
     })
     //trừ sl sai màu
     this.saimauservice.trusl(this.tru).subscribe(result => {
-      this.toastr.success("Thay đổi thành công")
+
     })
     //tham lai
     this.username = this.tokenservice.getUser();

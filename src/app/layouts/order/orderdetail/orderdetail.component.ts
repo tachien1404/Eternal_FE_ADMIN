@@ -344,4 +344,6 @@ export class OrderdetailComponent implements OnInit {
   get name() {
     return this.customerinfoFrom.get('name');
   }
+
+
 }
