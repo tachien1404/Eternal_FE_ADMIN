@@ -1,9 +1,9 @@
 <app-navbar></app-navbar>
 <app-side-bar></app-side-bar>
-
+<div style="overflow-x: hidden;">
 <span *ngIf="order==null">
   <div style="margin-left: 295px;">
-    <button (click)="taodonhang()">Tạo đơn hàng</button>
+    <button class="btn-success" (click)="taodonhang() ">Tạo đơn hàng</button>
   </div>
 </span>
 <span *ngIf="order==null">
@@ -15,15 +15,14 @@
 
 <!--hoadoncho-->
 <span *ngIf="order==null">
-  <table class="table table-hover table-responsive" style="margin-left: 270px;">
+    <table class="table table-hover " style="height: 50px;margin-left: 300px">
   <thead>
   <tr>
-    <th scope="col">Mã đơn hàng</th>
-    <th scope="col">Tên khách hàng</th>
-    <th scope="col">Ngày tạo</th>
-    <th scope="col">Trạng thái</th>
-    <th scope="col">Ghi chú</th>
-    <th scope="col">Thao tác</th>
+    <th>Mã đơn hàng</th>
+    <th>Tên khách hàng</th>
+    <th>Ngày tạo</th>
+    <th>Ghi chú</th>
+    <th>Thao tác</th>
   </tr>
   </thead>
   <tbody>
@@ -32,11 +31,9 @@
     <td>{{item.id}}</td>
     <td>{{item.nameCustomer}}</td>
     <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>
-    <td>{{item.statusName}}</td>
     <td>{{item.note}}</td>
     <td>
       <button (click)="deletehoadoncho(item.id)">xóa</button>
-      <button>Sửa</button>
     </td>
   </tr>
 
@@ -143,7 +140,7 @@
           </button>
          </span>
                   <span *ngIf="valuekenh==2">
-                      <button class="btn btn-primary ms-3">Lưu</button>
+                      <button class="btn btn-primary ms-3" (click)="enddononlai()">Lưu</button>
                   </span>
         </div>
       </div>
@@ -309,5 +306,5 @@
     </table>
   </ng-template>
 </div>
-
+</div>
 

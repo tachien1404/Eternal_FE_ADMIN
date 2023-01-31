@@ -356,9 +356,7 @@ console.log(this.size)
     })
   }
 
-  getAllsize() {
 
-  }
 
   serchNameProduct() {
     this.productFrom.value.name = this.namesot
@@ -427,22 +425,27 @@ console.log(this.size)
     })
   }
 
-  enddonnhap() {
+  enddononlai() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-
+    this.orderFrom.value.status = '0';
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-    this.orderFrom.value.status = '6';
+
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-      console.log(this.order)
+
+
     }, error => {
       this.toastr.success("eroooo");
+    })
+    //trừ sl sai màu
+    this.saimauservice.trusl(this.tru).subscribe(result => {
+
     })
   }
 

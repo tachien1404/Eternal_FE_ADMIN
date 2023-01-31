@@ -11,6 +11,8 @@ import {OrdertimlineService} from "../../../service/ordertimline.service";
 import {CustomerinfoService} from "../../../service/customerinfo.service";
 import {SCDetailsService} from "../../../@core/services/s-c.-details.service";
 import {ProductService} from "../../../@core/services/products.service";
+import {SaimauService} from "../../../service/saimau.service";
+import {AdminunitService} from "../../../service/adminunit.service";
 
 @Component({
   selector: 'app-orderdetail',
@@ -23,6 +25,12 @@ export class OrderdetailComponent implements OnInit {
   litorderdetail: any;
   order: any;
   status: any;
+  litthanhpho: any;
+  lithuyen: any;
+  litxa: any
+  tp_id: any;
+  huyen_id: any;
+  xa_id: any;
   username: any;
   type: any;
   description?: String;
@@ -34,11 +42,13 @@ export class OrderdetailComponent implements OnInit {
   size: any;
   mau: any;
   litproduct: any;
-  namesot: any=null;
+  namesot: any = null;
   valuesize: any;
   valuecolor: any;
+  addres: any = "";
 
-  constructor(private modalService: NgbModal,
+  constructor(private modalService: NgbModal, private adminunitservice: AdminunitService,
+              private saimauservice: SaimauService,
               private saimauService: SCDetailsService,
               private cus4: CustomerinfoService,
               private ordertimelineservice: OrdertimlineService,
@@ -57,6 +67,7 @@ export class OrderdetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tinh();
   }
 
   productFrom = new FormGroup({
@@ -72,9 +83,12 @@ export class OrderdetailComponent implements OnInit {
   })
   customerinfoFrom = new FormGroup({
     name: new FormControl('', Validators.required),
-    id: new FormControl('', Validators.required),
+    id: new FormControl(),
     sdt: new FormControl('', Validators.required),
-    address: new FormControl('')
+    address: new FormControl('', Validators.required)
+  })
+  adminunitFrom = new FormGroup({
+    parentId: new FormControl()
   })
 
   logout() {
@@ -83,6 +97,68 @@ export class OrderdetailComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  tinh() {
+    if (this.adminunitFrom.value.parentId == null) {
+      this.adminunitservice.gettinhhuyenxa(this.adminunitFrom.value).subscribe(result => {
+        this.litthanhpho = result;
+      })
+    }
+
+  }
+
+  xa() {
+
+    if (this.adminunitFrom.value.parentId != null) {
+      this.adminunitservice.gettinhhuyenxa(this.adminunitFrom.value).subscribe(result => {
+        this.litxa = result;
+      })
+    }
+
+  }
+
+  huyen() {
+
+    if (this.adminunitFrom.value.parentId != null) {
+      this.adminunitservice.gettinhhuyenxa(this.adminunitFrom.value).subscribe(result => {
+        this.lithuyen = result;
+      })
+    }
+  }
+
+  laytp(value: any) {
+    this.tp_id = value;
+    this.adminunitFrom.value.parentId = this.tp_id;
+    for (let item of this.litthanhpho) {
+      if (item.id == this.tp_id) {
+        this.addres += item.name;
+      }
+    }
+
+    this.huyen()
+  }
+
+  layhuyen(value: any) {
+    this.huyen_id = value;
+    this.adminunitFrom.value.parentId = this.huyen_id;
+    for (let item of this.lithuyen) {
+      if (item.id == this.huyen_id) {
+        this.addres = item.name + " " + this.addres;
+      }
+    }
+    this.xa()
+  }
+
+  layxa(value: any) {
+    this.xa_id = value
+    for (let item of this.litxa) {
+      if (item.id == this.xa_id) {
+        this.addres = item.name + " " + this.addres;
+      }
+    }
+    console.log(this.addres)
+  }
+
+
   delete(id: any) {
     //xóa đơn chi tiết
     this.Orderid = this.route.snapshot.paramMap.get('id');
@@ -90,6 +166,15 @@ export class OrderdetailComponent implements OnInit {
     if (confirm("bnaj có chắc muốn xóa sản phẩm này khói giỏ hàng?")) {
       this.service.delete(id).subscribe(result => {
         this.getByOrderId(this.Orderid);
+        this.type = 'Sửa đơn hàng';
+        this.ordertimeline.type = this.type;
+
+        this.ordertimeline.description = 'Xóa sản phẩm ';
+
+        this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+          this.ordertimeline = result;
+
+        })
         this.toastr.success("Xóa thành công")
       });
     }
@@ -142,7 +227,7 @@ export class OrderdetailComponent implements OnInit {
         })
 
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
-          this.router.navigate(['/order/chuanbihang'])
+          location.reload()
         });
         this.modalService.dismissAll();
       }
@@ -160,7 +245,7 @@ export class OrderdetailComponent implements OnInit {
           console.log(this.ordertimeline)
         })
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
-          this.router.navigate(['/order/dahuy'])
+          location.reload()
         });
         this.modalService.dismissAll();
       }
@@ -206,7 +291,7 @@ export class OrderdetailComponent implements OnInit {
     this.customerinfoFrom.value.id = id;
     this.customerinfoFrom.value.name = this.name4;
     this.customerinfoFrom.value.sdt = this.sdt4;
-    this.customerinfoFrom.value.address = this.diachi4;
+    this.customerinfoFrom.value.address = this.addres;
     this.username = this.tokenservice.getUser();
     this.ordertimeline.account_name = this.username;
     this.ordertimeline.order_id = this.order.id;
@@ -226,15 +311,33 @@ export class OrderdetailComponent implements OnInit {
       this.modalService.dismissAll();
     })
   }
+
 //thêm sp
+  saimauform = new FormGroup({
+    product_id: new FormControl(''),
+    size_id: new FormControl(''),
+    color_id: new FormControl(''),
+
+  })
+
   laysize(sizevalue: any) {
     this.valuesize = sizevalue;
-    console.log(this.valuesize)
+
   }
 
-  laycolor(colorvalue: any) {
+  laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
-    console.log(this.valuecolor)
+    console.log(id)
+    this.saimauform.value.color_id = colorvalue;
+    this.saimauform.value.product_id = id;
+    console.log(this.saimauform.value)
+    console.log(colorvalue)
+    this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
+      this.size = result;
+
+    })
+    console.log(this.size)
+
   }
 
   giohang(order_id: any, product_id: any, gia: any) {
@@ -242,11 +345,19 @@ export class OrderdetailComponent implements OnInit {
     this.orderdeteoFrom.value.productId = product_id;
     this.orderdeteoFrom.value.colorId = this.valuecolor;
     this.orderdeteoFrom.value.sizeId = this.valuesize;
-    this.orderdeteoFrom.value.orderId = this.order.id;
+    this.orderdeteoFrom.value.orderId = this.Orderid;
     this.orderdeteoFrom.value.price = gia;
     this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
       this.orderdetail = result;
+      this.type = 'Sửa đơn hàng';
+      this.ordertimeline.type = this.type;
 
+      this.ordertimeline.description = 'Thêm sản phẩm ';
+
+      this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+        this.ordertimeline = result;
+
+      })
       if (this.orderdetail != null) {
         this.toastr.success("Đã thêm vào giỏ");
         this.getByOrderId(this.Orderid);
@@ -262,7 +373,7 @@ export class OrderdetailComponent implements OnInit {
   }
 
   opencustomerinfo(content: any) {
-    this.diachi4 = this.order.addressinfo;
+    this.addres = this.order.addressinfo;
     this.name4 = this.order.nameinfo;
     this.sdt4 = this.order.sdtinfo;
     this.modalService.open(content, {
@@ -301,7 +412,7 @@ export class OrderdetailComponent implements OnInit {
 
   openProduct(product: any) {
     this.serchNameProduct();
-    this.getAllsize();
+
     this.getAllmau();
     this.modalService.open(product, {
       size: 'xl', centered: true

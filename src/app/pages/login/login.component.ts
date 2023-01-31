@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
           if (localStorage.getItem('auth-token')
             && (role.includes('ROLE_ADMIN') || role.includes('ROLE_JE'))) {
             this.toastr.success("Đăng nhập thành công")
-            this.router.navigate(['/product']);
+            this.router.navigate(['/thongke']);
             return;
           }
           if (localStorage.getItem('auth-token')
