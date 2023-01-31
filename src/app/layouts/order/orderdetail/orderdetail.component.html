@@ -166,12 +166,12 @@
     <button class="btn btn-success ms-3" (click)="openmodaltimeline(timeline)">Chi tiết</button>
   </span>
   <br>
-  <span *ngIf="order.status ==1">
-    <button (click)="pdfphieugiaohang(order.id)" class="btn btn-warning ms-3">In phiếu giao <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
-    </svg></button>
-  </span>
+<!--  <span *ngIf="order.status ==1">-->
+<!--    <button (click)="pdfphieugiaohang(order.id)" class="btn btn-warning ms-3">In phiếu giao <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">-->
+<!--      <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>-->
+<!--      <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>-->
+<!--    </svg></button>-->
+<!--  </span>-->
 </div>
 <div class="card" style="margin-left: 295px;">
   <h5 class="card-title p-3">Thông tin khách hàng</h5>
@@ -217,9 +217,11 @@
               <label>Tên người nhận</label><br>
               <label><b>{{order.nameinfo}}</b></label>
             </div>
-            <div class="col-1">
+
+              <div class="col-1" *ngIf="order.status==0">
               <button (click)="opencustomerinfo(customerinfo)">sửa</button>
             </div>
+
           </div>
         </div>
       </div>
@@ -314,17 +316,41 @@
       <hr>
 
         <div class="row ">
-          <div class="form-group col-5">
+          <div class="form-group col-6  mb-3">
             <label for="inputten">Họ và tên</label>
             <input class="form-control" type="text" id="inputten" [(ngModel)]="name4">
           </div>
-          <div class="form-group col-5">
+          <div class="form-group col-6  mb-3">
             <label for="inputSDT">SDT</label>
             <input class="form-control" type="text" id="inputSDT" [(ngModel)]="sdt4" >
           </div>
-          <div class="form-group col-5 " style="margin-left: 20px">
+          <div class="col-6 mb-3">
+            <select #selectTp (change)="laytp(selectTp.value)" class="form-select "
+                    aria-label="Default select example">
+              <option selected>Mời chọn thành phố</option>
+              <option *ngFor="let itemtp of litthanhpho" [value]="itemtp.id">{{itemtp.name}}</option>
+
+            </select>
+          </div>
+          <div class="col-6 mb-3">
+            <select #selecthuyen (change)="layhuyen(selecthuyen.value)" class="form-select "
+                    aria-label="Default select example">
+              <option selected>Mời chọn huyện</option>
+              <option *ngFor="let itemtp of lithuyen" [value]="itemtp.id">{{itemtp.name}}</option>
+
+            </select>
+          </div>
+          <div class="col-6 mb-3">
+            <select class="form-select "
+                    aria-label="Default select example" #selectxa (change)="layxa(selectxa.value)">
+              <option selected>Mời chọn xã</option>
+              <option *ngFor="let itemtp of litxa" [value]="itemtp.id">{{itemtp.name}}</option>
+
+            </select>
+          </div>
+          <div class="form-group col-12  mb-3" >
             <label for="inputdiachi">Địa chỉ</label>
-            <input class="form-control" type="text" id="inputdiachi"  [(ngModel)]="diachi4">
+            <input class="form-control" type="text" id="inputdiachi"  [(ngModel)]="addres">
           </div>
           <div class="col-3" style="margin-top: 20px;">
             <button class="btn btn-success" (click)=editcustomerinfo(order.customerinfo_id)>Thêm mới</button>
@@ -365,7 +391,7 @@
         <th>{{item.name}}</th>
         <th style="padding-left: 25px;">{{item.outputprice| currency :'VND' }}</th>
         <th>
-          <select #selectColor (change)="laycolor(selectColor.value)" class="form-select "
+          <select #selectColor (change)="laycolor(selectColor.value,item.id)" class="form-select "
                   aria-label="Default select example">
             <option selected>Mời chọn</option>
             <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>

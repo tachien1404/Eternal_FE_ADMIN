@@ -11,6 +11,7 @@ import {formatDate} from "@angular/common";
   styleUrls: ['./thongke.component.css']
 })
 export class ThongkeComponent implements OnInit {
+  dthomnay: any;//chưá dt hôm nay và sld hôm nay
   loai: any;//loại thời gian
   tongdoanhthu: number = 0;
   salesReport: SalesReport = {};//salesReportdto
@@ -22,9 +23,15 @@ export class ThongkeComponent implements OnInit {
   nam: any[] = [];
   doanhthu: any[] = [];
   colordata: any[] = [];
+  ngayhientai: any = new Date();
+  sldx01: any;
+  sld0: any;
+  sld1: any;
 
   ngOnInit(): void {
     this.tatca()
+    this.homnay();
+    this.sld01();
   }
 
   constructor(private service: ReportService) {
@@ -106,6 +113,23 @@ export class ThongkeComponent implements OnInit {
     });
 
 
+  }
+
+//doanh thu và sld bán đc hôm nay
+  homnay() {
+    this.service.doanhthutheongay().subscribe(result => {
+      this.dthomnay = result;
+    })
+  }
+
+  //số lượng đơn trạng thái 0 và 1
+  sld01() {
+    this.service.sld01().subscribe(result => {
+      this.sldx01 = result;
+this.sld0=this.sldx01[0];
+this.sld1=this.sldx01[1];
+
+    })
   }
 
 //loại thời gian
