@@ -57,7 +57,7 @@ const routes:  Routes = [
 
   {
     path:'tao-don-hang',loadChildren:()=>import('./layouts/tao-don-hang/tao-don-hang.module').then((m=>m.TaoDonHangModule)),
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   },
 
 

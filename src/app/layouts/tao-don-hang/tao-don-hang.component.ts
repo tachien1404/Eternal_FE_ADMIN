@@ -21,6 +21,38 @@ import {AdminunitService} from "../../service/adminunit.service";
   styleUrls: ['./tao-don-hang.component.css']
 })
 export class TaoDonHangComponent implements OnInit {
+  //Tab
+  tabs : any[] = [] ; // [order1 in tab1, order2 intab2]
+  selected = new FormControl(0);
+
+  addTab() {
+    this.tabs.push(`Order ${this.tabs.length + 1}`);
+    this.selected.setValue(this.tabs.length - 1);
+    // nên chỗ code dưới này phải theo trên, mấy cái btn add nữa
+    // this.order=null;
+    // this.orderService.save(this.orderFrom.value).subscribe(result => {
+    //   this.order = result;
+    //   this.namesot = '';
+    //   this.username = this.tokenservice.getUser();
+    //   this.ordertimeline.account_name = this.username;
+    //   this.ordertimeline.order_id = this.order.id;
+    //   this.type = 'Tạo đơn hàng';
+    //   this.ordertimeline.type = this.type;
+
+    //   this.ordertimeline.description = this.username + " tạo đơn hàng";
+
+    //   this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+
+
+    //   })
+    // })
+  }
+
+  removeTab(index: number) {
+    var result = confirm("Are you sure?");
+    if (result) this.tabs.splice(index, 1);
+  }
+
   tru: S_CDetails[] = [];//mảng trừ sl
   fordon: any[] = [1];//ra các hóa đơn chờ
   orderdetail: OrderDeteo = {};
@@ -356,7 +388,9 @@ console.log(this.size)
     })
   }
 
+  getAllsize() {
 
+  }
 
   serchNameProduct() {
     this.productFrom.value.name = this.namesot
@@ -425,27 +459,22 @@ console.log(this.size)
     })
   }
 
-  enddononlai() {
+  enddonnhap() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-    this.orderFrom.value.status = '0';
+
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-
+    this.orderFrom.value.status = '6';
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-
-
+      console.log(this.order)
     }, error => {
       this.toastr.success("eroooo");
-    })
-    //trừ sl sai màu
-    this.saimauservice.trusl(this.tru).subscribe(result => {
-
     })
   }
 

@@ -9,6 +9,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatInputModule} from "@angular/material/input";
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   exports :[
@@ -21,7 +22,8 @@ import {MatInputModule} from "@angular/material/input";
     MatDialogModule,
     MatSelectModule,
     MatRadioModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule
   ]
 })
 export class Material_module{
