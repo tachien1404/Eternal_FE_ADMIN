@@ -109,7 +109,7 @@
           <label>Số lượng sản phẩm: </label><br>
           <label>Tổng tiền hàng: </label><br>
           <label>Giảm giá: </label><br>
-          <span *ngIf="valuekenh==2"><label>Tiền ship</label></span><br>
+          <span *ngIf="valuekenh==2"><label>Phí giao hàng:</label></span><br>
           <label>Tạm tính: </label><br>
          <span *ngIf="valuekenh==1">
             <label>Tiền khách đưa: </label><br>
@@ -122,8 +122,8 @@
           <label>{{orderdeteogiaquantity.quantity}}</label><br>
           <label>{{orderdeteogiaquantity.price| currency :'VND' }}</label><br>
           <input [(ngModel)]="giamgia" style="width: 40px;" type="text"><br>
-           <span *ngIf="valuekenh==2"><label>Tiền ship</label></span><br>
-          <label>{{tongthu - giamgia| currency :'VND' }}</label><br>
+           <span *ngIf="valuekenh==2"><label>{{shippingFee| currency :'VND' }}</label></span><br>
+          <label>{{tongthu+shippingFee-giamgia| currency :'VND' }}</label><br>
          <span *ngIf="valuekenh==1">
             <input [(ngModel)]="khachdua" style="width: 40px;" type="text"><br>
           <span *ngIf="khachdua>0">

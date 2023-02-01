@@ -89,11 +89,11 @@
               <th>Ngày đặt</th>
               <th>Giá</th>
               <th>Địa chỉ</th>
-
+              <th>Giảm giá</th>
               <th>Ghi chú</th>
               <th>Trạng thái</th>
               <th>Kênh</th>
-
+              <th>Phí giao hàng</th>
             </tr>
             </thead>
             <tbody>
@@ -129,7 +129,7 @@
               <span *ngIf="item.addressinfo==null&&item.addresscustomer==null">
                  <th>Khách lẻ </th>
               </span>
-
+              <td >{{item.giamgia}}</td>
               <td>{{item.note}}</td>
               <td>
               <span *ngIf="item.status ==0">
@@ -142,7 +142,7 @@
               </span>
                 <span *ngIf="item.status ==2">
                 <a class="btn-dark "
-                   style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#70bf73;">{{item.statusName}}</a>
+                   style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#0d6efd;">{{item.statusName}}</a>
               </span>
                 <span *ngIf="item.status ==3">
                 <a class="btn-dark "
@@ -158,6 +158,7 @@
               </span>
               </td>
               <th>{{item.kenhName}}</th>
+              <th>{{item.ship}}</th>
             </tr>
             </tbody>
           </table>
@@ -165,8 +166,6 @@
           <div style="margin-bottom: 100px;float: right;">
             <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
           </div>
-
-
         </div>
 
 
