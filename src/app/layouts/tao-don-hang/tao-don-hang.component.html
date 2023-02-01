@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <app-side-bar></app-side-bar>
 
-<span *ngIf="order==null">
+
   <div style="margin-left: 295px;">
     <div>
       <button mat-raised-button class="example-add-tab-button" (click)="addTab()">
@@ -34,7 +34,7 @@
                 <div class="input-group">
                   <div class="form-outline">
                     <input type="search" id="form1" class="form-control" placeholder="Nhập tên sản phẩm"
-                      [(ngModel)]="namesot" />
+                           [(ngModel)]="namesot"/>
                     <label class="form-label" for="form1"></label>
                   </div>
                   <button type="button" class="btn btn-primary">
@@ -50,8 +50,8 @@
                       <label class="col-2">Size:{{item.valuesize}}</label>
                       <label class="col-2">Giá:{{item.price| currency :'VND' }}</label>
                       <input class="col-2" style="height: 20px;width: 70px;" type="number" #selectquantity
-                        (change)="changeQuantity(selectquantity.value,item.detail_id,item.quantitysaimau)"
-                        value="{{item.quantity}}">
+                             (change)="changeQuantity(selectquantity.value,item.detail_id,item.quantitysaimau)"
+                             value="{{item.quantity}}">
                       <label class="col-2 " style="color: red">Số lượng hàng còn :{{item.quantitysaimau}}</label>
                     </div>
                     <div class="row p-3">
@@ -121,7 +121,7 @@
                 <h5>Kênh bán hàng</h5>
                 <hr>
                 <select class="form-select " aria-label="Default select example" #selectKenh
-                  (change)="laykenh (selectKenh.value)">
+                        (change)="laykenh (selectKenh.value)">
                   <option selected>Mời chọn</option>
                   <option value="1">Tại quầy</option>
                   <option value="2">Giao hàng</option>
@@ -134,7 +134,7 @@
                   <hr>
                   <div class="input-group">
                     <div class="form-outline">
-                      <input type="search" id="form2" [(ngModel)]="namecus" class="form-control" placeholder="Search" />
+                      <input type="search" id="form2" [(ngModel)]="namecus" class="form-control" placeholder="Search"/>
 
                     </div>
                     <button type="button" class="btn btn-primary" (click)="timkiemcus()">
@@ -184,7 +184,7 @@
                 </div>
                 <div class="col-6 mb-3">
                   <select #selectTp (change)="laytp(selectTp.value)" class="form-select "
-                    aria-label="Default select example">
+                          aria-label="Default select example">
                     <option selected>Mời chọn thành phố</option>
                     <option *ngFor="let itemtp of litthanhpho" [value]="itemtp.id">{{itemtp.name}}</option>
 
@@ -192,7 +192,7 @@
                 </div>
                 <div class="col-6 mb-3">
                   <select #selecthuyen (change)="layhuyen(selecthuyen.value)" class="form-select "
-                    aria-label="Default select example">
+                          aria-label="Default select example">
                     <option selected>Mời chọn huyện</option>
                     <option *ngFor="let itemtp of lithuyen" [value]="itemtp.id">{{itemtp.name}}</option>
 
@@ -200,7 +200,7 @@
                 </div>
                 <div class="col-6 mb-3">
                   <select class="form-select " aria-label="Default select example" #selectxa
-                    (change)="layxa(selectxa.value)">
+                          (change)="layxa(selectxa.value)">
                     <option selected>Mời chọn xã</option>
                     <option *ngFor="let itemtp of litxa" [value]="itemtp.id">{{itemtp.name}}</option>
 
@@ -225,7 +225,7 @@
           <ng-template #product>
             <div class="input-group mt-3">
               <div class="form-outline">
-                <input type="search" id="form" class="form-control" [(ngModel)]="namesot" />
+                <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
                 <label class="form-label" for="form"></label>
               </div>
               <button type="button" class="btn btn-primary">
@@ -248,12 +248,12 @@
               <tbody>
                 <tr *ngFor="let item of litproduct">
                   <th><img src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}" alt=""
-                      width="120px" height="100"></th>
+                           width="120px" height="100"></th>
                   <th>{{item.name}}</th>
                   <th style="padding-left: 25px;">{{item.outputprice| currency :'VND' }}</th>
                   <th>
                     <select #selectColor (change)="laycolor(selectColor.value,item.id)" class="form-select "
-                      aria-label="Default select example">
+                            aria-label="Default select example">
                       <option selected>Mời chọn</option>
                       <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
 
@@ -261,7 +261,7 @@
                   </th>
                   <th>
                     <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
-                      aria-label="Default select example">
+                            aria-label="Default select example">
                       <option selected>Mời chọn</option>
                       <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
 
@@ -276,13 +276,13 @@
           </ng-template>
         </div>
         <button mat-raised-button class="example-delete-tab-button"
-          (click)="removeTab(index)">
+                (click)="removeTab(index)">
           Hủy
         </button>
       </mat-tab>
     </mat-tab-group>
   </div>
-</span>
+
 <span *ngIf="order==null">
   <div style="margin-top: 20px;margin-left: 295px;">
     <input type="text" placeholder="Mã đơn hàng" [(ngModel)]="namesot">

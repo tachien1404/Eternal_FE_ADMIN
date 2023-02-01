@@ -16,42 +16,12 @@ import {SaimauService} from "../../service/saimau.service";
 import {AdminunitService} from "../../service/adminunit.service";
 
 @Component({
-  selector: 'app-tao-don-hang',
-  templateUrl: './tao-don-hang.component.html',
-  styleUrls: ['./tao-don-hang.component.css']
+  selector: 'app-don-tai-quay',
+  templateUrl: './don-tai-quay.component.html',
+  styleUrls: ['./don-tai-quay.component.css']
+
 })
-export class TaoDonHangComponent implements OnInit {
-  //Tab
-  tabs : any[] = [] ; // [order1 in tab1, order2 intab2]
-  selected = new FormControl(0);
-
-  addTab() {
-    this.tabs.push(`Order ${this.tabs.length + 1}`);
-    this.selected.setValue(this.tabs.length - 1);
-    // nên chỗ code dưới này phải theo trên, mấy cái btn add nữa
-    this.orderService.save(this.orderFrom.value).subscribe(result => {
-      this.order = result;
-      this.namesot = '';
-      this.username = this.tokenservice.getUser();
-      this.ordertimeline.account_name = this.username;
-      this.ordertimeline.order_id = this.order.id;
-      this.type = 'Tạo đơn hàng';
-      this.ordertimeline.type = this.type;
-
-      this.ordertimeline.description = this.username + " tạo đơn hàng";
-
-      this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
-
-
-      })
-    })
-  }
-
-  removeTab(index: number) {
-    var result = confirm("Are you sure?");
-    if (result) this.tabs.splice(index, 1);
-  }
-  shippingFee:any;
+export class DonTaiQuayComponent implements OnInit {
   tru: S_CDetails[] = [];//mảng trừ sl
   fordon: any[] = [1];//ra các hóa đơn chờ
   orderdetail: OrderDeteo = {};
@@ -100,9 +70,9 @@ export class TaoDonHangComponent implements OnInit {
   })
 
   customerFrom = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.maxLength(255)]),
 
-    sdt: new FormControl('', Validators.required),
+    sdt: new FormControl('', [Validators.required, Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]),
     address: new FormControl('', Validators.required)
   })
   orderFrom = new FormGroup({
@@ -132,7 +102,17 @@ export class TaoDonHangComponent implements OnInit {
     this.tinh();
 
   }
+  tabs = ['Tab 1', 'Tab 2'];
+  selectedIndex = 0;
 
+  closeTab({ index }: { index: number }): void {
+    this.tabs.splice(index, 1);
+  }
+
+  newTab(): void {
+    this.tabs.push('New Tab');
+    this.selectedIndex = this.tabs.length;
+  }
   sumquantitygia() {
     this.orderService.sumgiaquantity(this.order.id).subscribe(result => {
       this.orderdeteogiaquantity = result;
@@ -222,7 +202,7 @@ export class TaoDonHangComponent implements OnInit {
         this.addres=item.name +" "+ this.addres ;
       }
     }
-console.log(this.addres)
+    console.log(this.addres)
   }
 
   laykenh(kenhvalue: any) {
@@ -302,15 +282,15 @@ console.log(this.addres)
   laycolor(colorvalue: any,id:any) {
     this.valuecolor = colorvalue;
     console.log(id)
-this.saimauform.value.color_id=colorvalue;
-this.saimauform.value.product_id=id;
+    this.saimauform.value.color_id=colorvalue;
+    this.saimauform.value.product_id=id;
     console.log(this.saimauform.value)
     console.log(colorvalue)
     this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
       this.size = result;
 
     })
-console.log(this.size)
+    console.log(this.size)
   }
 
 
@@ -387,9 +367,7 @@ console.log(this.size)
     })
   }
 
-  getAllsize() {
 
-  }
 
   serchNameProduct() {
     this.productFrom.value.name = this.namesot
@@ -434,7 +412,7 @@ console.log(this.size)
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-
+location.reload();
 
     }, error => {
       this.toastr.success("eroooo");
@@ -458,22 +436,27 @@ console.log(this.size)
     })
   }
 
-  enddonnhap() {
+  enddononlai() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-
+    this.orderFrom.value.status = '0';
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-    this.orderFrom.value.status = '6';
+
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-      console.log(this.order)
+
+
     }, error => {
       this.toastr.success("eroooo");
+    })
+    //trừ sl sai màu
+    this.saimauservice.trusl(this.tru).subscribe(result => {
+
     })
   }
 
@@ -493,18 +476,6 @@ console.log(this.size)
       this.toastr.error("Xóa thất bại");
     })
   }
-  getFeeShip(addResscustommerdefault: any) {
-    console.log(addResscustommerdefault);
-    this.service
-      .getFeeShip(
-        addResscustommerdefault.address,addResscustommerdefault.nameCity,addResscustommerdefault.nameDistrict
-      )
-      .subscribe((res) => {
-        this.shippingFee = res;
-      },error => {
-        this.toastr.error("Lỗi tính phí ship");
-      });
-  };
 
   get email() {
     return this.customerFrom.get('email');
