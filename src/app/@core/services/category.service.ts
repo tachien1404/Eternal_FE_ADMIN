@@ -27,6 +27,10 @@ export class CategoryService{
     return this.http.get<any>(`${environment.apiUrl}public/category/delete/`+id);
   }
 
+  public quickAdd(category: Category): Observable<any> {
+    return this.http.post(`${environment.apiUrl}public/category/create`, category);
+  }
+
 
 
 }

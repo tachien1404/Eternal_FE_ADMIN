@@ -216,6 +216,11 @@
             </div>
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Danh mục: </label>
+              <button (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              </button>
               <div class="col-md-10 mt-2">
                 <div>
                   <select class="form-select" formControlName="category" style="border: solid 1px gray;">
@@ -234,6 +239,11 @@
 
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Hãng: </label>
+              <button (click)="quickAddBrand(contentBrand)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              </button>
               <div class="col-md-10 mt-2">
                 <div>
                   <select class="form-select" formControlName="hang" style="border: solid 1px gray;">
@@ -251,6 +261,11 @@
             </div>
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Loại đinh giày: </label>
+              <button (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              </button>
               <div class="col-md-10 mt-2">
                 <div>
                   <select class="form-select" formControlName="sole" style="border: solid 1px gray;">
@@ -269,6 +284,11 @@
 
             <div class="form-group row">
               <label class="col-md-4 col-form-label"> Dòng giày: </label>
+              <button (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+              </button>
               <div class="col-md-10 mt-2">
                 <div>
                   <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">
@@ -356,3 +376,60 @@
   </form>
 
 </div>
+
+<form novalidate [formGroup]="formAddCate">
+  <ng-template #contentCate let-modal>
+    <div class="modal-header">
+      <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Thêm mới danh mục</h2>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Tên Danh Mục: </label>
+          <div class="col-md-10">
+            <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+            <small class="col alert text-danger" role="alert"
+                   *ngIf="formAddCate.get('name')?.errors?.required && formAddCate.get('name')?.touched">
+              Tên danh mục không được để trống !
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button type="button" class="btn btn-success" type="submit" (click)="createCate(content)">Thêm</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</form>
+
+<form novalidate [formGroup]="formAddBrand">
+  <ng-template #contentBrand let-modal>
+    <div class="modal-header">
+      <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Thêm mới hãng</h2>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Tên hãng: </label>
+          <div class="col-md-10">
+            <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+            <small class="col alert text-danger" role="alert"
+                   *ngIf="formAddBrand.get('name')?.errors?.required && formAddBrand.get('name')?.touched">
+              Tên hãng không được để trống !
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button type="button" class="btn btn-success" type="submit" (click)="createBrand(content)">Thêm</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</form>
+

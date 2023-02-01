@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Brand, Category} from "../@core/models/product";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn :'root'
@@ -18,7 +20,10 @@ export  class BrandService{
     }else{
       return this.http.post(this.api+'/saveOrUpdate',inputdata);
     }
+  }
 
+  public create(brand: Brand): Observable<any> {
+    return this.http.post(`${environment.apiUrl}public/brand/create`, brand);
   }
 }
 
