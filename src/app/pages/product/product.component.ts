@@ -8,6 +8,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {computeStartOfLinePositions} from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/source_file";
 import {ProductDTO, SortByValue} from "../../@core/models/ProductSortDTO";
 import {SCDetailsService} from "../../@core/services/s-c.-details.service";
+import {CategoryService} from "../../@core/services/category.service";
+import {BrandService} from "../../service/brand.service";
 
 @Component({
   selector: 'app-product',
@@ -17,6 +19,8 @@ import {SCDetailsService} from "../../@core/services/s-c.-details.service";
 export class ProductComponent implements OnInit {
   formAdd!: FormGroup;
   formSearch!: FormGroup;
+  formAddCate!: FormGroup;
+  formAddBrand!: FormGroup;
   datas: Product[] = [];
   indexPage = 0;
   Page: any;
@@ -30,6 +34,8 @@ export class ProductComponent implements OnInit {
   product: Product = {};
   message!: String;
   hiddeen!: boolean;
+  category: Category = {};
+  brand: Brand = {};
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +43,8 @@ export class ProductComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: NgbModal,
     private productService: ProductService,
+    private cateService: CategoryService,
+    private brandService: BrandService,
   ) {
   }
 
@@ -50,6 +58,8 @@ export class ProductComponent implements OnInit {
     this.initFormAdd();
     this.pagination(this.indexPage)
     this.initFormSearch();
+    this.initFormAddCate();
+    this.initFormAddBrand();
   }
 
   initFormSearch() {
@@ -76,6 +86,20 @@ export class ProductComponent implements OnInit {
       sole: ['', Validators.required],
       shoeLine: ['', Validators.required],
     })
+  }
+
+  initFormAddCate(){
+    this.formAddCate = this.fb.group({
+      id:'',
+      name: ['', [Validators.required, Validators.maxLength(20)]]
+    });
+  }
+
+  initFormAddBrand(){
+    this.formAddBrand = this.fb.group({
+      id:'',
+      name: ['', [Validators.required, Validators.maxLength(20)]]
+    });
   }
 
   openLg(content: any) {
@@ -345,6 +369,55 @@ export class ProductComponent implements OnInit {
   config(id: any) {
     const url = "configProduct/" + id;
     this.router.navigate([url]);
+  }
+
+  quickAddCategory(contentCate: any){
+    this.modalService.dismissAll();
+    this.modalService.open(contentCate, {size: 'lg', centered: true, scrollable: true});
+  }
+
+  addValueFromCate() {
+    this.category.name = this.formAddCate.value.name;
+  }
+
+  createCate(content: any){
+    this.addValueFromCate();
+    this.cateService.quickAdd(this.category).subscribe(
+      res =>{
+        this.toastr.success(res.message);
+        this.category={};
+        this.getAllCategory();
+        this.modalService.dismissAll();
+        this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
+      }, error => {
+        this.toastr.error(error.error.message);
+      }
+    );
+  }
+
+
+  quickAddBrand(contentBrand: any){
+    this.modalService.dismissAll();
+    this.modalService.open(contentBrand, {size: 'lg', centered: true, scrollable: true});
+  }
+
+  addValueFromBrand() {
+    this.brand.name = this.formAddBrand.value.name;
+  }
+
+  createBrand(content: any){
+    this.addValueFromBrand();
+    this.brandService.create(this.brand).subscribe(
+      res =>{
+        this.toastr.success(res.message);
+        this.brand={};
+        this.getAllBrand();
+        this.modalService.dismissAll();
+        this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
+      }, error => {
+        this.toastr.error(error.error.message);
+      }
+    );
   }
 
 
