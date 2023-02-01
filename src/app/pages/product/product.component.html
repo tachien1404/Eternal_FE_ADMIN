@@ -190,7 +190,7 @@
           <div class="col-7">
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Tên sản phẩm: </label>
-              <div class="col-md-10">
+              <div class="col-md-9">
                 <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('name')?.errors?.required && formAdd.get('name')?.touched">
@@ -201,7 +201,7 @@
 
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Giá bán: </label>
-              <div class="col-md-10">
+              <div class="col-md-9">
                 <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('outputprice')?.errors?.required && formAdd.get('outputprice')?.touched">
@@ -216,108 +216,108 @@
             </div>
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Danh mục: </label>
-              <button (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-              </button>
-              <div class="col-md-10 mt-2">
-                <div>
+              <div class="col-md-11 mt-2">
+                <div class="d-flex">
                   <select class="form-select" formControlName="category" style="border: solid 1px gray;">
                     <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
                     </option>
-
                   </select>
 
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('category')?.errors?.required && formAdd.get('category')?.touched">
                     Danh mục chưa được chọn !
                   </small>
+                  <button style="margin-left: 25px;" (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                  </button>
                 </div>
+
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Hãng: </label>
-              <button (click)="quickAddBrand(contentBrand)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-              </button>
-              <div class="col-md-10 mt-2">
-                <div>
+
+              <div class="col-md-11 mt-2">
+                <div class="d-flex">
                   <select class="form-select" formControlName="hang" style="border: solid 1px gray;">
                     <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
                     </option>
-
                   </select>
 
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('hang')?.errors?.required && formAdd.get('hang')?.touched">
                     Hãng chưa được chọn !
                   </small>
+                  <button style="margin-left: 25px;" (click)="quickAddBrand(contentBrand)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                  </button>
                 </div>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Loại đinh giày: </label>
-              <button (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-              </button>
-              <div class="col-md-10 mt-2">
-                <div>
+
+              <div class="col-md-11 mt-2">
+                <div class="d-flex">
                   <select class="form-select" formControlName="sole" style="border: solid 1px gray;">
                     <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}
                     </option>
-
                   </select>
 
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('sole')?.errors?.required && formAdd.get('sole')?.touched">
                     Loại đinh giày chưa được chọn !
                   </small>
+                  <button style="margin-left: 25px;" (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                  </button>
                 </div>
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-md-4 col-form-label"> Dòng giày: </label>
-              <button (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-              </svg>
-              </button>
-              <div class="col-md-10 mt-2">
-                <div>
+
+              <div class="col-md-11 mt-2">
+                <div class="d-flex">
                   <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">
                     <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}
                     </option>
-
                   </select>
 
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('shoeLine')?.errors?.required && formAdd.get('shoeLine')?.touched">
                     Dòng giày chưa được chọn !
                   </small>
+                  <button style="margin-left: 25px;" (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                  </svg>
+                  </button>
                 </div>
               </div>
             </div>
 
             <div class="form-group row">
-              <label class="col-md-2 col-form-label">Tình trạng :</label>
+              <label class="col-md-4 col-form-label">Tình trạng :</label>
               <div class="col-md-10 mt-2 ">
-                <div class="form-check form-check-inline col-12 col-sm-12">
+                <div class="form-check form-check-inline col-12 col-sm-12 ">
                   <input class="form-check-input" formControlName="status" [value]="1" type="radio" name="status"
                     id="active">
-                  <label class="form-check-label col-12" for="active">Đang kinh doanh</label>
+                  <label class="form-check-label" for="active">Đang kinh doanh</label>
                 </div>
 
                 <div class="form-check form-check-inline col-12 col-sm-12">
                   <input class="form-check-input" formControlName="status" [value]="0" type="radio" name="status"
                     id="notActive">
-                  <label class="form-check-label col-12" for="notActive">Ngừng kinh doanh</label>
+                  <label class="form-check-label" for="notActive">Ngừng kinh doanh</label>
                 </div>
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">
@@ -328,7 +328,7 @@
             <div class="col-md-10 ">
               <label for="formFile" class="form-label">Ảnh</label>
               <input type="text" formControlName="" value="{{product.photo}}" class="form-control">
-              <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
+              <input class="form-control mt-2" formControlName="Photo" type="file" accept="image/*" id="formFile"
                 (change)="onFileSelected($event)">
             </div>
 
@@ -351,7 +351,7 @@
 
 
           <div class="col-5">
-            <div div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
+            <div div class=" rounded h-100 p-4 align-items-center justify-content-center mx-0">
               <img class="rounded mx-auto d-block" alt="none" style="width: 200px;height: 200px;"
                 src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{product.photo?product.photo:filename}}">
             </div>

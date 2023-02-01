@@ -34,6 +34,13 @@ import { MauSacComponent } from './layouts/mau-sac/mau-sac.component';
 import { SizeGiayComponent } from './layouts/size-giay/size-giay.component';
 import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
 
+const configToast: any = {
+  timeOut: 2000,
+  positionClass: 'toast-top-right',
+  preventDuplicates: true,
+  progressBar: true,
+  progressAnimation:'increasing'
+};
 
 
 @NgModule({
@@ -66,7 +73,7 @@ import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
         AppRoutingModule, HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot(configToast),
         NgbModule,
         NgxPaginationModule, NgChartsModule,
       CookieModule.forRoot(),
