@@ -46,6 +46,8 @@ export class DonTaiQuayComponent implements OnInit {
   addres: any = "";
   mau: any;
   order: any;
+  namecity: any;
+  nameDistrict: any;
   namesot: any;
   namecus: any;
   litproduct: any;
@@ -59,6 +61,7 @@ export class DonTaiQuayComponent implements OnInit {
   description?: String;
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
+  shippingFee: any = 0;
 
   constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
               private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
@@ -78,6 +81,7 @@ export class DonTaiQuayComponent implements OnInit {
   orderFrom = new FormGroup({
     id: new FormControl(''),
     note: new FormControl(''),
+    giamgia: new FormControl(''),
 
     price: new FormControl(''),
     status: new FormControl('6'),
@@ -102,10 +106,11 @@ export class DonTaiQuayComponent implements OnInit {
     this.tinh();
 
   }
+
   tabs = ['Tab 1', 'Tab 2'];
   selectedIndex = 0;
 
-  closeTab({ index }: { index: number }): void {
+  closeTab({index}: { index: number }): void {
     this.tabs.splice(index, 1);
   }
 
@@ -113,6 +118,7 @@ export class DonTaiQuayComponent implements OnInit {
     this.tabs.push('New Tab');
     this.selectedIndex = this.tabs.length;
   }
+
   sumquantitygia() {
     this.orderService.sumgiaquantity(this.order.id).subscribe(result => {
       this.orderdeteogiaquantity = result;
@@ -177,6 +183,8 @@ export class DonTaiQuayComponent implements OnInit {
     this.adminunitFrom.value.parentId = this.tp_id;
     for (let item of this.litthanhpho) {
       if (item.id == this.tp_id) {
+        this.namecity = item.name;
+        this.addres = '';
         this.addres += item.name;
       }
     }
@@ -189,7 +197,8 @@ export class DonTaiQuayComponent implements OnInit {
     this.adminunitFrom.value.parentId = this.huyen_id;
     for (let item of this.lithuyen) {
       if (item.id == this.huyen_id) {
-        this.addres=item.name +" "+ this.addres ;
+        this.addres = item.name + " " + this.addres;
+        this.nameDistrict = item.name;
       }
     }
     this.xa()
@@ -199,7 +208,7 @@ export class DonTaiQuayComponent implements OnInit {
     this.xa_id = value
     for (let item of this.litxa) {
       if (item.id == this.xa_id) {
-        this.addres=item.name +" "+ this.addres ;
+        this.addres = item.name + " " + this.addres;
       }
     }
     console.log(this.addres)
@@ -212,10 +221,10 @@ export class DonTaiQuayComponent implements OnInit {
 
   savecustomer() {
     if (this.customerFrom.valid) {
-      this.customerFrom.value.address+= " "+this.addres;
+      this.customerFrom.value.address += " " + this.addres;
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
-        console.log(this.customer)
+        this.getFeeShip();
         this.toastr.success("Thêm mới thành công");
         this.modalService.dismissAll();
 
@@ -273,17 +282,19 @@ export class DonTaiQuayComponent implements OnInit {
     this.valuesize = sizevalue;
 
   }
+
   saimauform = new FormGroup({
     product_id: new FormControl(''),
     size_id: new FormControl(''),
     color_id: new FormControl(''),
 
   })
-  laycolor(colorvalue: any,id:any) {
+
+  laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
     console.log(id)
-    this.saimauform.value.color_id=colorvalue;
-    this.saimauform.value.product_id=id;
+    this.saimauform.value.color_id = colorvalue;
+    this.saimauform.value.product_id = id;
     console.log(this.saimauform.value)
     console.log(colorvalue)
     this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
@@ -368,7 +379,6 @@ export class DonTaiQuayComponent implements OnInit {
   }
 
 
-
   serchNameProduct() {
     this.productFrom.value.name = this.namesot
     this.productService.serchName(this.productFrom.value).subscribe(result => {
@@ -380,7 +390,7 @@ export class DonTaiQuayComponent implements OnInit {
   }
 
   taodonhang() {
-    this.order=null;
+    this.order = null;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.namesot = '';
@@ -406,13 +416,14 @@ export class DonTaiQuayComponent implements OnInit {
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-
+    this.orderFrom.value.giamgia=this.giamgia;
+    this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-location.reload();
+      location.reload();
 
     }, error => {
       this.toastr.success("eroooo");
@@ -466,6 +477,21 @@ location.reload();
 
     })
   }
+
+  getFeeShip() {
+    if (this.nameDistrict != null && this.namecity != null&&this.valuekenh==2) {
+
+      this.service
+        .getFeeShip(
+          this.addres, this.namecity, this.nameDistrict
+        )
+        .subscribe((res) => {
+          this.shippingFee = res;
+        }, error => {
+          this.toastr.error("Lỗi tính phí ship");
+        });
+    }
+  };
 
   deletehoadoncho(id: any) {
     this.orderService.deleteorder(id).subscribe(result => {
