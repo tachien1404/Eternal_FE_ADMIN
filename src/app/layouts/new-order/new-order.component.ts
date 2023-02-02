@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {CustomerService} from "../../service/customer.service";
@@ -16,46 +16,13 @@ import {SaimauService} from "../../service/saimau.service";
 import {AdminunitService} from "../../service/adminunit.service";
 
 @Component({
-  selector: 'app-tao-don-hang',
-  templateUrl: './tao-don-hang.component.html',
-  styleUrls: ['./tao-don-hang.component.css']
+  selector: 'app-new-order',
+  templateUrl: './new-order.component.html',
+  styleUrls: ['./new-order.component.css']
 })
-export class TaoDonHangComponent implements OnInit {
-  //Tab
-  tabs : any[] = [] ; // [order1 in tab1, order2 intab2]
-  selected = new FormControl(0);
-
-  addTab() {
-    this.tabs.push(`Order ${this.tabs.length + 1}`);
-    this.selected.setValue(this.tabs.length - 1);
-    // nên chỗ code dưới này phải theo trên, mấy cái btn add nữa
-    // this.order=null;
-    // this.orderService.save(this.orderFrom.value).subscribe(result => {
-    //   this.order = result;
-    //   this.namesot = '';
-    //   this.username = this.tokenservice.getUser();
-    //   this.ordertimeline.account_name = this.username;
-    //   this.ordertimeline.order_id = this.order.id;
-    //   this.type = 'Tạo đơn hàng';
-    //   this.ordertimeline.type = this.type;
-
-    //   this.ordertimeline.description = this.username + " tạo đơn hàng";
-
-    //   this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
-
-
-    //   })
-    // })
-  }
-
-  removeTab(index: number) {
-    var result = confirm("Are you sure?");
-    if (result) this.tabs.splice(index, 1);
-  }
-
-  removeSucces(index: number) {
-    this.tabs.splice(index, 1);
-  }
+export class NewOrderComponent implements OnInit {
+  @Output() childEvent = new EventEmitter();
+  @Output() childEventCreateDra = new EventEmitter();
 
   tru: S_CDetails[] = [];//mảng trừ sl
   fordon: any[] = [1];//ra các hóa đơn chờ
@@ -133,9 +100,7 @@ export class TaoDonHangComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.getAll();
-    this.tinh();
-
+    this.taodonhang()
   }
 
   sumquantitygia() {
@@ -319,7 +284,7 @@ console.log(this.size)
   }
 
 
-  giohang(order_id: any, product_id: any, gia: any) {
+  giohang(product_id: any, gia: any) {
     this.orderdeteoFrom.value.productId = product_id;
     this.orderdeteoFrom.value.colorId = this.valuecolor;
     this.orderdeteoFrom.value.sizeId = this.valuesize;
@@ -421,7 +386,7 @@ console.log(this.size)
 
       this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
 
-
+        this.childEventCreateDra.emit();
       })
     })
   }
@@ -439,7 +404,7 @@ console.log(this.size)
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-
+      this.childEvent.emit();
 
     }, error => {
       this.toastr.success("eroooo");
@@ -485,7 +450,6 @@ console.log(this.size)
   getAll() {
     this.orderService.getBy6().subscribe(result => {
       this.listhoadoncho = result;
-
     })
   }
 
@@ -514,6 +478,4 @@ console.log(this.size)
   get name() {
     return this.customerFrom.get('name');
   }
-
-
 }
