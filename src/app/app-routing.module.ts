@@ -59,10 +59,10 @@ const routes:  Routes = [
     path:'tao-don-hang',loadChildren:()=>import('./layouts/tao-don-hang/tao-don-hang.module').then((m=>m.TaoDonHangModule)),
     // canActivate:[AuthGuard]
   },
-  {
-    path:'don-tai-quay',loadChildren:()=>import('./layouts/don-tai-quay/don-tai-quay.module').then((m=>m.DonTaiQuayModule)),
-    // canActivate:[AuthGuard]
-  },
+  // {
+  //   path:'don-tai-quay',loadChildren:()=>import('./layouts/don-tai-quay/don-tai-quay.module').then((m=>m.DonTaiQuayModule)),
+  //   // canActivate:[AuthGuard]
+  // },
 
   {
     path:'thongke',loadChildren:()=>import('./layouts/thongke/thongke.module').then((m=>m.ThongkeModule)),
