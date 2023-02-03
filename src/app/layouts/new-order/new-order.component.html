@@ -5,9 +5,9 @@
         <h3>Thông tin đơn hàng</h3><br>
         <h5>Vui lòng cung cấp thông tin về đơn hàng sẽ tạo</h5>
       </div>
-      <div class="col-4">
-        <button class="btn btn-success" (click)="back()">Đơn mới</button>
-      </div>
+<!--      <div class="col-4">-->
+<!--        <button class="btn btn-success" (click)="back()">Đơn mới</button>-->
+<!--      </div>-->
 
     </div>
 
@@ -77,8 +77,8 @@
               <label>{{orderdeteogiaquantity.quantity}}</label><br>
               <label>{{orderdeteogiaquantity.price| currency :'VND' }}</label><br>
               <input [(ngModel)]="giamgia" style="width: 40px;" type="text"><br>
-              <span *ngIf="valuekenh==2"><label>Tiền ship</label></span><br>
-              <label>{{tongthu - giamgia| currency :'VND' }}</label><br>
+              <span *ngIf="valuekenh==2"><label>{{shippingFee| currency :'VND' }}</label></span><br>
+              <label>{{tongthu +shippingFee - giamgia| currency :'VND' }}</label><br>
               <span *ngIf="valuekenh==1">
                 <input [(ngModel)]="khachdua" style="width: 40px;" type="text"><br>
                 <span *ngIf="khachdua>0">
@@ -95,7 +95,7 @@
                 </button>
               </span>
               <span *ngIf="valuekenh==2">
-                <button class="btn btn-primary ms-3">Lưu</button>
+                <button class="btn btn-primary ms-3" (click)="enddononlai()">Lưu</button>
               </span>
             </div>
           </div>
@@ -114,7 +114,7 @@
             <option value="2">Giao hàng</option>
           </select>
         </div>
-        <span *ngIf="customer==null">
+        <span *ngIf="customer==null&&valuekenh==2">
           <div class="card p-4 " style="margin-top: 53px">
             <h5>Khách hàng</h5>
             <a style="color: #0d6efd" type="button" (click)="openthem(content)">Tạo khách hàng</a>

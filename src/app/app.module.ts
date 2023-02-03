@@ -33,7 +33,7 @@ import { ConfigProductComponent } from './pages/config-product/config-product.co
 import { MauSacComponent } from './layouts/mau-sac/mau-sac.component';
 import { SizeGiayComponent } from './layouts/size-giay/size-giay.component';
 import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
-// import { DonTaiQuayComponent } from './layouts/don-tai-quay/don-tai-quay.component';
+ import { DonTaiQuayComponent } from './layouts/don-tai-quay/don-tai-quay.component';
 import { NewOrderComponent } from './layouts/new-order/new-order.component';
 
 const configToast: any = {
@@ -54,7 +54,7 @@ const configToast: any = {
     AddCateComponent,
     ProductComponent,
     SCDetailsComponent,
-    // DonTaiQuayComponent,
+    DonTaiQuayComponent,
     AccountComponent,
     TaoDonHangComponent,
 

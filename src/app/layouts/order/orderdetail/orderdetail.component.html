@@ -194,7 +194,7 @@
             </div>
             <div class="col-6">
               <label>Mã khách hàng</label><br>
-              <label><b>MKH:KH-00000{{order.account_id}}</b></label><br>
+              <label><b>{{order.account_id}}</b></label><br>
 
               <label>Địa chỉ</label><br>
               <label><b>{{order.address}}</b></label>
@@ -208,17 +208,20 @@
           <div class="row">
             <div class="col-6">
               <label>Địa chỉ chi tiết:</label>
-              <label><b>{{order.addressinfo}}</b></label>
+              <label *ngIf="order.addressinfo!=null"><b>{{order.addressinfo}}</b></label>
+              <label *ngIf="order.addresscustomer!=null"><b>{{order.addresscustomer}}</b></label>
               <br>
               <label>Số điện thoại</label><br>
-              <label><b>{{order.sdtinfo}}</b></label>
+              <label *ngIf="order.sdtinfo!=null"><b>{{order.sdtinfo}}</b></label>
+              <label *ngIf="order.sdtCustomer!=null"><b>{{order.sdtCustomer}}</b></label>
             </div>
             <div class="col-5">
               <label>Tên người nhận</label><br>
-              <label><b>{{order.nameinfo}}</b></label>
+              <label *ngIf="order.nameinfo!=null"><b>{{order.nameinfo}}</b></label>
+              <label *ngIf="order.nameCustomer!=null"><b>{{order.nameCustomer}}</b></label>
             </div>
 
-              <div class="col-1" *ngIf="order.status==0">
+              <div class="col-1" *ngIf="order.status==0&&order.nameinfo!=null">
               <button (click)="opencustomerinfo(customerinfo)">sửa</button>
             </div>
 

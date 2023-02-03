@@ -55,12 +55,15 @@ export class NewOrderComponent implements OnInit {
   orderdeteo: any;
   litorderdeteo: any;
   listhoadoncho: any;
+  namecity: any;
+  nameDistrict: any;
   p: number = 1;
   username: any;
   type: any;
   description?: String;
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
+  shippingFee: any = 0;
 
   constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
               private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
@@ -72,14 +75,15 @@ export class NewOrderComponent implements OnInit {
   })
 
   customerFrom = new FormGroup({
-    name: new FormControl('', Validators.required),
-
-    sdt: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+    sdt: new FormControl('', [Validators.required, Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]),
     address: new FormControl('', Validators.required)
   })
   orderFrom = new FormGroup({
     id: new FormControl(''),
     note: new FormControl(''),
+    giamgia: new FormControl(''),
+    ship: new FormControl(''),
 
     price: new FormControl(''),
     status: new FormControl('6'),
@@ -101,6 +105,7 @@ export class NewOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.taodonhang()
+    this.tinh();
   }
 
   sumquantitygia() {
@@ -167,6 +172,8 @@ export class NewOrderComponent implements OnInit {
     this.adminunitFrom.value.parentId = this.tp_id;
     for (let item of this.litthanhpho) {
       if (item.id == this.tp_id) {
+        this.namecity = item.name;
+        this.addres = '';
         this.addres += item.name;
       }
     }
@@ -179,7 +186,8 @@ export class NewOrderComponent implements OnInit {
     this.adminunitFrom.value.parentId = this.huyen_id;
     for (let item of this.lithuyen) {
       if (item.id == this.huyen_id) {
-        this.addres=item.name +" "+ this.addres ;
+        this.addres = item.name + " " + this.addres;
+        this.nameDistrict = item.name;
       }
     }
     this.xa()
@@ -189,10 +197,10 @@ export class NewOrderComponent implements OnInit {
     this.xa_id = value
     for (let item of this.litxa) {
       if (item.id == this.xa_id) {
-        this.addres=item.name +" "+ this.addres ;
+        this.addres = item.name + " " + this.addres;
       }
     }
-console.log(this.addres)
+
   }
 
   laykenh(kenhvalue: any) {
@@ -202,10 +210,10 @@ console.log(this.addres)
 
   savecustomer() {
     if (this.customerFrom.valid) {
-      this.customerFrom.value.address+= " "+this.addres;
+      this.customerFrom.value.address += " " + this.addres;
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
-        console.log(this.customer)
+        this.getFeeShip();
         this.toastr.success("Thêm mới thành công");
         this.modalService.dismissAll();
 
@@ -263,24 +271,26 @@ console.log(this.addres)
     this.valuesize = sizevalue;
 
   }
+
   saimauform = new FormGroup({
     product_id: new FormControl(''),
     size_id: new FormControl(''),
     color_id: new FormControl(''),
 
   })
-  laycolor(colorvalue: any,id:any) {
+
+  laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
     console.log(id)
-this.saimauform.value.color_id=colorvalue;
-this.saimauform.value.product_id=id;
+    this.saimauform.value.color_id = colorvalue;
+    this.saimauform.value.product_id = id;
     console.log(this.saimauform.value)
     console.log(colorvalue)
     this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
       this.size = result;
 
     })
-console.log(this.size)
+    console.log(this.size)
   }
 
 
@@ -357,9 +367,7 @@ console.log(this.size)
     })
   }
 
-  getAllsize() {
 
-  }
 
   serchNameProduct() {
     this.productFrom.value.name = this.namesot
@@ -372,7 +380,7 @@ console.log(this.size)
   }
 
   taodonhang() {
-    this.order=null;
+    this.order = null;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.namesot = '';
@@ -399,6 +407,9 @@ console.log(this.size)
       this.orderFrom.value.customer_id = this.customer.id;
     }
 
+    this.orderFrom.value.giamgia=this.giamgia;
+    this.orderFrom.value.ship=this.shippingFee;
+    this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
@@ -428,22 +439,43 @@ console.log(this.size)
     })
   }
 
-  enddonnhap() {
+  enddononlai() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-
+    this.orderFrom.value.status = '0';
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-    this.orderFrom.value.status = '6';
+
+    this.orderFrom.value.giamgia=this.giamgia;
+    this.orderFrom.value.ship=this.shippingFee;
+    this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.toastr.success("Thành công");
-      console.log(this.order)
+      this.childEvent.emit();
+
     }, error => {
       this.toastr.success("eroooo");
+    })
+    //trừ sl sai màu
+    this.saimauservice.trusl(this.tru).subscribe(result => {
+
+    })
+    //tham lai
+    this.username = this.tokenservice.getUser();
+    this.ordertimeline.account_name = this.username;
+    this.ordertimeline.order_id = this.order.id;
+    this.type = 'Tạo đơn hàng';
+    this.ordertimeline.type = this.type;
+
+    this.ordertimeline.description = this.username + " tạo đơn hàng";
+
+    this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+      this.ordertimeline = result;
+
     })
   }
 
@@ -452,6 +484,21 @@ console.log(this.size)
       this.listhoadoncho = result;
     })
   }
+
+  getFeeShip() {
+    if (this.nameDistrict != null && this.namecity != null && this.valuekenh == 2) {
+
+      this.service
+        .getFeeShip(
+          this.addres, this.namecity, this.nameDistrict
+        )
+        .subscribe((res) => {
+          this.shippingFee = res;
+        }, error => {
+          this.toastr.error("Lỗi tính phí ship");
+        });
+    }
+  };
 
   deletehoadoncho(id: any) {
     this.orderService.deleteorder(id).subscribe(result => {
