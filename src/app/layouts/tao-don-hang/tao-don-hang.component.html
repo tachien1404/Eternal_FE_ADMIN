@@ -20,46 +20,46 @@
     </mat-tab-group>
   </div>
 </span>
-<span *ngIf="order==null">
-  <div style="margin-top: 20px;margin-left: 295px;">
-    <input type="text" placeholder="Mã đơn hàng" [(ngModel)]="namesot">
-    <button (click)="timkiemdon()">Tìm kiếm</button>
-  </div>
-</span>
+<!--<span *ngIf="order==null">-->
+<!--  <div style="margin-top: 20px;margin-left: 295px;">-->
+<!--    <input type="text" placeholder="Mã đơn hàng" [(ngModel)]="namesot">-->
+<!--    <button (click)="timkiemdon()">Tìm kiếm</button>-->
+<!--  </div>-->
+<!--</span>-->
 
 <!--hoadoncho-->
-<span *ngIf="order==null">
-  <table class="table table-hover table-responsive" style="margin-left: 270px;">
-    <thead>
-      <tr>
-        <th scope="col">Mã đơn hàng</th>
-        <th scope="col">Tên khách hàng</th>
-        <th scope="col">Ngày tạo</th>
-        <th scope="col">Trạng thái</th>
-        <th scope="col">Ghi chú</th>
-        <th scope="col">Thao tác</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of listhoadoncho | paginate: { itemsPerPage: 10, currentPage: p }">
+<!--<span *ngIf="order==null">-->
+<!--  <table class="table table-hover table-responsive" style="margin-left: 270px;">-->
+<!--    <thead>-->
+<!--      <tr>-->
+<!--        <th scope="col">Mã đơn hàng</th>-->
+<!--        <th scope="col">Tên khách hàng</th>-->
+<!--        <th scope="col">Ngày tạo</th>-->
+<!--        <th scope="col">Trạng thái</th>-->
+<!--        <th scope="col">Ghi chú</th>-->
+<!--        <th scope="col">Thao tác</th>-->
+<!--      </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--      <tr *ngFor="let item of listhoadoncho | paginate: { itemsPerPage: 10, currentPage: p }">-->
 
-        <td>{{item.id}}</td>
-        <td>{{item.nameCustomer}}</td>
-        <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>
-        <td>{{item.statusName}}</td>
-        <td>{{item.note}}</td>
-        <td>
-          <button (click)="deletehoadoncho(item.id)">xóa</button>
-          <button>Sửa</button>
-        </td>
-      </tr>
+<!--        <td>{{item.id}}</td>-->
+<!--        <td>{{item.nameCustomer}}</td>-->
+<!--        <td>{{item.create_date| date:'dd-MM-yyyy '}}</td>-->
+<!--        <td>{{item.statusName}}</td>-->
+<!--        <td>{{item.note}}</td>-->
+<!--        <td>-->
+<!--          <button (click)="deletehoadoncho(item.id)">xóa</button>-->
+<!--          <button>Sửa</button>-->
+<!--        </td>-->
+<!--      </tr>-->
 
-    </tbody>
-  </table>
-  <div style="margin-bottom: 100px;float: right;">
-    <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
-  </div>
-</span>
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  <div style="margin-bottom: 100px;float: right;">-->
+<!--    <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>-->
+<!--  </div>-->
+<!--</span>-->
 
 <!-- Tab -->
 <!-- End Tab -->
