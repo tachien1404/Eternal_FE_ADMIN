@@ -4,7 +4,8 @@
 <span *ngIf="order==null">
   <div style="margin-left: 295px;">
     <div>
-      <button mat-raised-button class="example-add-tab-button" (click)="addTab()">
+      <button mat-raised-button class="example-add-tab-button" (click)="addTab()"
+      [disabled]="this.tabs.length >= 5">
         Tạo đơn hàng
       </button>
     </div>

@@ -5,6 +5,8 @@ import { Color } from "../../@core/models/product";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ColorService } from 'src/app/service/color.service';
+import { ColorPickerService, Cmyk } from 'ngx-color-picker';
+
 
 @Component({
   selector: 'app-mau-sac',
@@ -12,6 +14,7 @@ import { ColorService } from 'src/app/service/color.service';
   styleUrls: ['./mau-sac.component.css']
 })
 export class MauSacComponent implements OnInit {
+  public colorPicker: string = '#ffffff';
   formAdd!: FormGroup;
   formSearch!: FormGroup;
   indexPage = 0;

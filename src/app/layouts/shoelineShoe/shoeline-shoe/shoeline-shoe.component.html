@@ -9,12 +9,13 @@
           <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm</h2>
           <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
         </div>
+
         <div class="row">
 
           <div class="row ml-3">
             <div class="col-6">
               <div class="form-group row">
-                <label class="col-md-4 col-form-label">Mã màu: </label>
+                <label class="col-md-4 col-form-label">Tên loại đế: </label>
                 <div class="col-md-10">
                   <input class="form-control" type="text" formControlName="keyword" style="border: solid 1px gray;">
                 </div>
@@ -41,16 +42,14 @@
         <tr>
           <th class="text-center col-1" scope="col">STT</th>
           <th class="text-center col-1" scope="col">ID</th>
-          <th class="text-center" scope="col">Tên màu</th>
-          <th class="text-center" scope="col">Giá trị màu</th>
+          <th class="text-center" scope="col">Tên loại đế</th>
         </tr>
       </thead>
-      <tbody *ngIf="colors">
-        <tr *ngFor="let item of colors; let i = index">
+      <tbody *ngIf="soles">
+        <tr *ngFor="let item of soles; let i = index">
           <td class="text-center" style="padding-top: 30px;">{{i + 1}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.id}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
-          <td class="text-center" style="padding-top: 30px;">{{item.value}}</td>
           <td class="text-center" style="padding-top: 30px;">
             <a (click)="info(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg"
                 width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -117,24 +116,12 @@
         <div class="row">
           <div class="col-7">
             <div class="form-group row">
-              <label class="col-md-4 col-form-label">Tên màu sắc: </label>
+              <label class="col-md-4 col-form-label">Tên đế giày: </label>
               <div class="col-md-10">
                 <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('name')?.errors?.required && formAdd.get('name')?.touched">
-                  Tên màu sắc không được để trống !
-                </small>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-4 col-form-label">Giá trị màu sắc: </label>
-              <div class="col-md-10">
-                <input [value]="colorPicker" [style.background]="colorPicker" [cpOKButton]="true" [cpSaveClickOutside]="false"
-                  [cpOKButtonClass]="'btn btn-primary btn-xs'" [(colorPicker)]="colorPicker" class="form-control" formControlName="value" style="border: solid 1px gray;"/>
-                <!-- <input class="form-control" type="number" formControlName="value" style="border: solid 1px gray;"> -->
-                <small class="col alert text-danger" role="alert"
-                  *ngIf="formAdd.get('value')?.errors?.required && formAdd.get('value')?.touched">
-                  Giá trị màu sắc không được để trống !
+                  Tên đế giày không được để trống !
                 </small>
               </div>
             </div>
