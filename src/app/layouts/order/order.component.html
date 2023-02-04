@@ -89,11 +89,11 @@
               <th>Ngày đặt</th>
               <th>Giá</th>
               <th>Địa chỉ</th>
-              <th>Giảm giá</th>
+
               <th>Ghi chú</th>
               <th>Trạng thái</th>
-              <th>Kênh</th>
               <th>Phí giao hàng</th>
+              <th>Kênh</th>
             </tr>
             </thead>
             <tbody>
@@ -129,7 +129,7 @@
               <span *ngIf="item.addressinfo==null&&item.addresscustomer==null">
                  <th>Khách lẻ </th>
               </span>
-              <td >{{item.giamgia}}</td>
+
               <td>{{item.note}}</td>
               <td>
               <span *ngIf="item.status ==0">
@@ -157,8 +157,9 @@
                    style="border-radius: 5px;padding: 10px; font-size: 12px; color: white;background-color:#dadbdf">{{item.statusName}}</a>
               </span>
               </td>
+              <th>{{item.ship| currency :'VND'}}</th>
               <th>{{item.kenhName}}</th>
-              <th>{{item.ship}}</th>
+
             </tr>
             </tbody>
           </table>

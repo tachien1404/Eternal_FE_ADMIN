@@ -46,7 +46,14 @@ export class OrderdetailComponent implements OnInit {
   valuesize: any;
   valuecolor: any;
   addres: any = "";
-
+  listsole: any;
+  category_id: any;
+  brand_id: any;
+  sole_id: any;
+  startgia:any;
+  endgia:any;
+  listcategory: any;
+  listbrand: any;
   constructor(private modalService: NgbModal, private adminunitservice: AdminunitService,
               private saimauservice: SaimauService,
               private saimauService: SCDetailsService,
@@ -72,6 +79,11 @@ export class OrderdetailComponent implements OnInit {
 
   productFrom = new FormGroup({
     name: new FormControl(''),
+    hang_id:new FormControl(''),
+    sole_id :new FormControl(''),
+    category_id:new FormControl(''),
+    startgia:new FormControl(''),
+    endgia:new FormControl(''),
   })
   orderdeteoFrom = new FormGroup({
     productId: new FormControl(''),
@@ -156,6 +168,37 @@ export class OrderdetailComponent implements OnInit {
       }
     }
     console.log(this.addres)
+  }
+  laycategory(value: string) {
+    if(value=='100'){
+      this.category_id=null;
+      console.log("có")
+      console.log(this.category_id)
+    }else{
+      this.category_id=value;
+    }
+
+  }
+
+  laybrand(value: string) {
+
+    if(value=='100'){
+      console.log("có")
+      this.brand_id=null;
+    }else{
+      this.brand_id=value;
+    }
+
+  }
+
+  laysole(value: string) {
+    if(value=='100'){
+      console.log("có")
+      this.sole_id=null;
+    }else{
+      this.sole_id=value;
+    }
+
   }
 
 
@@ -363,7 +406,7 @@ export class OrderdetailComponent implements OnInit {
         this.getByOrderId(this.Orderid);
 
       } else {
-        this.toastr.success("ko có màu size phù hợp ");
+        this.toastr.success("Mời bạn lựa chọn màu hoặc size");
       }
 
     }, error => {
@@ -432,9 +475,16 @@ export class OrderdetailComponent implements OnInit {
 
     })
   }
-
+  bocloc() {
+    this.serchNameProduct();
+  }
   serchNameProduct() {
     this.productFrom.value.name = this.namesot;
+    this.productFrom.value.hang_id = this.brand_id;
+    this.productFrom.value.category_id = this.category_id;
+    this.productFrom.value.sole_id = this.sole_id;
+    this.productFrom.value.startgia=this.startgia;
+    this.productFrom.value.endgia=this.endgia;
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
 
@@ -443,7 +493,24 @@ export class OrderdetailComponent implements OnInit {
 
   }
 
-
+  laygia(value: string) {
+    if(value=='100'){
+      this.startgia=null;
+      this.endgia=null;
+    }
+    if(value=='1'){
+      this.startgia=400000;
+      this.endgia=1000000;
+    }
+    if(value=='2'){
+      this.startgia=1000000;
+      this.endgia=1500000;
+    }
+    if(value=='3'){
+      this.startgia=1500000;
+      this.endgia=2000000;
+    }
+  }
   get sdt() {
     return this.customerinfoFrom.get('sdt');
   }

@@ -14,6 +14,9 @@ import {OrdertimlineService} from "../../service/ordertimline.service";
 import {S_CDetails} from "../../@core/models/SCDetails";
 import {SaimauService} from "../../service/saimau.service";
 import {AdminunitService} from "../../service/adminunit.service";
+import {CategoryService} from "../../service/category.service";
+import {BrandService} from "../../service/brand.service";
+import {SoleService} from "../../service/sole.service";
 
 @Component({
   selector: 'app-new-order',
@@ -54,6 +57,8 @@ export class NewOrderComponent implements OnInit {
   message!: String;
   orderdeteo: any;
   litorderdeteo: any;
+  listcategory: any;
+  listbrand: any;
   listhoadoncho: any;
   namecity: any;
   nameDistrict: any;
@@ -64,9 +69,19 @@ export class NewOrderComponent implements OnInit {
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
   shippingFee: any = 0;
-
-  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
-              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
+  listsole: any;
+  category_id: any;
+  brand_id: any;
+  sole_id: any;
+startgia:any;
+endgia:any;
+  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService,
+              private orderService: OrderService, private tokenservice: TokenStorageService
+    , private categoryservice: CategoryService, private hangservice: BrandService, private soleService: SoleService,
+              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService,
+              private toastr: ToastrService, private router: Router,
+              private service: CustomerService, private modalService: NgbModal,
+              private productService: ProductService
   ) {
   }
 
@@ -101,6 +116,11 @@ export class NewOrderComponent implements OnInit {
   })
   productFrom = new FormGroup({
     name: new FormControl(''),
+   hang_id:new FormControl(''),
+    sole_id :new FormControl(''),
+    category_id:new FormControl(''),
+    startgia:new FormControl(''),
+    endgia:new FormControl(''),
   })
 
   ngOnInit(): void {
@@ -279,9 +299,41 @@ export class NewOrderComponent implements OnInit {
 
   })
 
+  laycategory(value: string) {
+    if(value=='100'){
+      this.category_id=null;
+      console.log("có")
+      console.log(this.category_id)
+    }else{
+      this.category_id=value;
+    }
+
+  }
+
+  laybrand(value: string) {
+
+    if(value=='100'){
+      console.log("có")
+      this.brand_id=null;
+    }else{
+      this.brand_id=value;
+    }
+
+  }
+
+  laysole(value: string) {
+    if(value=='100'){
+      console.log("có")
+      this.sole_id=null;
+    }else{
+      this.sole_id=value;
+    }
+
+  }
+
   laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
-    console.log(id)
+
     this.saimauform.value.color_id = colorvalue;
     this.saimauform.value.product_id = id;
     console.log(this.saimauform.value)
@@ -290,7 +342,7 @@ export class NewOrderComponent implements OnInit {
       this.size = result;
 
     })
-    console.log(this.size)
+
   }
 
 
@@ -308,11 +360,11 @@ export class NewOrderComponent implements OnInit {
         this.getByOrderId();
         this.sumquantitygia();
       } else {
-        this.toastr.success("ko có màu size phù hợp ");
+        this.toastr.success("Mời bạn lựa chọn màu hoặc size  ");
       }
 
     }, error => {
-      this.toastr.success("ko có màu size phù hợp ");
+      this.toastr.success("Mời bạn lựa chọn màu hoặc size  ");
     })
 
   }
@@ -339,8 +391,13 @@ export class NewOrderComponent implements OnInit {
   }
 
   openProduct(product: any) {
+   this.brand_id=null;
+     this.category_id=null;
+     this.sole_id=null;
     this.serchNameProduct();
-
+    this.getAllbrand();
+    this.getAllcategory();
+    this.getAllSole();
     this.getAllmau();
     this.modalService.dismissAll();
     this.modalService.open(product, {
@@ -352,6 +409,24 @@ export class NewOrderComponent implements OnInit {
     this.saimauService.getAllColor().subscribe(result => {
       this.mau = result;
 
+    })
+  }
+
+  getAllcategory() {
+    this.categoryservice.getAllCategory().subscribe(result => {
+      this.listcategory = result;
+    })
+  }
+
+  getAllbrand() {
+    this.hangservice.getAllBrand().subscribe(result => {
+      this.listbrand = result;
+    })
+  }
+
+  getAllSole() {
+    this.soleService.getall().subscribe(result => {
+      this.listsole = result;
     })
   }
 
@@ -367,10 +442,16 @@ export class NewOrderComponent implements OnInit {
     })
   }
 
-
-
+  bocloc() {
+this.serchNameProduct();
+  }
   serchNameProduct() {
-    this.productFrom.value.name = this.namesot
+    this.productFrom.value.name = this.namesot;
+    this.productFrom.value.hang_id = this.brand_id;
+    this.productFrom.value.category_id = this.category_id;
+    this.productFrom.value.sole_id = this.sole_id;
+this.productFrom.value.startgia=this.startgia;
+this.productFrom.value.endgia=this.endgia;
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
 
@@ -407,8 +488,8 @@ export class NewOrderComponent implements OnInit {
       this.orderFrom.value.customer_id = this.customer.id;
     }
 
-    this.orderFrom.value.giamgia=this.giamgia;
-    this.orderFrom.value.ship=this.shippingFee;
+    this.orderFrom.value.giamgia = this.giamgia;
+    this.orderFrom.value.ship = this.shippingFee;
     this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
@@ -442,13 +523,13 @@ export class NewOrderComponent implements OnInit {
   enddononlai() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-    this.orderFrom.value.status = '0';
+    this.orderFrom.value.status = '1';
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
 
-    this.orderFrom.value.giamgia=this.giamgia;
-    this.orderFrom.value.ship=this.shippingFee;
+    this.orderFrom.value.giamgia = this.giamgia;
+    this.orderFrom.value.ship = this.shippingFee;
     this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
@@ -524,5 +605,25 @@ export class NewOrderComponent implements OnInit {
 
   get name() {
     return this.customerFrom.get('name');
+  }
+
+
+  laygia(value: string) {
+    if(value=='100'){
+      this.startgia=null;
+      this.endgia=null;
+    }
+    if(value=='1'){
+this.startgia=400000;
+this.endgia=1000000;
+    }
+    if(value=='2'){
+      this.startgia=1000000;
+      this.endgia=1500000;
+    }
+    if(value=='3'){
+      this.startgia=1500000;
+      this.endgia=2000000;
+    }
   }
 }

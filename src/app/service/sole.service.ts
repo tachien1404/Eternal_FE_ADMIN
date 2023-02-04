@@ -55,5 +55,7 @@ export class SoleService {
       api + `?page=${indexPage}&size=${size}`
     )
   }
-
+getall():Observable<Object>{
+    return this.http.get(api+'getAll')
+}
 }
