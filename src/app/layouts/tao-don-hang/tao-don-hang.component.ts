@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {CustomerService} from "../../service/customer.service";
@@ -18,7 +18,8 @@ import {AdminunitService} from "../../service/adminunit.service";
 @Component({
   selector: 'app-tao-don-hang',
   templateUrl: './tao-don-hang.component.html',
-  styleUrls: ['./tao-don-hang.component.css']
+  styleUrls: ['./tao-don-hang.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TaoDonHangComponent implements OnInit {
   //Tab
@@ -26,26 +27,11 @@ export class TaoDonHangComponent implements OnInit {
   selected = new FormControl(0);
 
   addTab() {
+    if (this.tabs.length >= 5) {
+      this.toastr.warning("Max order size", "Warning")
+    }
     this.tabs.push(`Order ${this.tabs.length + 1}`);
     this.selected.setValue(this.tabs.length - 1);
-    // nên chỗ code dưới này phải theo trên, mấy cái btn add nữa
-    // this.order=null;
-    // this.orderService.save(this.orderFrom.value).subscribe(result => {
-    //   this.order = result;
-    //   this.namesot = '';
-    //   this.username = this.tokenservice.getUser();
-    //   this.ordertimeline.account_name = this.username;
-    //   this.ordertimeline.order_id = this.order.id;
-    //   this.type = 'Tạo đơn hàng';
-    //   this.ordertimeline.type = this.type;
-
-    //   this.ordertimeline.description = this.username + " tạo đơn hàng";
-
-    //   this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
-
-
-    //   })
-    // })
   }
 
   removeTab(index: number) {

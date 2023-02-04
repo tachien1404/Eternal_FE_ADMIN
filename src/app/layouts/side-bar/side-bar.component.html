@@ -19,7 +19,7 @@
           <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
             <ul class="navbar-nav">
 
-              <li class="nav-item">
+              <li class="nav-item" id="thongke" (click)="selected('thongke')">
                 <a class="nav-link text-white " routerLink="/thongke">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -30,7 +30,7 @@
                 </a>
 
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="account" (click)="selected('account')">
                 <a class="nav-link text-white " routerLink="/account">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -49,7 +49,7 @@
 
 
 
-              <li class="nav-item">
+              <li class="nav-item" id="order" (click)="selected('order')">
                 <a class="nav-link text-white " [routerLink]="['/order']">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -60,7 +60,7 @@
                 </a>
               </li>
 
-              <li class="nav-item">
+              <li class="nav-item" id="category" (click)="selected('category')">
                 <a class="nav-link text-white " routerLink="/category">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -70,7 +70,7 @@
                   <span class="nav-link-text ms-1">Danh mục</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="brand" (click)="selected('brand')">
                 <a class="nav-link text-white " routerLink="/brand">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -80,7 +80,7 @@
                   <span class="nav-link-text ms-1">Hãng </span>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" id="tao-don-hang" (click)="selected('tao-don-hang')">
                 <a class="nav-link text-white " routerLink="/tao-don-hang">
 
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -102,7 +102,18 @@
 <!--                </a>-->
 <!--              </li>-->
               <!-- // -->
-              <li class="nav-item">
+              <li class="nav-item" id="khuyenmai" (click)="selected('khuyenmai')">
+                <a class="nav-link text-white " routerLink="/khuyenmai">
+
+                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+
+                    <i class="material-icons opacity-10">electric_bolt</i>
+                  </div>
+
+                  <span class="nav-link-text ms-1">Khuyến mại</span>
+                </a>
+              </li>
+              <li class="nav-item" id="quan-ly-san-pham"  (click)="selected('quan-ly-san-pham')">
                 <div class="dropdown dropdown-sidebar">
                   <button class="btn btn-secondary dropdown-toggle btn-drw" (click)="clickEvent()"
                     [ngClass]="status ? 'success' : 'danger'" href="#" role="button" id="dropdownMenuLink"
@@ -143,17 +154,6 @@
               </li>
 
 
-              <li class="nav-item">
-                <a class="nav-link text-white " routerLink="/khuyenmai">
-
-                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-
-                    <i class="material-icons opacity-10">electric_bolt</i>
-                  </div>
-
-                  <span class="nav-link-text ms-1">Khuyến mại</span>
-                </a>
-              </li>
 
 
 
