@@ -3,92 +3,148 @@
   <app-side-bar></app-side-bar>
   <div class="card" style="margin-left: 260px;">
     <div class="row mx-2">
-      <form [formGroup]="formSearch">
+<!--      <form [formGroup]="formSearch">-->
         <!--      <ng-template #content1 let-modal>-->
-        <div class="row">
-          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm sản phẩm</h2>
-          <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
+<!--        <div class="row">-->
+<!--          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm sản phẩm</h2>-->
+<!--          &lt;!&ndash;          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>&ndash;&gt;-->
+<!--        </div>-->
+<!--        <div class="row">-->
+
+<!--          <div class="row ml-3">-->
+<!--            <div class="col-6">-->
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-4 col-form-label">Tên sản phẩm: </label>-->
+<!--                <div class="col-md-10">-->
+<!--                  <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-4 col-form-label">Giá bán:</label>-->
+<!--                <div class="col-md-10">-->
+<!--                  <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-4 col-form-label">Đinh giày: </label>-->
+<!--                <div class="col-md-10 mt-2">-->
+<!--                  <div>-->
+<!--                    <select class="form-select" formControlName="sole" style="border: solid 1px gray;">-->
+<!--                      <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}-->
+<!--                      </option>-->
+
+<!--                    </select>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="col-6">-->
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-4 col-form-label">Danh Mục: </label>-->
+<!--                <div class="col-md-10 mt-2">-->
+<!--                  <div>-->
+<!--                    <select class="form-select" formControlName="category" style="border: solid 1px gray;">-->
+<!--                      <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}-->
+<!--                      </option>-->
+
+<!--                    </select>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-4 col-form-label">Hãng: </label>-->
+<!--                <div class="col-md-10 mt-2">-->
+<!--                  <div>-->
+<!--                    <select class="form-select" formControlName="hang" style="border: solid 1px gray;">-->
+<!--                      <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}-->
+<!--                      </option>-->
+
+<!--                    </select>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="form-group row">-->
+<!--                <label class="col-md-4 col-form-label">Dòng giày: </label>-->
+<!--                <div class="col-md-10 mt-2">-->
+<!--                  <div>-->
+<!--                    <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">-->
+<!--                      <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}-->
+<!--                      </option>-->
+
+<!--                    </select>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--          </div>-->
+<!--        </div>-->
+      <div class="input-group mt-3">
+        <div class="form-outline  m-2">
+          Nhập tên sản phẩm
+          <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
+          <label class="form-label" for="form"></label>
         </div>
-        <div class="row">
+        <div class="form-outline m-2">
+          Danh mục
+          <select #selectcategory (change)="laycategory(selectcategory.value)" class="form-select "
+                  aria-label="Default select example">
+            <option value="100">--All--</option>
+            <option *ngFor="let itemcategory of dataCate" [value]="itemcategory.id">{{itemcategory.name}}</option>
 
-          <div class="row ml-3">
-            <div class="col-6">
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label">Tên sản phẩm: </label>
-                <div class="col-md-10">
-                  <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
-                </div>
-              </div>
+          </select>
+        </div>
+        <div class="form-outline m-2">
+          Hãng
+          <select #selectbrand (change)="laybrand(selectbrand.value)" class="form-select "
+                  aria-label="Default select example">
+            <option value="100">--All--</option>
+            <option *ngFor="let itembrand of dataBrand" [value]="itembrand.id">{{itembrand.name}}</option>
 
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label">Giá bán:</label>
-                <div class="col-md-10">
-                  <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label">Đinh giày: </label>
-                <div class="col-md-10 mt-2">
-                  <div>
-                    <select class="form-select" formControlName="sole" style="border: solid 1px gray;">
-                      <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}
-                      </option>
-
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-6">
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label">Danh Mục: </label>
-                <div class="col-md-10 mt-2">
-                  <div>
-                    <select class="form-select" formControlName="category" style="border: solid 1px gray;">
-                      <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
-                      </option>
-
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label">Hãng: </label>
-                <div class="col-md-10 mt-2">
-                  <div>
-                    <select class="form-select" formControlName="hang" style="border: solid 1px gray;">
-                      <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
-                      </option>
-
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label">Dòng giày: </label>
-                <div class="col-md-10 mt-2">
-                  <div>
-                    <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">
-                      <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}
-                      </option>
-
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
+          </select>
         </div>
 
+        <div class="form-outline m-2">
+          Đinh giày
+          <select #selectsole (change)="laysole(selectsole.value)" class="form-select "
+                  aria-label="Default select example">
+            <option value="100">--All--</option>
+            <option *ngFor="let itemsole of dataSole" [value]="itemsole.id">{{itemsole.name}}</option>
+
+          </select>
+        </div>
+        <div class="form-outline m-2">
+          Giá nhập
+          <select class="form-select " aria-label="Default select example" #selectgia
+                  (change)="laygia (selectgia.value)">
+            <option value="100">--All-</option>
+            <option value="1">Từ 400.000 - 1.000.000 triệu</option>
+            <option value="2">Từ 1.000.000 - 1.500.000 triệu</option>
+            <option value="3">Từ 1.500.000 - 2.500.000 triệu</option>
+          </select>
+        </div>
+        <div class="form-outline m-2">
+          Trạng thái
+          <select class="form-select " aria-label="Default select example" #selecttrangthai
+                  (change)="laytrangthai (selecttrangthai.value)">
+            <option value="100">--All-</option>
+            <option value="1">Kinh doanh</option>
+            <option value="2">Ngừng kinh doanh</option>
+
+          </select>
+        </div>
+
+      </div>
+      <form [formGroup]="formSearch">
         <div class="row ml-3">
           <div>
-            <button type="button" class="btn btn-success me-2" type="submit" (click)="onSubmitSearch()"> Tìm
+            <button type="button" class="btn btn-success me-2" type="submit" (click)="bocloc()"> Tìm
               kiếm</button>
             <button class="btn btn-primary  ml-1 " (click)="openLg(content)">Thêm mới</button>
           </div>
@@ -102,28 +158,42 @@
     <table class="table table-hover table-responsive ">
       <thead>
         <tr>
-          <th class="text-center col-1" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>
-          <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>
-          <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>
-          <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>
-          <th class="text-center" scope="col" (click)="sortByValue('sole')">Loại đinh</th>
-          <th class="text-center" scope="col" (click)="sortByValue('shoeLine')">Dòng giày</th>
-          <th class="text-center" scope="col">Ngày tạo</th>
+<!--          <th class="text-center col-1" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>-->
+<!--          <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>-->
+<!--          <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>-->
+<!--          <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>-->
+<!--          <th class="text-center" scope="col" (click)="sortByValue('sole')">Loại đinh</th>-->
+<!--          <th class="text-center" scope="col" (click)="sortByValue('shoeLine')">Dòng giày</th>-->
+          <!--          //Tuấn-->
+          <th class="text-center " scope="col" >STT</th>
           <th class="text-center" scope="col">Ảnh</th>
+        <th class="text-center " scope="col" >Tên sản phẩm</th>
+
+          <th class="text-center" scope="col">Giá bán</th>
+          <th class="text-center" scope="col" >Danh mục</th>
+          <th class="text-center" scope="col" >Hãng</th>
+<!--          <th class="text-center" scope="col" >Loại đinh</th>-->
+<!--          <th class="text-center" scope="col" >Dòng giày</th>-->
+          <th class="text-center" scope="col" >Số lượng tồn</th>
+          <th class="text-center" scope="col">Ngày tạo</th>
+          <th class="text-center" scope="col" >Trạng thái</th>
           <th class="text-center" scope="col">Thao tác</th>
         </tr>
       </thead>
       <tbody *ngIf="datas">
-        <tr *ngFor="let item of datas; let i = index">
-          <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
-          <td class="text-center" style="padding-top: 30px;">{{item.outputprice}}</td>
-          <td class="text-center" style="padding-top: 30px;" *ngIf="item.category">{{item.category.name}}</td>
-          <td class="text-center" style="padding-top: 30px;" *ngIf="item.hang">{{item.hang.name}}</td>
-          <td class="text-center" style="padding-top: 30px;" *ngIf="item.sole">{{item.sole.name}}</td>
-          <td class="text-center" style="padding-top: 30px;" *ngIf="item.shoeLine">{{item.shoeLine.name}}</td>
-          <td class="text-center" style="padding-top: 30px;">{{item.createDate}}</td>
+        <tr *ngFor="let item of listproduct| paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+          <td class="text-center" style="padding-top: 30px;">{{i+1}}</td>
           <td class="text-center"><img class="img-fluid img" style="width: 100px;height: 80px;"
-              src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}"></td>
+                                       src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}"></td>
+          <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.outputprice| currency :'VND'}}</td>
+          <td class="text-center" style="padding-top: 30px;" >{{item.categoryName}}</td>
+          <td class="text-center" style="padding-top: 30px;" >{{item.brandName}}</td>
+<!--          <td class="text-center" style="padding-top: 30px;" >{{item.soleName}}</td>-->
+<!--          <td class="text-center" style="padding-top: 30px;" >{{item.shoelineName}}</td>-->
+          <td class="text-center" style="padding-top: 30px;" >{{item.sumquantity}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.createDate| date:'dd-MM-yyyy '}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.statusName}}</td>
           <td class="text-center"  style="padding-top: 30px;">
             <a  (click)="infoProduct(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                 height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -141,42 +211,44 @@
         </tr>
       </tbody>
     </table>
-
-    <div>
-
-
-      <!--              Pagination                -->
-      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">
-        <ul class="pagination justify-content-end">
-          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">
-            <option selected>5</option>
-            <option>10</option>
-            <option>15</option>
-          </select>
-          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
-              <path
-                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-            </svg>
-          </li>
-
-          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"
-            [ngClass]="indexPage == i?'active':''">
-            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
-          </li>
-
-          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
-              <path
-                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
-                (click)="preNextPage('next')" />
-            </svg>
-          </li>
-        </ul>
-      </nav>
+    <div style="margin-bottom: 100px;float: right;">
+      <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
     </div>
+<!--    <div>-->
+
+
+<!--      &lt;!&ndash;              Pagination                &ndash;&gt;-->
+<!--      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">-->
+<!--        <ul class="pagination justify-content-end">-->
+<!--          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">-->
+<!--            <option selected>5</option>-->
+<!--            <option>10</option>-->
+<!--            <option>15</option>-->
+<!--          </select>-->
+<!--          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">-->
+<!--              <path-->
+<!--                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />-->
+<!--            </svg>-->
+<!--          </li>-->
+
+<!--          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"-->
+<!--            [ngClass]="indexPage == i?'active':''">-->
+<!--            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>-->
+<!--          </li>-->
+
+<!--          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+<!--              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">-->
+<!--              <path-->
+<!--                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"-->
+<!--                (click)="preNextPage('next')" />-->
+<!--            </svg>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </nav>-->
+<!--    </div>-->
   </div>
 
   <form novalidate [formGroup]="formAdd" enctype="multipart/form-data">
@@ -305,26 +377,26 @@
               </div>
             </div>
 
-            <div class="form-group row">
-              <label class="col-md-4 col-form-label">Tình trạng :</label>
-              <div class="col-md-10 mt-2 ">
-                <div class="form-check form-check-inline col-12 col-sm-12 ">
-                  <input class="form-check-input" formControlName="status" [value]="1" type="radio" name="status"
-                    id="active">
-                  <label class="form-check-label" for="active">Đang kinh doanh</label>
-                </div>
+<!--            <div class="form-group row">-->
+<!--              <label class="col-md-4 col-form-label">Tình trạng :</label>-->
+<!--              <div class="col-md-10 mt-2 ">-->
+<!--                <div class="form-check form-check-inline col-12 col-sm-12 ">-->
+<!--                  <input class="form-check-input" formControlName="status" [value]="1" type="radio" name="status"-->
+<!--                    id="active">-->
+<!--                  <label class="form-check-label" for="active">Đang kinh doanh</label>-->
+<!--                </div>-->
 
-                <div class="form-check form-check-inline col-12 col-sm-12">
-                  <input class="form-check-input" formControlName="status" [value]="0" type="radio" name="status"
-                    id="notActive">
-                  <label class="form-check-label" for="notActive">Ngừng kinh doanh</label>
-                </div>
-                <small class="col alert text-danger" role="alert"
-                  *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">
-                  Tình trạng chưa được chọn !
-                </small>
-              </div>
-            </div>
+<!--                <div class="form-check form-check-inline col-12 col-sm-12">-->
+<!--                  <input class="form-check-input" formControlName="status" [value]="0" type="radio" name="status"-->
+<!--                    id="notActive">-->
+<!--                  <label class="form-check-label" for="notActive">Ngừng kinh doanh</label>-->
+<!--                </div>-->
+<!--                <small class="col alert text-danger" role="alert"-->
+<!--                  *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">-->
+<!--                  Tình trạng chưa được chọn !-->
+<!--                </small>-->
+<!--              </div>-->
+<!--            </div>-->
             <div class="col-md-10 ">
               <label for="formFile" class="form-label">Ảnh</label>
               <input type="text" formControlName="" value="{{product.photo}}" class="form-control">
