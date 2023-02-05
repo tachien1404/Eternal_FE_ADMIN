@@ -256,7 +256,9 @@
       <label class="col-1 mt-4">x{{item.quantity}},Size:{{item.valuesize}}</label>
       <label  class="col-1 mt-4"><b>{{item.price| currency :'VND'}}</b></label>
       <label class="col-2 mt-4"><b>{{item.statusName}}</b></label>
-      <label class="col-2 mt-4">Đơn vị vận chuyển nhanh</label>
+      <label class="col-2 mt-4">
+        <img src="https://cdn.ntlogistics.vn/images/NTX/new_images/don-vi-giao-hang-nhanh-uy-tin-ghn-giao-hang-nhanh.jpg"width="60px">
+        Đơn vị vận chuyển nhanh</label>
       <div class="col-1 mt-4">
         <span *ngIf="order.status ==0">
           <button class="btn btn-danger" (click)="delete(item.detail_id)"> Xóa</button>

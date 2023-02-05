@@ -47,7 +47,7 @@
                 <label class="col-4">Tổng tiền:{{item.quantity * item.price| currency :'VND' }} </label>
               </div>
               <div class="row" style="margin-left: 450px;">
-                <button class="btn btn-danger" style="width: 100px;" (click)="delete(item.detail_id)">Hủy</button>
+                <button class="btn btn-danger" style="width: 100px;" (click)="delete(item.detail_id)">Xóa</button>
               </div>
 
             </div>
@@ -65,7 +65,9 @@
               <label>Số lượng sản phẩm: </label><br>
               <label>Tổng tiền hàng: </label><br>
 
-              <span *ngIf="valuekenh==2"><label>Tiền ship</label></span><br>
+              <span *ngIf="valuekenh==2"><label>
+                <img src="https://cdn.ntlogistics.vn/images/NTX/new_images/don-vi-giao-hang-nhanh-uy-tin-ghn-giao-hang-nhanh.jpg"style="width: 60px">
+                Tiền ship:</label></span><br>
               <label>Tạm tính: </label><br>
               <span *ngIf="valuekenh==1">
                 <label>Tiền khách đưa: </label><br>
@@ -91,7 +93,7 @@
 
             <div style="margin-left: 300px;">
               <span *ngIf="valuekenh==1">
-                <button class="btn btn-success" (click)="enddonhang()">
+                <button [disabled]="tongthu==null" class="btn btn-success" (click)="enddonhang()" >
                   Thanh toán
                 </button>
               </span>
@@ -171,6 +173,7 @@
             <span *ngIf="sdt && sdt.invalid && sdt.touched" class="error" style="color: red">Mời nhập SDT</span>
           </div>
           <div class="col-6 mb-3">
+            Thành Phố
             <select #selectTp (change)="laytp(selectTp.value)" class="form-control "
                     aria-label="Default select example">
 
@@ -179,6 +182,7 @@
             </select>
           </div>
           <div class="col-6 mb-3">
+            Quận/Huyện
             <select #selecthuyen (change)="layhuyen(selecthuyen.value)" class="form-control "
                     aria-label="Default select example">
 
@@ -187,6 +191,7 @@
             </select>
           </div>
           <div class="col-6 mb-3">
+            Xã/Phường/Thị Trấn
             <select class="form-control " aria-label="Default select example" #selectxa
                     (change)="layxa(selectxa.value)">
 

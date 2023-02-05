@@ -21,8 +21,9 @@ export class DeGiayComponent implements OnInit {
   message!: String;
   hiddeen!: boolean;
   sole: Sole = {}
-  soles: Sole[] = []
-
+  soles: Sole[] = [];
+  litsole:any;
+p:number=1;
   constructor(
     private fb: FormBuilder,
     private readonly router: Router,
@@ -33,8 +34,8 @@ export class DeGiayComponent implements OnInit {
 
   ngOnInit() {
     this.getAll();
-    this.initFormAdd();
-    this.pagination(this.indexPage)
+     this.initFormAdd();
+    // this.pagination(this.indexPage)
     this.initFormSearch();
   }
 
@@ -59,9 +60,9 @@ export class DeGiayComponent implements OnInit {
   }
 
   getAll() {
-    this.soleService.getAll().subscribe(
-      (res: any) => {
-        this.soles = res.content;
+    this.soleService.getall().subscribe(
+      res => {
+        this.litsole= res;
         console.log(this.soles)
       }
     );

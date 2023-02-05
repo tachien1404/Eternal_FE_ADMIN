@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Brand, Category, Product, ShoeLine, Sole} from "../../@core/models/product";
 import {ToastrService} from "ngx-toastr";
@@ -36,6 +36,17 @@ export class ProductComponent implements OnInit {
   hiddeen!: boolean;
   category: Category = {};
   brand: Brand = {};
+  //tuấn
+listproduct:any;//getalllistvaf phân trang
+  p:number=1;
+   brand_id: any;
+  category_id: any;
+  sole_id: any;
+  startgia: any;
+  endgia: any;
+  namesot:any;
+  trangthai: any;
+ // end
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +71,7 @@ export class ProductComponent implements OnInit {
     this.initFormSearch();
     this.initFormAddCate();
     this.initFormAddBrand();
+    this.getAllProduct();
   }
 
   initFormSearch() {
@@ -109,16 +121,102 @@ export class ProductComponent implements OnInit {
     this.hiddeen = true;
     this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
   }
+  ////Tuấn
+  productFrom = new FormGroup({
+    name: new FormControl(''),
+    hang_id: new FormControl(''),
+    sole_id: new FormControl(''),
+    category_id: new FormControl(''),
+    startgia: new FormControl(''),
+    endgia: new FormControl(''),
+    status: new FormControl(''),
+  })
+  bocloc() {
+    this.serchNameProduct();
+  }
+  serchNameProduct() {
+    this.productFrom.value.name = this.namesot;
+    this.productFrom.value.hang_id = this.brand_id;
+    this.productFrom.value.category_id = this.category_id;
+    this.productFrom.value.sole_id = this.sole_id;
+this.productFrom.value.status=this.trangthai;
+    this.productFrom.value.startgia = this.startgia;
+    this.productFrom.value.endgia = this.endgia;
+    this.productService.bolocproductadmin(this.productFrom.value).subscribe(result => {
+      this.listproduct = result;
 
+    })
+
+
+  }
   getAllProduct() {
-    this.productService.getAllProduct().subscribe(
-      (res: any) => {
-        this.datas = res;
-        console.log(this.datas)
+    this.productService.bolocproductadmin(this.productFrom.value).subscribe(
+      result => {
+        this.listproduct =result;
+        console.log(this.listproduct)
       }
     )
   }
+  laycategory(value: string) {
+    if (value == '100') {
+      this.category_id = null;
+      console.log("có")
+      console.log(this.category_id)
+    } else {
+      this.category_id = value;
+    }
 
+  }
+  laygia(value: string) {
+    if (value == '100') {
+      this.startgia = null;
+      this.endgia = null;
+    }
+    if (value == '1') {
+      this.startgia = 400000;
+      this.endgia = 1000000;
+    }
+    if (value == '2') {
+      this.startgia = 1000000;
+      this.endgia = 1500000;
+    }
+    if (value == '3') {
+      this.startgia = 1500000;
+      this.endgia = 2000000;
+    }
+  }
+  laybrand(value: string) {
+
+    if (value == '100') {
+      console.log("có")
+      this.brand_id = null;
+    } else {
+      this.brand_id = value;
+    }
+
+  }
+
+  laysole(value: string) {
+    if (value == '100') {
+      console.log("có")
+      this.sole_id = null;
+    } else {
+      this.sole_id = value;
+    }
+
+  }
+
+  laytrangthai(value: string) {
+    if (value == '100') {
+
+      this.trangthai = null;
+    } else {
+      this.trangthai = value;
+    }
+  }
+
+
+//end tuấn
   getAllCategory() {
     this.productService.getAllCate().subscribe(
       (res: any) => {
@@ -274,7 +372,7 @@ export class ProductComponent implements OnInit {
     this.product.shoeLine = this.dataBrand.find(shoeLine => {
       return shoeLine.id == shoeLineId;
     })
-    this.product.status = this.formAdd.value.status;
+    this.product.status = 1;
   }
 
   create() {
@@ -419,6 +517,7 @@ export class ProductComponent implements OnInit {
       }
     );
   }
+
 
 
 }

@@ -8,17 +8,13 @@
       <div class="collapse navbar-collapse justify-content-center mt-3 " id="navbarNav">
         <ul class="nav justify-content-center nav-pills" id="navbar1">
           <li class="nav-item px-3">
-            <a class="btn btn-danger nav-link" (click)="loadAll('')"
+            <a class="btn btn-danger nav-link " (click)="loadAll('')"
             >Tất cả</a>
           </li>
           <li class="nav-item px-3">
             <a class="btn btn-danger position-relative nav-link" aria-current="page"
                (click)="loadAll('0')">Đơn đặt hàng
-              <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="margin-top: 10px;margin-right: 2px;">
-                1
-              </span> -->
             </a>
-
           </li>
           <li class="nav-item px-3">
             <a class="btn btn-danger nav-link" (click)="loadAll('1')">Đóng gói chuẩn bị
@@ -83,7 +79,7 @@
           <table class="table table-hover table-responsive mt-2" style="height: 50px ; font-size: 14px">
             <thead>
             <tr>
-              <th>Thao tác</th>
+              <th>Stt</th>
               <th>Mã đơn hàng</th>
               <th>Người đặt</th>
               <th>Ngày đặt</th>
@@ -94,15 +90,12 @@
               <th>Trạng thái</th>
               <th>Phí giao hàng</th>
               <th>Kênh</th>
+              <th>Thao tác</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of orderdata | paginate: { itemsPerPage: 10, currentPage: p }">
-              <td>
-                <a class="view" title="Chi tiết" data-toggle="tooltip" routerLink="/order/orderdetail/{{item.id}}"><i
-                  class="material-icons" style="color: gray;">visibility</i></a>
-
-              </td>
+            <tr *ngFor="let item of orderdata | paginate: { itemsPerPage: 10, currentPage: p },let i = index">
+              <td>{{i+1}}</td>
               <td>{{item.id}}</td>
               <span *ngIf="item.nameinfo!=null">
                 <td>{{item.nameinfo}}<br>
@@ -159,7 +152,11 @@
               </td>
               <th>{{item.ship| currency :'VND'}}</th>
               <th>{{item.kenhName}}</th>
+              <td>
+                <a class="view" title="Chi tiết" data-toggle="tooltip" routerLink="/order/orderdetail/{{item.id}}"><i
+                  class="material-icons" style="color: gray;">visibility</i></a>
 
+              </td>
             </tr>
             </tbody>
           </table>

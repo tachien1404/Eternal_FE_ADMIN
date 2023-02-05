@@ -18,7 +18,7 @@ export class OrderComponent implements OnInit {
   p: number = 1;
   status: any=null;
   keyword: any=null;
-
+index:any=0;
   constructor(private service: OrderService,
               private toastr: ToastrService,
               private modalService: NgbModal) {

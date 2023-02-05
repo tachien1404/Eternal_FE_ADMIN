@@ -62,4 +62,7 @@ export class ProductService{
 public serchName(input:any):Observable<any>{
     return this.http.post<any>(`${this.productAPI}public/products/serchName`,input);
 }
+  public bolocproductadmin(input:any):Observable<any>{
+    return this.http.post<any>(`${this.productAPI}public/products/bolocproductadmin`,input);
+  }
 }
