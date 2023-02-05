@@ -1,19 +1,20 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
-import {CustomerService} from "../../service/customer.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ProductService} from "../../@core/services/products.service";
-import {SCDetailsService} from "../../@core/services/s-c.-details.service";
-import {OrderService} from "../../service/order.service";
-import {OrderDeteo} from "../../@core/models/OrderDeteo.";
-import {OrderTimeline} from "../../@core/models/OrderTimeline";
-import {TokenStorageService} from "../../@core/services/Token-storage.service";
-import {OrdertimlineService} from "../../service/ordertimline.service";
-import {S_CDetails} from "../../@core/models/SCDetails";
-import {SaimauService} from "../../service/saimau.service";
-import {AdminunitService} from "../../service/adminunit.service";
+import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
+import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
+import { CustomerService } from "../../service/customer.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ProductService } from "../../@core/services/products.service";
+import { SCDetailsService } from "../../@core/services/s-c.-details.service";
+import { OrderService } from "../../service/order.service";
+import { OrderDeteo } from "../../@core/models/OrderDeteo.";
+import { OrderTimeline } from "../../@core/models/OrderTimeline";
+import { TokenStorageService } from "../../@core/services/Token-storage.service";
+import { OrdertimlineService } from "../../service/ordertimline.service";
+import { S_CDetails } from "../../@core/models/SCDetails";
+import { SaimauService } from "../../service/saimau.service";
+import { AdminunitService } from "../../service/adminunit.service";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tao-don-hang',
@@ -23,8 +24,14 @@ import {AdminunitService} from "../../service/adminunit.service";
 })
 export class TaoDonHangComponent implements OnInit {
   //Tab
-  tabs : any[] = [] ; // [order1 in tab1, order2 intab2]
+  tabs: any[] = []; // [order1 in tab1, order2 intab2]
   selected = new FormControl(0);
+
+  onFocusout() {
+    if (this.tabs.length != 0) {
+      localStorage.setItem("taodonhang", JSON.stringify(this.tabs))
+    }
+  }
 
   addTab() {
     if (this.tabs.length >= 5) {
@@ -32,15 +39,22 @@ export class TaoDonHangComponent implements OnInit {
     }
     this.tabs.push(`Order ${this.tabs.length + 1}`);
     this.selected.setValue(this.tabs.length - 1);
+    localStorage.setItem("taodonhang", JSON.stringify(this.tabs))
   }
 
   removeTab(index: number) {
     var result = confirm("Are you sure?");
-    if (result) this.tabs.splice(index, 1);
+    if (result) {
+      this.tabs.splice(index, 1);
+      localStorage.removeItem("Order"+index)
+      localStorage.setItem("taodonhang", JSON.stringify(this.tabs))
+    }
   }
 
   removeSucces(index: number) {
     this.tabs.splice(index, 1);
+    localStorage.removeItem("Order"+index)
+    localStorage.setItem("taodonhang", JSON.stringify(this.tabs))
   }
 
   tru: S_CDetails[] = [];//mảng trừ sl
@@ -82,7 +96,7 @@ export class TaoDonHangComponent implements OnInit {
   listordertimeline: any;
 
   constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
-              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
+    private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
   ) {
   }
 
@@ -121,7 +135,10 @@ export class TaoDonHangComponent implements OnInit {
   ngOnInit(): void {
     this.getAll();
     this.tinh();
-
+    const taodonhang = localStorage.getItem('taodonhang');
+    if (taodonhang) {
+      this.tabs = JSON.parse(taodonhang);
+    }
   }
 
   sumquantitygia() {
@@ -200,7 +217,7 @@ export class TaoDonHangComponent implements OnInit {
     this.adminunitFrom.value.parentId = this.huyen_id;
     for (let item of this.lithuyen) {
       if (item.id == this.huyen_id) {
-        this.addres=item.name +" "+ this.addres ;
+        this.addres = item.name + " " + this.addres;
       }
     }
     this.xa()
@@ -210,10 +227,10 @@ export class TaoDonHangComponent implements OnInit {
     this.xa_id = value
     for (let item of this.litxa) {
       if (item.id == this.xa_id) {
-        this.addres=item.name +" "+ this.addres ;
+        this.addres = item.name + " " + this.addres;
       }
     }
-console.log(this.addres)
+    console.log(this.addres)
   }
 
   laykenh(kenhvalue: any) {
@@ -223,7 +240,7 @@ console.log(this.addres)
 
   savecustomer() {
     if (this.customerFrom.valid) {
-      this.customerFrom.value.address+= " "+this.addres;
+      this.customerFrom.value.address += " " + this.addres;
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
         console.log(this.customer)
@@ -290,18 +307,18 @@ console.log(this.addres)
     color_id: new FormControl(''),
 
   })
-  laycolor(colorvalue: any,id:any) {
+  laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
     console.log(id)
-this.saimauform.value.color_id=colorvalue;
-this.saimauform.value.product_id=id;
+    this.saimauform.value.color_id = colorvalue;
+    this.saimauform.value.product_id = id;
     console.log(this.saimauform.value)
     console.log(colorvalue)
     this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
       this.size = result;
 
     })
-console.log(this.size)
+    console.log(this.size)
   }
 
 
@@ -386,14 +403,13 @@ console.log(this.size)
     this.productFrom.value.name = this.namesot
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
-
     })
 
 
   }
 
   taodonhang() {
-    this.order=null;
+    this.order = null;
     this.orderService.save(this.orderFrom.value).subscribe(result => {
       this.order = result;
       this.namesot = '';
