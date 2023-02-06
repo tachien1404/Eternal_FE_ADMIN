@@ -6,27 +6,34 @@
       <form [formGroup]="formSearch">
         <!--      <ng-template #content1 let-modal>-->
         <div class="row">
-          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm</h2>
-          <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
+          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Color</h2>
+                   <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll('Cross click')"></button> -->
         </div>
-        <div class="row">
-
-          <div class="row ml-3">
-            <div class="col-6">
+        <div class="row ml-3">
+            <div class="row">
               <div class="form-group row">
-                <label class="col-md-4 col-form-label">Mã màu: </label>
-                <div class="col-md-10">
-                  <input class="form-control" type="text" formControlName="keyword" style="border: solid 1px gray;">
+                <div class="col-md-5">
+                  <input class="form-control" type="text" formControlName="keyword" style="border: solid 1px gray;" placeholder="Tìm kiếm theo tên màu!">
                 </div>
+                <label class="col-1 mt-2" >Trạng thái: </label>
+                <div class="col-3">
+                  <select class="form-select drpCombobox me-3"aria-label="Default select example" formControlName="Status">
+                    <option value="all" selected>Tất Cả</option>
+                    <option value="1">Hoạt động</option>
+                    <option value="2">Ngưng hoạt động</option>
+                  </select>
+                </div>
+                  <div  class="col-md-2">
+                  <button type="button" class="btn btn-success me-2" type="submit" (click)="onSubmitSearch()"> Tìm
+                    kiếm</button></div>
               </div>
             </div>
           </div>
-        </div>
+
 
         <div class="row ml-3 mt-5">
           <div>
-            <button type="button" class="btn btn-success me-2" type="submit" (click)="onSubmitSearch()"> Tìm
-              kiếm</button>
+
             <button class="btn btn-primary  ml-1 " (click)="openLg(content)">Thêm mới</button>
           </div>
         </div>
@@ -40,17 +47,17 @@
       <thead>
         <tr>
           <th class="text-center col-1" scope="col">STT</th>
-          <th class="text-center col-1" scope="col">ID</th>
           <th class="text-center" scope="col">Tên màu</th>
-          <th class="text-center" scope="col">Giá trị màu</th>
+          <th class="text-center" scope="col">Mã màu</th>
+          <th class="text-center col-1" scope="col">Trạng thái</th>
         </tr>
       </thead>
       <tbody *ngIf="colors">
         <tr *ngFor="let item of colors; let i = index">
           <td class="text-center" style="padding-top: 30px;">{{i + 1}}</td>
-          <td class="text-center" style="padding-top: 30px;">{{item.id}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.value}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{!item.isdelete ? "Hoạt động" : "Ngưng hoạt động"}}</td>
           <td class="text-center" style="padding-top: 30px;">
             <a (click)="info(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg"
                 width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -127,10 +134,12 @@
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-4 col-form-label">Giá trị màu sắc: </label>
+              <label class="col-md-4 col-form-label">Mã màu : </label>
               <div class="col-md-10">
-                <input [value]="colorPicker" [style.background]="colorPicker" [cpOKButton]="true" [cpSaveClickOutside]="false"
-                  [cpOKButtonClass]="'btn btn-primary btn-xs'" [(colorPicker)]="colorPicker" class="form-control" formControlName="value" style="border: solid 1px gray;"/>
+                <input [value]="colorPicker" [style.background]="colorPicker" [cpOKButton]="true"
+                  [cpSaveClickOutside]="false" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="colorPicker" class="form-control" formControlName="value"
+                  style="border: solid 1px gray;" />
                 <!-- <input class="form-control" type="number" formControlName="value" style="border: solid 1px gray;"> -->
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('value')?.errors?.required && formAdd.get('value')?.touched">
@@ -138,6 +147,10 @@
                 </small>
               </div>
             </div>
+            <select formControlName="Active" [hidden]="hiddeen">
+              <option [ngValue]="false" [selected]="!color.isdelete ? true : false">Active</option>
+              <option [ngValue]="true" [selected]="color.isdelete ? true : false">In-active</option>
+            </select>
           </div>
         </div>
       </div>

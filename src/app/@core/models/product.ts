@@ -36,6 +36,7 @@ export interface Color {
   id?:number;
   value?: string;
   name?: string;
+  isdelete?: boolean
 }
 
 export interface Size {
