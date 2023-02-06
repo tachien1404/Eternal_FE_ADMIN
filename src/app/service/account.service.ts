@@ -34,15 +34,15 @@ export class AccountService {
     )
   }
 
-  getAll(page: number = 0): Observable<Array<any>>{
+  getAll(page: number = 0, pageItems: number = 5): Observable<Array<any>>{
     return this.http.get<Array<any>>(
-      api + `?page=${page}`
+      api + `?page=${page}&size=${pageItems}`
     )
   }
 
-  search(email: any): Observable<Array<any>>{
+  search(email: any, active: any, role: any): Observable<Array<any>>{
     return this.http.get<Array<any>>(
-      api + `search?email=${email}`
+      api + `search?email=${email}&active=${active}&role=${role}`
     )
   }
 
@@ -53,9 +53,9 @@ export class AccountService {
       );
   }
 
-  getSize(): Observable<Array<any>>{
+  getSize(page: number = 0, size: number = 5): Observable<Array<any>>{
     return this.http.get<Array<any>>(
-      api + `size`
+      api + `size?page=${page}&size=${size}`
     )
   }
 

@@ -1,169 +1,233 @@
-<div style="overflow-x: hidden;">
-  <app-navbar></app-navbar>
-  <app-side-bar></app-side-bar>
-  <div class="container-fluid pt-4 px-4" style="margin-left: 270px;">
-    <div class="row g-4">
-      <div class="col-sm-12 col-xl-5 width: auto height:auto">
-        <div class="bg-light rounded h-100 p-4">
-          <h6 class="mb-4">Account</h6>
-          <form [formGroup]="accountForm" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" id="username" formControlName="Username" value="{{account.username}}"
-                class="form-control" style="border: solid 1px gray; padding-left: 5px;">
-              <span style="color: red;"
-                *ngIf="accountForm.controls['Username'].errors?.['required'] && accountForm.get('Username')?.touched">
-                Username không được để trống!
-              </span>
+<app-navbar></app-navbar>
+<app-side-bar></app-side-bar>
+<div class="container-fluid pt-4 px-4" style="margin-left: 270px;">
+  <div class="row g-4">
+    <div class="col-sm-12 col-xl-5 width: auto height:auto">
+      <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Account</h6>
+        <form [formGroup]="accountForm" enctype="multipart/form-data" [hidden]="!isDisplayedForm">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" formControlName="Username" value="{{account.username}}"
+              class="form-control" style="border: solid 1px gray; padding-left: 5px;" [readonly]="account.id != ''">
+            <span style="color: red;"
+              *ngIf="accountForm.controls['Username'].errors?.['required'] && accountForm.get('Username')?.touched">
+              Username không được để trống!
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" formControlName="Email" value="{{account.email}}" class="form-control"
+              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;" [readonly]="account.id != ''">
+            <span style="color: red;"
+              *ngIf="accountForm.controls['Email'].errors?.['required'] && accountForm.get('Email')?.touched">
+              Email không được để trống!
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="fullname" class="form-label">Full name</label>
+            <input type="text" formControlName="Fullname" value="{{account.fullname}}" class="form-control"
+              id="fullname" aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
+            <span style="color: red;"
+              *ngIf="accountForm.controls['Fullname'].errors?.['required'] && accountForm.get('Fullname')?.touched">
+              Fullname không được để trống!
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="birthday" class="form-label">Birthday</label>
+            <input type="date" formControlName="Birthday" value="{{account.birthday | date: 'yyyy-MM-dd'}}"
+              class="form-control" id="birthday" aria-describedby="emailHelp"
+              style="border: solid 1px gray; padding-left: 5px;">
+            <span style="color: red;"
+              *ngIf="accountForm.controls['Birthday'].errors?.['required'] && accountForm.get('Birthday')?.touched">
+              Birthday không được để trống!
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" formControlName="Address" value="{{account.address}}" class="form-control" id="address"
+              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
+            <span style="color: red;"
+              *ngIf="accountForm.controls['Address'].errors?.['required'] && accountForm.get('Address')?.touched">
+              Address không được để trống!
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="sdt" class="form-label">SDT</label>
+            <input type="text" formControlName="SDT" value="{{account.sdt}}" class="form-control" id="sdt"
+              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;" >
+            <span style="color: red;"
+              *ngIf="accountForm.controls['SDT'].errors?.['required'] && accountForm.get('SDT')?.touched">
+              SDT không được để trống!
+            </span>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <label for="" class="form-label">Role</label>
             </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" formControlName="Email" value="{{account.email}}" class="form-control"
-                aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
-              <span style="color: red;"
-                *ngIf="accountForm.controls['Email'].errors?.['required'] && accountForm.get('Email')?.touched">
-                Email không được để trống!
-              </span>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioAdmin" formControlName="Role" value="true"
+                [checked]="account.role ? true : false">
+              <label class="form-check-label" for="inlineRadio1">Admin</label>
             </div>
-            <div class="mb-3">
-              <label for="fullname" class="form-label">Full name</label>
-              <input type="text" formControlName="Fullname" value="{{account.fullname}}" class="form-control"
-                id="fullname" aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
-              <span style="color: red;"
-                *ngIf="accountForm.controls['Fullname'].errors?.['required'] && accountForm.get('Fullname')?.touched">
-                Fullname không được để trống!
-              </span>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioUser" formControlName="Role" value="false"
+                [checked]="!account.role ? true : false">
+              <label class="form-check-label" for="inlineRadio2">User</label>
             </div>
-            <div class="mb-3">
-              <label for="birthday" class="form-label">Birthday</label>
-              <input type="date" formControlName="Birthday" value="{{account.birthday | date: 'yyyy-MM-dd'}}"
-                class="form-control" id="birthday" aria-describedby="emailHelp"
-                style="border: solid 1px gray; padding-left: 5px;">
-              <span style="color: red;"
-                *ngIf="accountForm.controls['Birthday'].errors?.['required'] && accountForm.get('Birthday')?.touched">
-                Birthday không được để trống!
-              </span>
+          </div>
+          <div class="mb-3" [hidden]="account.id == ''">
+            <div class="row">
+              <label for="" class="form-label">Status</label>
             </div>
-            <div class="mb-3">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" formControlName="Address" value="{{account.address}}" class="form-control" id="address"
-                aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
-              <span style="color: red;"
-                *ngIf="accountForm.controls['Address'].errors?.['required'] && accountForm.get('Address')?.touched">
-                Address không được để trống!
-              </span>
+            <!-- <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioActive" formControlName="Active" value="true"
+                [checked]="account.active ? true : false">
+              <label class="form-check-label" for="inlineRadio1">Active</label>
             </div>
-            <div class="mb-3">
-              <label for="sdt" class="form-label">SDT</label>
-              <input type="text" formControlName="SDT" value="{{account.sdt}}" class="form-control" id="sdt"
-                aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
-              <span style="color: red;"
-                *ngIf="accountForm.controls['SDT'].errors?.['required'] && accountForm.get('SDT')?.touched">
-                SDT không được để trống!
-              </span>
-            </div>
-            <div class="mb-3">
-              <label for="formFile" class="form-label">Photo</label>
-              <input type="text" formControlName="" value="{{account.photo}}" class="form-control"
-                id="exampleInputEmail1" aria-describedby="emailHelp">
-              <input class="form-control mt-3" formControlName="Photo" type="file" accept="image/*" id="formFile"
-                (change)="onFileSelected($event)" style="border: solid 1px gray; padding-top: 5px;height: 40px;">
-            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioInactive" formControlName="Active" value="false"
+                [checked]="!account.active ? true : false">
+              <label class="form-check-label" for="inlineRadio2">Inactive</label>
+            </div> -->
+            <select formControlName="Active">
+              <option [ngValue]="true" [selected]="account.active ? true : false">Active</option>
+              <option [ngValue]="false" [selected]="!account.active ? true : false">In-active</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Photo</label>
+            <input type="text" formControlName="" value="{{account.photo}}" class="form-control" id="exampleInputEmail1"
+              aria-describedby="emailHelp">
+            <input class="form-control" formControlName="Photo" type="file" accept="image/*" id="formFile"
+              (change)="onFileSelected($event)" style="border: solid 1px gray; padding-top: 5px;height: 40px;">
+          </div>
+          <button *ngIf="account.id != ''" (click)="onUpdate(account.id)" class="m-2 btn btn-warning"
+            [disabled]="this.accountForm.invalid">Update</button>
+          <button *ngIf="account.id == ''" (click)="onCreate()" class="btn btn-success m-2"
+            [disabled]="this.accountForm.invalid">Create</button>
+          <button *ngIf="account.id != ''" (click)="onDelete(account.id)" class="btn btn-danger m-2">Delete</button>
+          <button *ngIf="account.id != ''" (click)="clearForm()" class="btn btn-secondary m-2">Clear</button>
+        </form>
+        <button *ngIf="account.id == ''" (click)="showForm()" class="btn btn-success m-2"
+          [hidden]="isDisplayedForm">Create</button>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xl-7" [hidden]="!isDisplayedForm">
+      <div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-5">
+        <img class="rounded mx-auto d-block" alt="none"
+          src="https://res.cloudinary.com/productenternal/image/upload/v1668928871/IMAGE/image/{{account.photo}}">
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="card mt-3" style="margin-left: 260px;">
+  <div class="row g-4">
+    <div class="col-sm-12 col-xl-12">
+      <div class=" rounded h-100 pt-3">
 
-            <button *ngIf="account.id != ''" (click)="onUpdate(account.id)" class="m-2 btn btn-warning"
-              [disabled]="this.accountForm.invalid">Update</button>
-            <button *ngIf="account.id == ''" (click)="onCreate()" class="btn btn-success m-2"
-              [disabled]="this.accountForm.invalid">Create</button>
-            <button *ngIf="account.id != ''" (click)="onDelete(account.id)" class="btn btn-danger m-2">Delete</button>
-            <button *ngIf="account.id != ''" (click)="clearForm()" class="btn btn-secondary m-2">Clear</button>
+        <div class="row">
+          <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
+            <input class="form-control ms-3 filterByEmail" type="email" formControlName="Email"
+              placeholder="Tìm kiếm theo email!">
+            <div class="mt-2 col-1">Trạng thái</div>
+            <select class="form-select drpCombobox me-3" formControlName="Active">
+              <option value="all" selected>Tất Cả</option>
+              <option value="true">Hoạt động</option>
+              <option value="false">Ngưng hoạt động</option>
+            </select>
+            <div class="mt-2 col-1">Phân quyền</div>
+            <select class="form-select drpCombobox me-3" formControlName="Role">
+              <option value="all" selected>Tất Cả</option>
+              <option value="true">ADMIN</option>
+              <option value="false">USER</option>
+            </select>
+
+            <button type="submit" class="btn btn-success me-3"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+              </svg></button>
+            <button (click)="clearForm()" class="btn btn-primary me-3"><i class="fas fa-times"></i></button>
           </form>
+
         </div>
-      </div>
-      <div class="col-sm-9 col-xl-5">
-        <div class="bg-light rounded h-100 " style="padding-top: 30px;">
-          <img class="rounded mx-auto d-block" alt="none" style="padding-right: 1px;"
-            src="https://res.cloudinary.com/productenternal/image/upload/v1668928871/IMAGE/image/{{account.photo}}">
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="card">
+          <table class="table table-hover table-responsive table-bordered">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of accounts,let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{account.username}}</td>
+                <td>{{account.email}}</td>
+                <td>{{account.sdt}}</td>
+                <td>{{account.role ? "Admin" : "User"}}</td>
+                <td>{{account.active ? "Hoạt động" : "Ngưng kích hoạt"}}</td>
+                <td>
+                  <a (click)="onEdit(account.id)" role="button" class="ms-3" title="Edit"><svg
+                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-pencil-square" viewBox="0 0 16 16">
+                      <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                      <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                    </svg></a>
+                  <a (click)="onDelete(account.id)" role="button" class="ms-4" title="Delete"><svg
+                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                    </svg></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!--              Pagination                -->
+          <div>
+            <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">
+              <ul class="pagination justify-content-end">
+                <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">
+                  <option selected>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                </select>
+                <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
+                    <path
+                      d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                  </svg>
+                </li>
 
-  <div class="card mt-3" style="margin-left: 260px;">
-    <div class="row g-4">
-      <div class="col-sm-12 col-xl-12">
-        <div class=" rounded h-100 pt-3">
+                <li *ngFor="let pageNumber of [].constructor(Page['totalPage']);let i = index" class="page-item"
+                  [ngClass]="indexPage == i?'active':''">
+                  <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+                </li>
 
-          <div class="row">
-            <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
-              <input class="form-control ms-3 filterByEmail" type="email" formControlName="Email"
-                placeholder="Tìm kiếm theo email!">
-              <button type="submit" class="btn btn-success me-3"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                  height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                  <path
-                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg></button>
-              <button (click)="clearForm()" class="btn btn-primary me-3"><i class="fas fa-times"></i></button>
-            </form>
-          </div>
-          <div class="card">
-            <table class="table table-hover table-responsive table-bordered">
-              <thead>
-                <tr>
-
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Fullname</th>
-                  <th>Birthday</th>
-                  <th>Address</th>
-                  <th>Photo</th>
-                  <th>SDT</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let account of accounts">
-
-                  <td>{{account.username}}</td>
-                  <td>{{account.email}}</td>
-                  <td>{{account.fullname}}</td>
-                  <td>{{account.birthday| date: 'yyyy-MM-dd'}}</td>
-                  <td>{{account.address}}</td>
-                  <td>{{account.photo}}</td>
-                  <td>{{account.sdt}}</td>
-                  <td>
-                    <a (click)="onEdit(account.id)" role="button" class="ms-3" title="Edit"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path
-                          d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                        <path fill-rule="evenodd"
-                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                      </svg></a>
-                    <a (click)="onDelete(account.id)" role="button" class="ms-4" title="Delete"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-trash3" viewBox="0 0 16 16">
-                        <path
-                          d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                      </svg></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="btn-group" role="group" aria-label="Basic example" #btnPageGroup>
-            <!-- <button (click)="prev()" type="button" class="btn btn-primary"
-          [disabled]="0 === this.page" id="btnPrev">Prev</button> -->
-            <div *ngFor="let page of pages; index as i">
-              <button (click)="viewPage(i)" type="button" id="btnPage_{{i}}" class="btn btn-primary"
-                [disabled]="i === 0">{{i + 1}}</button>
-            </div>
-            <!-- <button (click)="next()" type="button" class="btn btn-primary"
-          [disabled]="this.maxPage-1 === this.page" id="btnNext">Next</button> -->
+                <li class="page-item" [ngClass]="(Page['totalPage'] - 1) === indexPage?'disabled':''">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
+                    <path
+                      d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                      (click)="preNextPage('next')" />
+                  </svg>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
