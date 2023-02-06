@@ -86,11 +86,11 @@ export class OrderdetailComponent implements OnInit {
     endgia:new FormControl(''),
   })
   orderdeteoFrom = new FormGroup({
-    productId: new FormControl(''),
-    sizeId: new FormControl(''),
-    colorId: new FormControl(''),
-    orderId: new FormControl(''),
-    price: new FormControl(''),
+    productId: new FormControl(),
+    sizeId: new FormControl(),
+    colorId: new FormControl(),
+    orderId: new FormControl(),
+    price: new FormControl(),
     quantity: new FormControl('1')
   })
   customerinfoFrom = new FormGroup({
@@ -390,29 +390,32 @@ export class OrderdetailComponent implements OnInit {
     this.orderdeteoFrom.value.sizeId = this.valuesize;
     this.orderdeteoFrom.value.orderId = this.Orderid;
     this.orderdeteoFrom.value.price = gia;
-    this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
-      this.orderdetail = result;
-      this.type = 'Sửa đơn hàng';
-      this.ordertimeline.type = this.type;
+    if(this.valuesize!=null&&this.valuecolor!=null&&this.valuesize!=''&&this.valuecolor!='') {
+      this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
+        this.orderdetail = result;
+        this.type = 'Sửa đơn hàng';
+        this.ordertimeline.type = this.type;
 
-      this.ordertimeline.description = 'Thêm sản phẩm ';
+        this.ordertimeline.description = 'Thêm sản phẩm ';
 
-      this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
-        this.ordertimeline = result;
+        this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+          this.ordertimeline = result;
 
+        })
+        if (this.orderdetail != null) {
+          this.toastr.success("Đã thêm vào giỏ");
+          this.getByOrderId(this.Orderid);
+
+        } else {
+          this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
+        }
+
+      }, error => {
+        this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
       })
-      if (this.orderdetail != null) {
-        this.toastr.success("Đã thêm vào giỏ");
-        this.getByOrderId(this.Orderid);
-
-      } else {
-        this.toastr.success("Mời bạn lựa chọn màu hoặc size");
-      }
-
-    }, error => {
-      this.toastr.success("ko có màu size phù hợp ");
-    })
-
+    }else{
+      this.toastr.success("Mời bạn chọn màu và size của sản phẩm ");
+    }
   }
 
   opencustomerinfo(content: any) {

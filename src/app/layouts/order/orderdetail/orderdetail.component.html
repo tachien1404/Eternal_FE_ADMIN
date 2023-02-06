@@ -238,9 +238,8 @@
   <label class="col-2 ms-3">Tên sản phẩm</label>
   <label class="col-1">Số lượng</label>
   <label class="col-1">Giá tiền</label>
-  <label class="col-2">Tình trạng</label>
   <label class="col-2">Đơn vị vận chuyển</label>
-  <label class="col-2">Thao tác</label>
+  <label class="col-2" *ngIf="order.status ==0">Thao tác</label>
 
 </div>
 <div style="height: auto;padding-bottom: 100px;margin-left: 295px;">
@@ -255,10 +254,10 @@
 
       <label class="col-1 mt-4">x{{item.quantity}},Size:{{item.valuesize}}</label>
       <label  class="col-1 mt-4"><b>{{item.price| currency :'VND'}}</b></label>
-      <label class="col-2 mt-4"><b>{{item.statusName}}</b></label>
+
       <label class="col-2 mt-4">
-        <img src="https://cdn.ntlogistics.vn/images/NTX/new_images/don-vi-giao-hang-nhanh-uy-tin-ghn-giao-hang-nhanh.jpg"width="60px">
-        Đơn vị vận chuyển nhanh</label>
+        <img src="https://i.ytimg.com/vi/Wu83TlJk2og/maxresdefault.jpg"width="60px">
+        Giao hàng tiết kiệm</label>
       <div class="col-1 mt-4">
         <span *ngIf="order.status ==0">
           <button class="btn btn-danger" (click)="delete(item.detail_id)"> Xóa</button>
@@ -268,6 +267,7 @@
 
     </div>
   </div>
+  <label style="font-size: 25px ;float: right ;margin: 20px" >Tổng tiền : <b style="color: orangered">{{order.price| currency :'VND'}}</b></label>
   <span *ngIf="order.status ==0">
   <div>
     <button class="btn btn-success" (click)="openProduct(product)">Thêm sản phẩm</button>
@@ -439,16 +439,16 @@
         <th>
           <select #selectColor (change)="laycolor(selectColor.value,item.id)" class="form-select "
                   aria-label="Default select example">
-
-            <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
+            <option>Chọn size</option>
+            <option *ngFor="let itemmau of item.litcolor" [value]="itemmau.id">{{itemmau.name}}</option>
 
           </select>
         </th>
         <th>
           <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
                   aria-label="Default select example">
-
-            <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
+            <option>Chọn size</option>
+            <option *ngFor="let itemsize of item.litsai" [value]="itemsize.id">{{itemsize.value}}</option>
 
           </select>
         </th>
