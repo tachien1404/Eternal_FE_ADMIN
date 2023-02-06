@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Sole } from '../@core/models/ProductSortDTO';
-
-const api = 'http://localhost:8080/api/public/soles/'
+import { ShoeLine } from '../@core/models/product';
+const api = 'http://localhost:8080/api/public/shoelines/'
 
 @Injectable({
   providedIn: 'root'
 })
-export class SoleService {
-
+export class ShoelineService {
   constructor(private http: HttpClient) { }
 
   create(data: any): Observable<any> {
@@ -50,10 +48,9 @@ export class SoleService {
     )
   }
 
-  getPage(indexPage: any, size: any, dto: Sole): Observable<any> {
+  getPage(indexPage: any, size: any, dto: ShoeLine): Observable<any> {
     return this.http.get<Array<any>>(
       api + `?page=${indexPage}&size=${size}`
     )
   }
-
 }

@@ -21,9 +21,8 @@ export class DeGiayComponent implements OnInit {
   message!: String;
   hiddeen!: boolean;
   sole: Sole = {}
-  soles: Sole[] = [];
-  litsole:any;
-p:number=1;
+  soles: Sole[] = []
+
   constructor(
     private fb: FormBuilder,
     private readonly router: Router,
@@ -34,20 +33,22 @@ p:number=1;
 
   ngOnInit() {
     this.getAll();
-     this.initFormAdd();
-    // this.pagination(this.indexPage)
+    this.initFormAdd();
+    this.pagination(this.indexPage)
     this.initFormSearch();
   }
 
   initFormSearch() {
     this.formSearch = this.fb.group({
-      keyword: ''
+      keyword: '',
+      Active: "all"
     });
   }
 
   initFormAdd() {
     this.formAdd = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      Active: ['false']
     })
   }
 
@@ -60,9 +61,9 @@ p:number=1;
   }
 
   getAll() {
-    this.soleService.getall().subscribe(
-      res => {
-        this.litsole= res;
+    this.soleService.getAll().subscribe(
+      (res: any) => {
+        this.soles = res.content;
         console.log(this.soles)
       }
     );
@@ -76,8 +77,7 @@ p:number=1;
 
   onSubmitSearch() {
     this.fillValueSearch();
-    this.formSearch.value.keyword.trim() ?
-      this.soleService.search(this.formSearch.value.keyword).subscribe(
+      this.soleService.search(this.formSearch.value.keyword, this.formSearch.value.Active).subscribe(
         res => {
           this.soles = res
         },
@@ -86,13 +86,11 @@ p:number=1;
           this.pagination(0)
         }
       )
-      :
-      this.pagination(0)
-    this.initFormSearch();
   }
 
   addValue() {
     this.sole.name = this.formAdd.value.name;
+    this.sole.isdelete = this.formAdd.value.Active
   }
 
   create() {
@@ -107,7 +105,7 @@ p:number=1;
         this.ngOnInit();
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Some things went wrong :<");
+        this.toastr.error("Lỗi Nhập liễu :<");
       }
     ) : this.toastr.error("Invalid Form");
   }
@@ -129,6 +127,7 @@ p:number=1;
   fillValueForm() {
     this.formAdd.patchValue({
       name: this.sole.name,
+      Active: this.sole.isdelete
     })
   }
 
@@ -138,6 +137,7 @@ p:number=1;
       valid = true
     }
     this.sole.name = this.formAdd.value.name
+    this.sole.isdelete = this.formAdd.value.Active
     this.sole.id && valid ? this.soleService.update(this.sole.id, this.sole).subscribe(
       res => {
         this.toastr.success("Success !");
@@ -145,20 +145,20 @@ p:number=1;
         this.sole = {};
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Some things went wrong :<");
+        this.toastr.error("Lỗi nhập liệu :<");
       }
     ) : this.toastr.error("Invalid Form");
   }
 
   delete() {
-    this.sole.id && confirm("Are u sure?") ? this.soleService.delete(this.sole.id).subscribe(
+    this.sole.id && confirm("Bạn có chắn muốn xóa không?") ? this.soleService.delete(this.sole.id).subscribe(
       res => {
         this.toastr.success("Success !");
         this.ngOnInit();
         this.sole = {};
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Some things went wrong :<");
+        this.toastr.error("Lỗi :<");
       }
     ) : ""
   }
@@ -175,7 +175,7 @@ p:number=1;
           console.log(this.soles)
           this.Page = res;
         }, error: error => {
-          this.toastr.error("Some things went wrong :<");
+          this.toastr.error("Lỗi :<");
         }
       });
   }

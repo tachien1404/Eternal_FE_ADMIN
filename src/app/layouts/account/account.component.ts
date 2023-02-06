@@ -18,6 +18,7 @@ export class AccountComponent implements OnInit {
     Address: new FormControl('', Validators.required),
     Photo: new FormControl(),
     SDT: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[- +()0-9]{10}')])),
+    Password: new FormControl(''),
     Role: new FormControl('', Validators.required),
     Active: new FormControl,
   })
@@ -47,6 +48,7 @@ export class AccountComponent implements OnInit {
       address: '',
       photo: 'null.png',
       sdt: '',
+      password: '',
       role: false
     }
     this.getAll()
@@ -89,6 +91,7 @@ export class AccountComponent implements OnInit {
       address: this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
       photo: this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ", "%20"),
       sdt: this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value,
+      password: this.accountForm.controls['Password'].value == null ? this.account.password : this.accountForm.controls['Password'].value,
       role: this.accountForm.controls['Role'].value == null ? this.account.role : this.accountForm.controls['Role'].value,
       active: true
     }
@@ -138,6 +141,7 @@ export class AccountComponent implements OnInit {
       address: this.accountForm.controls['Address'].value == null ? this.account.address : this.accountForm.controls['Address'].value,
       photo: this.filename == 'null.png' ? this.account.photo : this.filename.replace(" ", "%20"),
       sdt: this.accountForm.controls['SDT'].value == null ? this.account.sdt : this.accountForm.controls['SDT'].value,
+      password: this.accountForm.controls['Password'].value == null ? this.account.password : this.accountForm.controls['Password'].value,
       role: this.accountForm.controls['Role'].value == null ? this.account.role : this.accountForm.controls['Role'].value,
       active: this.accountForm.controls['Active'].value == null ? this.account.active : this.accountForm.controls['Active'].value,
     }
@@ -183,12 +187,12 @@ export class AccountComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    var result = confirm("Confirm?");
+    var result = confirm("Bạn có chắn chắn xóa ?");
     if (result) {
       this.accountService.delete(id).subscribe(
         res => {
           this.clearForm()
-          window.alert("Delete succes!!")
+          window.alert("Xóa Thành Công!!")
           this.getAll()
         },
         err => {
@@ -212,7 +216,8 @@ export class AccountComponent implements OnInit {
           Photo: this.account.photo,
           SDT: this.account.sdt,
           Role: this.account.role,
-          Active: this.account.active
+          Active: this.account.active,
+          Password: this.account.password
         })
         this.accountForm.patchValue({
           SDT: this.account.sdt
@@ -265,20 +270,14 @@ export class AccountComponent implements OnInit {
       photo: 'null.png',
       sdt: '',
       role: false,
-      active: false
+      active: false,
+      password: ''
     }
   }
 
   clearFilter() {
     this.filterForm.reset()
-    this.accountService.getAll(this.indexPage).subscribe(
-      res => {
-        this.accounts = res
-      },
-      err => {
-        console.log(err)
-      }
-    )
+    this.getAll()
   }
 
   onFileSelected(event: Event) {

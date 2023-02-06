@@ -427,7 +427,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   getAllSole() {
-    this.soleService.getall().subscribe(result => {
+    this.soleService.getAll().subscribe(result => {
       this.listsole = result;
     })
   }

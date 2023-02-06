@@ -8,6 +8,7 @@ import {OrderdetailComponent} from "./layouts/order/orderdetail/orderdetail.comp
 import { SizeGiayComponent } from './layouts/size-giay/size-giay.component';
 import { MauSacComponent } from './layouts/mau-sac/mau-sac.component';
 import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
+import { ShoelineshoeComponent } from './layouts/shoelineshoe/shoelineshoe.component';
 
 const routes:  Routes = [
   {
@@ -45,6 +46,10 @@ const routes:  Routes = [
   },
   {
     path:'sizes',component: SizeGiayComponent,
+    // canActivate:[AdminGuard]
+  },
+  {
+    path:'shoelines',component: ShoelineshoeComponent,
     // canActivate:[AdminGuard]
   },  {
     path:'colors',component: MauSacComponent,
