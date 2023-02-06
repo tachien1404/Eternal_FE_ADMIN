@@ -66,7 +66,7 @@
               <label>Tổng tiền hàng: </label><br>
 
               <span *ngIf="valuekenh==2"><label>
-                <img src="https://cdn.ntlogistics.vn/images/NTX/new_images/don-vi-giao-hang-nhanh-uy-tin-ghn-giao-hang-nhanh.jpg"style="width: 60px">
+                <img src="https://i.ytimg.com/vi/Wu83TlJk2og/maxresdefault.jpg"style="width: 60px">
                 Tiền ship:</label></span><br>
               <label>Tạm tính: </label><br>
               <span *ngIf="valuekenh==1">
@@ -83,9 +83,9 @@
               <span *ngIf="valuekenh==2"><label>{{shippingFee| currency :'VND' }}</label></span><br>
               <label>{{tongthu + shippingFee | currency :'VND' }}</label><br>
               <span *ngIf="valuekenh==1">
-                <input [(ngModel)]="khachdua" style="width: 40px;" type="text"><br>
+                <input [(ngModel)]="khachdua" style="width: 100px;" type="text"><br>
                 <span *ngIf="khachdua>0">
-                  <label>{{khachdua - tongthu - giamgia| currency :'VND' }}</label><br>
+                  <label>{{khachdua - tongthu| currency :'VND' }}</label><br>
                 </span>
               </span>
             </div>
@@ -93,7 +93,7 @@
 
             <div style="margin-left: 300px;">
               <span *ngIf="valuekenh==1">
-                <button [disabled]="tongthu==null" class="btn btn-success" (click)="enddonhang()" >
+                <button [disabled]="khachdua<=0" class="btn btn-success" (click)="enddonhang()" >
                   Thanh toán
                 </button>
               </span>
@@ -267,7 +267,7 @@
         </div>
       </div>
       <hr>
-      <table class="table table-hover p-3">
+      <table class="table table-hover  p-3">
         <thead>
         <tr>
           <th scope="col" style="padding-left: 25px;">Ảnh</th>
@@ -284,19 +284,45 @@
                    width="120px" height="100"></th>
           <th>{{item.name}}</th>
           <th style="padding-left: 25px;">{{item.outputprice| currency :'VND' }}</th>
-          <th>
+          <th >
+<!--<div class="btn-group">-->
+<!--            <div *ngFor="let itemcolor of item.litcolor" class="mx-2">-->
+<!--              <input-->
+<!--                mdbRadio-->
+<!--                type="radio"-->
+<!--                class="btn-check"-->
+<!--                name="options1"-->
+<!--                id={{itemcolor.value}}-->
+<!--                autocomplete="off"-->
+<!--              />-->
+<!--              <label class="btn btn-outline-primary"for={{itemcolor.value}}  >{{itemcolor.name}}</label>-->
+<!--            </div>-->
+<!--</div>-->
             <select #selectColor (change)="laycolor(selectColor.value,item.id)" class="form-select "
                     aria-label="Default select example">
-
-              <option *ngFor="let itemmau of mau" [value]="itemmau.id">{{itemmau.name}}</option>
+<option>Chọn màu</option>
+              <option *ngFor="let itemmau of item.litcolor" [value]="itemmau.id" >{{itemmau.name}}</option>
 
             </select>
           </th>
           <th>
+<!--            <div class="btn-group-">-->
+<!--              <div *ngFor="let itemsize of item.litsai" >-->
+<!--                <input-->
+<!--                  mdbRadio-->
+<!--                  type="radio"-->
+<!--                  class="btn-check"-->
+<!--                  name="options1"-->
+<!--                  id={{itemsize.value}}-->
+<!--                  autocomplete="off"-->
+<!--                />-->
+<!--                <label class="btn btn-outline-primary"for={{itemsize.value}} (click)="size(itemsize.id)" >{{itemsize.value}}</label>-->
+<!--              </div>-->
+<!--            </div>-->
             <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
                     aria-label="Default select example">
-
-              <option *ngFor="let itemsize of size" [value]="itemsize.id">{{itemsize.value}}</option>
+<option>Chọn size</option>
+              <option *ngFor="let itemsize of item.litsai" [value]="itemsize.id" >{{itemsize.value}}</option>
 
             </select>
           </th>

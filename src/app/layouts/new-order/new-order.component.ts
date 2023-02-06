@@ -109,11 +109,11 @@ export class NewOrderComponent implements OnInit {
     customer_id: new FormControl('')
   })
   orderdeteoFrom = new FormGroup({
-    productId: new FormControl(''),
-    sizeId: new FormControl(''),
-    colorId: new FormControl(''),
-    orderId: new FormControl(''),
-    price: new FormControl(''),
+    productId: new FormControl(),
+    sizeId: new FormControl(),
+    colorId: new FormControl(),
+    orderId: new FormControl(),
+    price: new FormControl(),
     quantity: new FormControl('1')
   })
   productFrom = new FormGroup({
@@ -299,7 +299,8 @@ export class NewOrderComponent implements OnInit {
 
   laysize(sizevalue: any) {
     this.valuesize = sizevalue;
-
+console.log(this.valuesize)
+    console.log(this.saimauform.value)
   }
 
   saimauform = new FormGroup({
@@ -323,7 +324,7 @@ export class NewOrderComponent implements OnInit {
   laybrand(value: string) {
 
     if (value == '100') {
-      console.log("có")
+
       this.brand_id = null;
     } else {
       this.brand_id = value;
@@ -333,7 +334,7 @@ export class NewOrderComponent implements OnInit {
 
   laysole(value: string) {
     if (value == '100') {
-      console.log("có")
+
       this.sole_id = null;
     } else {
       this.sole_id = value;
@@ -347,7 +348,7 @@ export class NewOrderComponent implements OnInit {
     this.saimauform.value.color_id = colorvalue;
     this.saimauform.value.product_id = id;
     console.log(this.saimauform.value)
-    console.log(colorvalue)
+
     this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
       this.size = result;
 
@@ -362,21 +363,25 @@ export class NewOrderComponent implements OnInit {
     this.orderdeteoFrom.value.sizeId = this.valuesize;
     this.orderdeteoFrom.value.orderId = this.order.id;
     this.orderdeteoFrom.value.price = gia;
-    this.orderService.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
-      this.orderdeteo = result;
+    if(this.valuesize!=null&&this.valuecolor!=null&&this.valuesize!=''&&this.valuecolor!=''){
+      this.orderService.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
+        this.orderdeteo = result;
 
-      if (this.orderdeteo != null) {
-        this.toastr.success("Đã thêm vào giỏ");
-        this.getByOrderId();
-        this.sumquantitygia();
-      } else {
-        this.toastr.success("Mời bạn lựa chọn màu hoặc size  ");
-      }
+        if (this.orderdeteo != null) {
+          this.toastr.success("Đã thêm vào giỏ");
+          this.getByOrderId();
+          this.sumquantitygia();
+        } else {
+          this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
+        }
 
-    }, error => {
-      this.toastr.success("Mời bạn lựa chọn màu hoặc size  ");
-    })
+      }, error => {
+        this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
+      })
 
+    }else{
+      this.toastr.success("Mời bạn chọn màu và size của sản phẩm ");
+    }
   }
 
   openthem(content: any) {
@@ -469,7 +474,9 @@ export class NewOrderComponent implements OnInit {
     this.productFrom.value.endgia = this.endgia;
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
-
+for(let item of this.litproduct){
+  console.log(item.litsai)
+}
     })
 
 
