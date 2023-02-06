@@ -26,9 +26,9 @@
           <li class="nav-item px-3">
             <a class="btn btn-danger nav-link" (click)="loadAll('3')">Đã giao</a>
           </li>
-          <li class="nav-item px-3">
-            <a class="btn btn-danger nav-link" (click)="loadAll('7')">Đơn tại quầy</a>
-          </li>
+          <!--          <li class="nav-item px-3">-->
+          <!--            <a class="btn btn-danger nav-link" (click)="loadkenh('1')">Đơn tại quầy</a>-->
+          <!--          </li>-->
           <li class="nav-item px-3">
             <a class="btn btn-danger nav-link" (click)="loadAll('4')">Đã hủy</a>
           </li>
@@ -53,23 +53,33 @@
           <!--      </div>-->
 
 
-            <div class="form-group row">
-              <input type="text" class="col-4 ms-3" placeholder="Tên khách hàng" [(ngModel)]="keyword"
-                     aria-describedby="basic-addon1" style="border-radius: 10px; height: 40px; border: solid 1px gray;">
-              <div class="col-3">
-                <b>Ngày bắt đầu</b>
-                <input class="ms-2" type="date" [(ngModel)]="start">
-              </div>
-
-              <div class="col-3">
-                <b>Ngày kết thúc</b>
-                <input class="ms-2" type="date" [(ngModel)]="end">
-              </div>
-              <div class="col-2" style="margin-top: 18px;">
-                <button class=" btn btn-success " (click)="timkiem()">Tìm kiếm</button>
-              </div>
+          <div class="form-group row">
+            <input type="text" class="col-3 ms-3" placeholder="Số điện thoại" [(ngModel)]="keyword"
+                   aria-describedby="basic-addon1" style="border-radius: 10px; height: 40px; border: solid 1px gray;">
+            <div class="col-2">
+              <b>Ngày bắt đầu</b>
+              <input class="ms-2" type="date" [(ngModel)]="start">
             </div>
 
+            <div class="col-2">
+              <b>Ngày kết thúc</b>
+              <input class="ms-2" type="date" [(ngModel)]="end">
+            </div>
+            <div class="col-1"><b >Kênh bán</b></div>
+            <div class="col-1">
+              <select class="form-select " aria-label="Default select example" #selectkenh
+                      (change)="laykenh (selectkenh.value)">
+                <option value="100">--All-</option>
+                <option value="0">Web</option>
+                <option value="1">Tại quầy</option>
+                <option value="2">Giao hàng</option>
+
+              </select>
+            </div>
+            <div class="col-2" >
+              <button class=" btn btn-success " (click)="timkiem()">Tìm kiếm</button>
+            </div>
+          </div>
 
 
         </div>
@@ -95,7 +105,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let item of orderdata | paginate: { itemsPerPage: 10, currentPage: p },let i = index">
-              <td>{{i+1}}</td>
+              <td>{{i + 1}}</td>
               <td>{{item.id}}</td>
               <span *ngIf="item.nameinfo!=null">
                 <td>{{item.nameinfo}}<br>

@@ -184,11 +184,15 @@ this.productFrom.value.status=this.trangthai;
       this.startgia = 1500000;
       this.endgia = 2000000;
     }
+    if (value == '4') {
+      this.startgia = 2000000;
+      this.endgia = 10000000;
+    }
   }
   laybrand(value: string) {
 
     if (value == '100') {
-      console.log("có")
+
       this.brand_id = null;
     } else {
       this.brand_id = value;
@@ -198,7 +202,7 @@ this.productFrom.value.status=this.trangthai;
 
   laysole(value: string) {
     if (value == '100') {
-      console.log("có")
+
       this.sole_id = null;
     } else {
       this.sole_id = value;
