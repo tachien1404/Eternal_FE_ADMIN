@@ -17,7 +17,9 @@ export class ProductService{
   getAllProduct():Observable<any>{
     return this.http.get<any>(`${environment.apiUrl}public/products`);
   }
-
+  getone(id:any):Observable<Object>{
+    return this.http.get(api+'getbyid/'+id);
+  }
   uploadImage(file: FormData): Observable<any>{
     return this.http.post<any>(
       api+ `image`,

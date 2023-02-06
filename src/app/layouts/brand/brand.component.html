@@ -31,64 +31,65 @@
 
     </form>
   </div>
-  <div class="row mx-2">
-    <form>
-      <!--      <ng-template #content1 let-modal>-->
-      <div class="row">
-        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm Hãng</h2>
-        <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
-      </div>
-      <div class="row">
+<!--<div class="row mx-2">-->
+<!--    <form>-->
+<!--      &lt;!&ndash;      <ng-template #content1 let-modal>&ndash;&gt;-->
+<!--      <div class="row">-->
+<!--        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm Hãng</h2>-->
+<!--        &lt;!&ndash;          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>&ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="row">-->
 
-        <div class="row ml-3">
-          <div class="col-6">
+<!--        <div class="row ml-3">-->
+<!--          <div class="col-6">-->
 
-            <div class="form-group row">
-              <label class="col-md-4 col-form-label">Mã hãng : </label>
-              <div class="col-md-10">
-                <input class="form-control" type="text" formControlName="keyid" style="border:solid 1px gray;">
-              </div>
-            </div>
+<!--            <div class="form-group row">-->
+<!--              <label class="col-md-4 col-form-label">Mã hãng : </label>-->
+<!--              <div class="col-md-10">-->
+<!--                <input class="form-control" type="text" formControlName="keyid" style="border:solid 1px gray;">-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="form-group row">
-              <label class="col-md-4 col-form-label">Tên hãng: </label>
-              <div class="col-md-10">
-                <input class="form-control" type="text" formControlName="keyname" style="border:solid 1px gray;">
-              </div>
-            </div>
+<!--            <div class="form-group row">-->
+<!--              <label class="col-md-4 col-form-label">Tên hãng: </label>-->
+<!--              <div class="col-md-10">-->
+<!--                <input class="form-control" type="text" formControlName="keyname" style="border:solid 1px gray;">-->
+<!--              </div>-->
+<!--            </div>-->
 
-          </div>
+<!--          </div>-->
 
-        </div>
-      </div>
+<!--        </div>-->
+<!--      </div>-->
 
-      <div class="row ml-3">
-        <div class="d-flex mt-2">
-          <button type="button" class="btn btn-success me-2" type="submit"> Tìm kiếm</button>
+<!--      <div class="row ml-3">-->
+<!--        <div class="d-flex mt-2">-->
+<!--          <button type="button" class="btn btn-success me-2" type="submit"> Tìm kiếm</button>-->
 
-        </div>
-      </div>
-      <!--      </ng-template>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash;      </ng-template>&ndash;&gt;-->
 
-    </form>
-  </div>
-</div>
-<div class="card mt-3" style="margin-left: 270px;overflow-x: hidden;">
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="card mt-3" style="overflow-x: hidden;">
   <table class="table table-bordered  table-responsive table-hover mt-2" style="height: 50px ; font-size: 14px">
     <thead class="table-dark">
       <tr>
-        <th>ID</th>
+        <th>STT</th>
         <th>Name</th>
 
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of branData | paginate: { itemsPerPage: 5, currentPage: p }">
-        <td>{{item.id}}}</td>
+      <tr *ngFor="let item of branData | paginate: { itemsPerPage: 5, currentPage: p },let i=index">
+        <td>{{i+1}}</td>
         <td>{{item.name}}</td>
 
       </tr>
     </tbody>
   </table>
   <pagination-controls class="mr-3 mb-8" (pageChange)="p= $event"></pagination-controls>
+</div>
 </div>

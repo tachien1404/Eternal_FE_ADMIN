@@ -18,4 +18,7 @@ export class SaimauService{
   getsize(input:any):Observable<Object>{
     return this.http.post(this.api+'/getsize',input)
   }
+  soluongsaimau(input:any):Observable<Object>{
+    return this.http.post(this.api+'/soluongsaimau',input)
+  }
 }
