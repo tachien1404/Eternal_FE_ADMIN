@@ -14,6 +14,9 @@ import {OrdertimlineService} from "../../service/ordertimline.service";
 import {S_CDetails} from "../../@core/models/SCDetails";
 import {SaimauService} from "../../service/saimau.service";
 import {AdminunitService} from "../../service/adminunit.service";
+import {CategoryService} from "../../service/category.service";
+import {BrandService} from "../../service/brand.service";
+import {SoleService} from "../../service/sole.service";
 
 @Component({
   selector: 'app-new-order',
@@ -36,7 +39,10 @@ export class NewOrderComponent implements OnInit {
   khachdua: any = 0;
   giamgia: any = 0;
   tongthu: any;
-  valuekenh: any = 0;
+  valuekenh: any = 1;
+  dis:any;
+  listcategory: any;
+  listbrand: any;
   valuesize: any;
   valuecolor: any;
   size: any;
@@ -65,10 +71,19 @@ export class NewOrderComponent implements OnInit {
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
   shippingFee: any = 0;
-
-  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
-              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
-  ) {
+  listsole: any;
+  category_id: any;
+  brand_id: any;
+  sole_id: any;
+  startgia: any;
+  endgia: any;
+  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService,
+  private orderService: OrderService, private tokenservice: TokenStorageService
+, private categoryservice: CategoryService, private hangservice: BrandService, private soleService: SoleService,
+  private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService,
+  private toastr: ToastrService, private router: Router,
+  private service: CustomerService, private modalService: NgbModal,
+  private productService: ProductService) {
   }
 
   adminunitFrom = new FormGroup({
@@ -79,7 +94,7 @@ export class NewOrderComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     sdt: new FormControl('', [Validators.required, Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]),
     address: new FormControl('', Validators.required),
-    active: new FormControl("true")
+
   })
   orderFrom = new FormGroup({
     id: new FormControl(''),
@@ -94,24 +109,32 @@ export class NewOrderComponent implements OnInit {
     customer_id: new FormControl('')
   })
   orderdeteoFrom = new FormGroup({
-    productId: new FormControl(''),
-    sizeId: new FormControl(''),
-    colorId: new FormControl(''),
-    orderId: new FormControl(''),
-    price: new FormControl(''),
+    productId: new FormControl(),
+    sizeId: new FormControl(),
+    colorId: new FormControl(),
+    orderId: new FormControl(),
+    price: new FormControl(),
     quantity: new FormControl('1')
   })
   productFrom = new FormGroup({
     name: new FormControl(''),
+    hang_id: new FormControl(''),
+    sole_id: new FormControl(''),
+    category_id: new FormControl(''),
+    startgia: new FormControl(''),
+    endgia: new FormControl(''),
   })
 
   ngOnInit(): void {
     this.taodonhang()
     this.tinh();
+    if(this.litorderdeteo!=null){
+      this.dis=1;
+    }
     this.getDataFromLocal()
   }
 
-  sumquantitygia() {
+  sumquantitygia() {//tổng số lượng mua và tổng giá
     this.orderService.sumgiaquantity(this.order.id).subscribe(result => {
       this.orderdeteogiaquantity = result;
       this.price = this.orderdeteogiaquantity.price;
@@ -120,12 +143,17 @@ export class NewOrderComponent implements OnInit {
     })
   }
 
-  changeQuantity(quantity: any, id: any, quantitysaimau: any) {
+  changeQuantity(quantity: any, id: any, quantitysaimau: any) {//chỉnh số lượng
     this.orderdetail.detail_id = id;
     this.orderdetail.quantity = quantity;
     if (quantity > quantitysaimau) {
       this.orderdetail.quantity = quantitysaimau;
       this.toastr.success("Số lượng sản phẩm vượt quá số lượng hàng có sẵn");
+    } else
+    if (quantity == 0 ||quantity<0) {
+      if (confirm("bạn muốn xóa sản phâẩm này khỏi giỏ hàng ?")) {
+        this.delete(id);
+      }
     }
     this.orderService.savedeteo(this.orderdetail).subscribe(result => {
 
@@ -218,9 +246,9 @@ export class NewOrderComponent implements OnInit {
         this.getFeeShip();
         this.toastr.success("Thêm mới thành công");
         this.modalService.dismissAll();
-        // localStorage.setItem("customer", this.customer)
+
       }, error => {
-        this.toastr.success("Thêm mới thất bại");
+        this.toastr.error("Thêm mới thất bại");
       })
     }
   }
@@ -265,6 +293,7 @@ export class NewOrderComponent implements OnInit {
     if (confirm("Bạn chắc chắn muốn xóa chứ?")) {
       this.orderService.delete(id).subscribe(result => {
         this.getByOrderId();
+        this.sumquantitygia();
       });
     }
   }
@@ -295,27 +324,58 @@ export class NewOrderComponent implements OnInit {
     console.log(this.size)
   }
 
+  laycategory(value: string) {
+    if (value == '100') {
+      this.category_id = null;
+      console.log("có")
+      console.log(this.category_id)
+    } else {
+      this.category_id = value;
+    }
 
+  }
+
+  laybrand(value: string) {
+
+    if (value == '100') {
+
+      this.brand_id = null;
+    } else {
+      this.brand_id = value;
+    }
+
+  }
+
+  laysole(value: string) {
+    if (value == '100') {
+
+      this.sole_id = null;
+    } else {
+      this.sole_id = value;
+    }
+
+  }
   giohang(product_id: any, gia: any) {
     this.orderdeteoFrom.value.productId = product_id;
     this.orderdeteoFrom.value.colorId = this.valuecolor;
     this.orderdeteoFrom.value.sizeId = this.valuesize;
     this.orderdeteoFrom.value.orderId = this.order.id;
     this.orderdeteoFrom.value.price = gia;
-    this.orderService.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
-      this.orderdeteo = result;
+    if(this.valuesize!=null&&this.valuecolor!=null&&this.valuesize!=''&&this.valuecolor!=''){
+      this.orderService.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
+        this.orderdeteo = result;
 
-      if (this.orderdeteo != null) {
-        this.toastr.success("Đã thêm vào giỏ");
-        this.getByOrderId();
-        this.sumquantitygia();
-      } else {
-        this.toastr.success("ko có màu size phù hợp ");
-      }
-
-    }, error => {
-      this.toastr.success("ko có màu size phù hợp ");
-    })
+        if (this.orderdeteo != null) {
+          this.toastr.success("Đã thêm vào giỏ");
+          this.getByOrderId();
+          this.sumquantitygia();
+        } else {
+          this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
+        } }, error => {
+        this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
+      }) }else{
+      this.toastr.success("Mời bạn chọn màu và size của sản phẩm ");
+    }
 
   }
 
@@ -341,15 +401,36 @@ export class NewOrderComponent implements OnInit {
   }
 
   openProduct(product: any) {
+    this.brand_id = null;
+    this.category_id = null;
+    this.sole_id = null;
     this.serchNameProduct();
-
+    this.getAllbrand();
+    this.getAllcategory();
+    this.getAllSole();
     this.getAllmau();
     this.modalService.dismissAll();
     this.modalService.open(product, {
       size: 'xl', centered: true
     })
   }
+  getAllcategory() {
+    this.categoryservice.getAllCategory().subscribe(result => {
+      this.listcategory = result;
+    })
+  }
 
+  getAllbrand() {
+    this.hangservice.getAllBrand().subscribe(result => {
+      this.listbrand = result;
+    })
+  }
+
+  getAllSole() {
+    this.soleService.getall().subscribe(result => {
+      this.listsole = result;
+    })
+  }
   getAllmau() {
     this.saimauService.getAllColor().subscribe(result => {
       this.mau = result;
@@ -357,22 +438,34 @@ export class NewOrderComponent implements OnInit {
     })
   }
 
-  getByOrderId() {
+  getByOrderId() {//đơn chi tiết
     this.orderService.getByOrderId(this.order.id).subscribe(result => {
       this.litorderdeteo = result;
+      if(this.litorderdeteo!=null){
       for (let item of this.litorderdeteo) {
         this.tru.push({
           id: item.scId,
           quantity: item.quantity
         })
       }
-    })
+      }else{
+      this.litorderdeteo=null;
+    }
+    }
+      )
   }
 
-
+  bocloc() {
+    this.serchNameProduct();
+  }
 
   serchNameProduct() {
-    this.productFrom.value.name = this.namesot
+    this.productFrom.value.name = this.namesot;
+    this.productFrom.value.hang_id = this.brand_id;
+    this.productFrom.value.category_id = this.category_id;
+    this.productFrom.value.sole_id = this.sole_id;
+    this.productFrom.value.startgia = this.startgia;
+    this.productFrom.value.endgia = this.endgia;
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
 
@@ -408,7 +501,6 @@ export class NewOrderComponent implements OnInit {
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
-
     this.orderFrom.value.giamgia=this.giamgia;
     this.orderFrom.value.ship=this.shippingFee;
     this.tongthu = this.tongthu - this.giamgia;
@@ -444,7 +536,7 @@ export class NewOrderComponent implements OnInit {
   enddononlai() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-    this.orderFrom.value.status = '0';
+    this.orderFrom.value.status = '1';
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
@@ -479,6 +571,25 @@ export class NewOrderComponent implements OnInit {
       this.ordertimeline = result;
 
     })
+  }
+  laygia(value: string) {
+    if (value == '100') {
+      this.startgia = null;
+      this.endgia = null;
+    }
+    if (value == '1') {
+      this.startgia = 400000;
+      this.endgia = 1000000;
+    }
+    if (value == '2') {
+      this.startgia = 1000000;
+      this.endgia = 1500000;
+    }
+    if (value == '3') {
+      this.startgia = 1500000;
+      this.endgia = 2000000;
+    }
+
   }
 
   getAll() {
