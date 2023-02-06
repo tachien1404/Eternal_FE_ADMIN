@@ -36,7 +36,7 @@ import { DeGiayComponent } from './layouts/de-giay/de-giay.component';
 import { DonTaiQuayComponent } from './layouts/don-tai-quay/don-tai-quay.component';
 import { NewOrderComponent } from './layouts/new-order/new-order.component';
 import { ColorPickerModule } from 'ngx-color-picker';
-// import { ShoelineShoeComponent } from './layouts/shoelineShoe/shoeline-shoe/shoeline-shoe.component';
+import { ShoelineshoeComponent } from './layouts/shoelineshoe/shoelineshoe.component';
 
 const configToast: any = {
   timeOut: 2000,
@@ -57,6 +57,7 @@ const configToast: any = {
     ProductComponent,
     SCDetailsComponent,
     DonTaiQuayComponent,
+    ShoelineshoeComponent,
     AccountComponent,
     TaoDonHangComponent,
 
@@ -69,7 +70,7 @@ const configToast: any = {
     SizeGiayComponent,
     DeGiayComponent,
     NewOrderComponent,
-    // ShoelineShoeComponent
+
   ],
   imports: [
     BrowserAnimationsModule,

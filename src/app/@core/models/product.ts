@@ -25,11 +25,13 @@ export interface Brand{
 export interface Sole {
   id?:number;
   name?: string;
+  isdelete?: boolean
 }
 
 export interface ShoeLine {
   id?:number;
   name?: string;
+  isdelete?: boolean
 }
 
 export interface Color {
@@ -42,6 +44,7 @@ export interface Color {
 export interface Size {
   id?:number;
   value?: string;
+  isdelete?: boolean
 }
 
 

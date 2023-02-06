@@ -6,28 +6,34 @@
       <form [formGroup]="formSearch">
         <!--      <ng-template #content1 let-modal>-->
         <div class="row">
-          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm</h2>
+          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Đinh giày</h2>
           <!--          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
         </div>
-
-        <div class="row">
-
-          <div class="row ml-3">
-            <div class="col-6">
+        <div class="row ml-3">
+            <div class="row">
               <div class="form-group row">
-                <label class="col-md-4 col-form-label">Tên loại đế: </label>
-                <div class="col-md-10">
-                  <input class="form-control" type="text" formControlName="keyword" style="border: solid 1px gray;">
+                <div class="col-md-5">
+                  <input class="form-control" type="text" formControlName="keyword" style="border: solid 1px gray;" placeholder="Tìm kiếm theo tên đinh giày!">
                 </div>
+                <label class="col-1 mt-2" >Trạng thái: </label>
+                <div class="col-3">
+                  <select class="form-select drpCombobox me-3"aria-label="Default select example" formControlName="Active">
+                    <option value = "all" selected>Tất Cả</option>
+                    <option value="1">Hoạt động</option>
+                    <option value="2">Ngưng hoạt động</option>
+                  </select>
+                </div>
+                  <div  class="col-md-2">
+                  <button type="button" class="btn btn-success me-2" type="submit" (click)="onSubmitSearch()"> Tìm
+                    kiếm</button></div>
               </div>
             </div>
           </div>
-        </div>
+
 
         <div class="row ml-3 mt-5">
           <div>
-            <button type="button" class="btn btn-success me-2" type="submit" (click)="onSubmitSearch()"> Tìm
-              kiếm</button>
+
             <button class="btn btn-primary  ml-1 " (click)="openLg(content)">Thêm mới</button>
           </div>
         </div>
@@ -41,15 +47,15 @@
       <thead>
         <tr>
           <th class="text-center col-1" scope="col">STT</th>
-          <th class="text-center col-1" scope="col">ID</th>
-          <th class="text-center" scope="col">Tên loại đế</th>
+          <th class="text-center" scope="col">Tên đinh giày</th>
+          <th class="text-center col-1" scope="col">Trạng thái</th>
         </tr>
       </thead>
       <tbody *ngIf="soles">
-        <tr *ngFor="let item of litsole | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+        <tr *ngFor="let item of soles; let i = index">
           <td class="text-center" style="padding-top: 30px;">{{i + 1}}</td>
-          <td class="text-center" style="padding-top: 30px;">{{item.id}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{!item.isdelete ? "Hoạt động" : "Ngưng hoạt động"}}</td>
           <td class="text-center" style="padding-top: 30px;">
             <a (click)="info(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg"
                 width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -68,65 +74,67 @@
         </tr>
       </tbody>
     </table>
-    <div style="margin-bottom: 100px;float: right;">
-      <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
+
+    <div>
+
+
+      <!--              Pagination                -->
+      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">
+        <ul class="pagination justify-content-end">
+          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">
+            <option selected>5</option>
+            <option>10</option>
+            <option>15</option>
+          </select>
+          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">
+              <path
+                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+            </svg>
+          </li>
+
+          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"
+            [ngClass]="indexPage == i?'active':''">
+            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>
+          </li>
+
+          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">
+              <path
+                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                (click)="preNextPage('next')" />
+            </svg>
+          </li>
+        </ul>
+      </nav>
     </div>
-
-<!--    <div>-->
-
-
-<!--      &lt;!&ndash;              Pagination                &ndash;&gt;-->
-<!--      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">-->
-<!--        <ul class="pagination justify-content-end">-->
-<!--          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">-->
-<!--            <option selected>5</option>-->
-<!--            <option>10</option>-->
-<!--            <option>15</option>-->
-<!--          </select>-->
-<!--          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">-->
-<!--              <path-->
-<!--                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />-->
-<!--            </svg>-->
-<!--          </li>-->
-
-<!--          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"-->
-<!--            [ngClass]="indexPage == i?'active':''">-->
-<!--            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>-->
-<!--          </li>-->
-
-<!--          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">-->
-<!--              <path-->
-<!--                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"-->
-<!--                (click)="preNextPage('next')" />-->
-<!--            </svg>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </nav>-->
-<!--    </div>-->
   </div>
 
   <form novalidate [formGroup]="formAdd" enctype="multipart/form-data">
     <ng-template #content let-modal>
       <div class="modal-header">
-        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">{{message}} đế giày</h2>
+        <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">{{message}} đinh giày</h2>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-7">
             <div class="form-group row">
-              <label class="col-md-4 col-form-label">Tên đế giày: </label>
+              <label class="col-md-4 col-form-label">Tên đinh giày: </label>
               <div class="col-md-10">
                 <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('name')?.errors?.required && formAdd.get('name')?.touched">
-                  Tên đế giày không được để trống !
+                  Tên đinh giày không được để trống !
                 </small>
+                <select formControlName="Active" [hidden]="hiddeen">
+                  <option [ngValue]="false" [selected]="!sole.isdelete ? true : false">Active</option>
+                  <option [ngValue]="true" [selected]="sole.isdelete ? true : false">In-active</option>
+                </select>
               </div>
+
             </div>
           </div>
         </div>

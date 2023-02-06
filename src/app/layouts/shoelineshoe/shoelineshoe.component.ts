@@ -1,35 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators ,FormControl} from "@angular/forms";
+import { ShoeLine } from '../../@core/models/product';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from "@angular/router";
-import { Size } from "../../@core/models/product";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { SizeService } from 'src/app/service/size.service';
-import {computeStartOfLinePositions} from "@angular/compiler-cli/src/ngtsc/sourcemaps/src/source_file";
-import { ConnectableObservable } from 'rxjs';
+import { ShoelineService } from '../../service/shoeline.service';
 
 @Component({
-  selector: 'app-size-giay',
-  templateUrl: './size-giay.component.html',
-  styleUrls: ['./size-giay.component.css']
+  selector: 'app-shoelineshoe',
+  templateUrl: './shoelineshoe.component.html',
+  styleUrls: ['./shoelineshoe.component.css']
 })
-export class SizeGiayComponent implements OnInit {
+export class ShoelineshoeComponent implements OnInit {
   formAdd!: FormGroup;
   formSearch!: FormGroup;
   indexPage = 0;
   Page: any;
-  sizePage = 5;
-  datas: Size[] = [];
+  size = 5;
+  dataSole: ShoeLine[] = [];
   message!: String;
   hiddeen!: boolean;
-  size: Size = {}
-  sizes: Size[] = []
+  shoeLine: ShoeLine = {}
+  shoeLines: ShoeLine[] = []
+
   constructor(
     private fb: FormBuilder,
-    private readonly router: Router,
+    private readonly Router: Router,
     private toastr: ToastrService,
     private modalService: NgbModal,
-    private sizeService: SizeService,
+    private ShoelineService: ShoelineService,
   ) { }
 
   ngOnInit() {
@@ -48,15 +47,13 @@ export class SizeGiayComponent implements OnInit {
 
   initFormAdd() {
     this.formAdd = this.fb.group({
-      value: ['', Validators.required],
-      Active: ["all"]
+      name: ['', Validators.required],
+      Active: ['false']
     })
   }
-  filterForm: FormGroup = new FormGroup({
-    keyword: new FormControl,
-  })
+
   openLg(content: any) {
-    this.size = {};
+    this.shoeLine = {};
     this.message = "Thêm mới";
     this.initFormAdd();
     this.hiddeen = true;
@@ -64,36 +61,40 @@ export class SizeGiayComponent implements OnInit {
   }
 
   getAll() {
-    this.sizeService.getAll().subscribe(
+    this.ShoelineService.getAll().subscribe(
       (res: any) => {
-        this.sizes = res.content;
-        console.log(this.sizes)
+        this.shoeLines = res.content;
+        console.log(this.shoeLines)
+      }
+    );
+  }
+  filterForm: FormGroup = new FormGroup({
+    keyword: new FormControl,
+  })
+  clearFilter() {
+    this.filterForm.reset()
+    this.ShoelineService.getAll().subscribe(
+      (res: any) => {
+        this.shoeLines = res.content;
+        console.log(this.shoeLines)
       }
     );
   }
 
   fillValueSearch() {
     const formSearchValue = this.formSearch.value;
-    this.size.id = formSearchValue.id;
-    this.size.value = formSearchValue.value;
+    this.shoeLine.id = formSearchValue.id;
+    this.shoeLine.name = formSearchValue.name;
   }
-  clearFilter() {
-    this.filterForm.reset()
-    this.sizeService.getAll().subscribe(
-      (res: any) => {
-        this.sizes = res.content;
-        console.log(this.sizes)
-      }
-    );
-  }
+
   onSubmitSearch() {
     this.fillValueSearch();
-      this.sizeService.search(this.formSearch.value.keyword,  "" + this.formSearch.value.Status).subscribe(
+      this.ShoelineService.search(this.formSearch.value.keyword, this.formSearch.value.Status).subscribe(
         res => {
-          this.sizes = res
+          this.shoeLines = res
         },
         error => {
-          this.toastr.error("Not found");
+          this.toastr.error("Không tìm thấy!!");
           this.pagination(0)
         }
       )
@@ -101,35 +102,36 @@ export class SizeGiayComponent implements OnInit {
   }
 
   addValue() {
-    this.size.value = this.formAdd.value.value;
+    this.shoeLine.name = this.formAdd.value.name;
+    this.shoeLine.isdelete = this.formAdd.value.Active;
   }
 
   create() {
     let valid = false
-    if (String(this.formAdd.value.value).trim().length > 0) {
+    if (this.formAdd.value.name.trim().length > 0) {
       valid = true
     }
     this.addValue();
-    valid ? this.sizeService.create(this.size).subscribe(
+    valid ? this.ShoelineService.create(this.shoeLine).subscribe(
       (res) => {
         this.toastr.success("Success !");
         this.ngOnInit();
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Lỗi Nhập Liệu :<");
+        this.toastr.error("Lỗi nhập liệu");
       }
-    ): this.toastr.error("Invalid Form");
+    ) : this.toastr.error("Invalid Form");
   }
 
   info(id: any, content: any) {
     this.openLg(content);
     this.message = "Cập nhật ";
     this.hiddeen = false;
-    const sizeId = this.sizes.find(value => {
+    const ShoeLineId = this.shoeLines.find(value => {
       return value.id == id;
     })
-    if (sizeId) {
-      this.size = sizeId;
+    if (ShoeLineId) {
+      this.shoeLine = ShoeLineId;
     }
     this.initFormAdd();
     this.fillValueForm();
@@ -137,23 +139,23 @@ export class SizeGiayComponent implements OnInit {
 
   fillValueForm() {
     this.formAdd.patchValue({
-      value: this.size.value,
-      Active: this.size.isdelete
+      name: this.shoeLine.name,
+      Active: this.shoeLine.isdelete
     })
   }
 
   update() {
     let valid = false
-    if (String(this.formAdd.value.value).trim().length > 0) {
+    if (this.formAdd.value.name.trim().length > 0) {
       valid = true
     }
-    this.size.value = this.formAdd.value.value,
-    this.size.isdelete = this.formAdd.value.Active
-    this.size.id && valid ? this.sizeService.update(this.size.id, this.size).subscribe(
+    this.shoeLine.name = this.formAdd.value.name
+    this.shoeLine.isdelete = this.formAdd.value.Active
+    this.shoeLine.id && valid ? this.ShoelineService.update(this.shoeLine.id, this.shoeLine).subscribe(
       res => {
         this.toastr.success("Success !");
         this.ngOnInit();
-        this.size = {};
+        this.shoeLine = {};
         this.modalService.dismissAll();
       }, error => {
         this.toastr.error("Lỗi :<");
@@ -161,15 +163,15 @@ export class SizeGiayComponent implements OnInit {
     ) : this.toastr.error("Invalid Form");
   }
 
-  deleteSizeGiay() {
-    this.size.id  && confirm("Bạn đã chắc chắn xóa chưa?") ? this.sizeService.delete(this.size.id).subscribe(
+  delete() {
+    this.shoeLine.id && confirm("Bạn có chắn chắn xóa?") ? this.ShoelineService.delete(this.shoeLine.id).subscribe(
       res => {
         this.toastr.success("Success !");
         this.ngOnInit();
-        this.size = {};
+        this.shoeLine = {};
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Lỗi :<");
+        this.toastr.error("Lỗi");
       }
     ) : ""
   }
@@ -179,27 +181,32 @@ export class SizeGiayComponent implements OnInit {
       page = 0;
     }
     this.indexPage = page
-    this.sizeService.getPage(this.indexPage, this.sizePage, this.size)
+    this.ShoelineService.getPage(this.indexPage, this.size, this.shoeLine)
       .subscribe({
         next: res => {
-          this.sizes = res.content;
-          console.log(this.sizes)
+          this.shoeLines = res.content;
+          console.log(this.shoeLines)
           this.Page = res;
         }, error: error => {
-          this.toastr.error("Lỗi :<");
+          this.toastr.error("Lỗi ");
         }
       });
   }
 
-    preNextPage(selector: string) {
+  preNextPage(selector: string) {
     if (selector == 'pre') --this.indexPage;
     if (selector == 'next') ++this.indexPage;
     this.pagination(this.indexPage);
   }
 
   pageItem(pageItems: any) {
-    this.sizePage = pageItems;
+    this.size = pageItems;
     this.indexPage = 0;
     this.pagination(this.indexPage);
   }
+
+
 }
+
+
+
