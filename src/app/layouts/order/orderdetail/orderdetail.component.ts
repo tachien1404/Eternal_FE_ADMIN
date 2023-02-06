@@ -13,6 +13,7 @@ import {SCDetailsService} from "../../../@core/services/s-c.-details.service";
 import {ProductService} from "../../../@core/services/products.service";
 import {SaimauService} from "../../../service/saimau.service";
 import {AdminunitService} from "../../../service/adminunit.service";
+import {OrderDeteo} from "../../../@core/models/OrderDeteo.";
 
 @Component({
   selector: 'app-orderdetail',
@@ -54,6 +55,8 @@ export class OrderdetailComponent implements OnInit {
   endgia:any;
   listcategory: any;
   listbrand: any;
+  orderdeteogiaquantity: OrderDeteo = {};
+   price: any;
   constructor(private modalService: NgbModal, private adminunitservice: AdminunitService,
               private saimauservice: SaimauService,
               private saimauService: SCDetailsService,
@@ -66,7 +69,7 @@ export class OrderdetailComponent implements OnInit {
               private productService: ProductService,
               private tokenService: TokenStorageService,) {
     this.Orderid = this.route.snapshot.paramMap.get('id');
-    console.log(this.Orderid)
+
     if (this.Orderid != null && this.Orderid >= 0) {
       this.getByOrderId(this.Orderid);
       this.getOrderById(this.Orderid);
@@ -75,6 +78,7 @@ export class OrderdetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.tinh();
+    this.sumquantitygia();
   }
 
   productFrom = new FormGroup({
@@ -205,7 +209,7 @@ export class OrderdetailComponent implements OnInit {
   delete(id: any) {
     //xóa đơn chi tiết
     this.Orderid = this.route.snapshot.paramMap.get('id');
-    console.log(this.Orderid)
+
     if (confirm("bnaj có chắc muốn xóa sản phẩm này khói giỏ hàng?")) {
       this.service.delete(id).subscribe(result => {
         this.getByOrderId(this.Orderid);
@@ -218,11 +222,20 @@ export class OrderdetailComponent implements OnInit {
           this.ordertimeline = result;
 
         })
+        this.sumquantitygia()
         this.toastr.success("Xóa thành công")
       });
     }
   }
+  sumquantitygia() {//tổng số lượng mua và tổng giá
+    this.Orderid = this.route.snapshot.paramMap.get('id');
+    this.service.sumgiaquantity(this.Orderid).subscribe(result => {
+      this.orderdeteogiaquantity = result;
+      this.price = this.orderdeteogiaquantity.price;
 
+
+    })
+  }
   getByOrderId(id: any) {//lấy ra chi tiết đơn
     this.service.getByOrderId(id).subscribe(result => {
       this.litorderdetail = result;
@@ -242,7 +255,7 @@ export class OrderdetailComponent implements OnInit {
   getOrderById(id: any) {//lấy ra thông tin đặt hàng
     this.service.getOrderById(id).subscribe(result => {
       this.order = result;
-      console.log(this.order)
+
     })
   }
 
@@ -370,16 +383,15 @@ export class OrderdetailComponent implements OnInit {
 
   laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
-    console.log(id)
+
     this.saimauform.value.color_id = colorvalue;
     this.saimauform.value.product_id = id;
-    console.log(this.saimauform.value)
-    console.log(colorvalue)
+
     this.saimauservice.getsize(this.saimauform.value).subscribe(result => {
       this.size = result;
 
     })
-    console.log(this.size)
+
 
   }
 
@@ -390,6 +402,9 @@ export class OrderdetailComponent implements OnInit {
     this.orderdeteoFrom.value.sizeId = this.valuesize;
     this.orderdeteoFrom.value.orderId = this.Orderid;
     this.orderdeteoFrom.value.price = gia;
+    this.username = this.tokenservice.getUser();
+    this.ordertimeline.account_name = this.username;
+    this.ordertimeline.order_id = this.order.id;
     if(this.valuesize!=null&&this.valuecolor!=null&&this.valuesize!=''&&this.valuecolor!='') {
       this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
         this.orderdetail = result;
@@ -406,6 +421,7 @@ export class OrderdetailComponent implements OnInit {
           this.toastr.success("Đã thêm vào giỏ");
           this.getByOrderId(this.Orderid);
 
+this.sumquantitygia();
         } else {
           this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
         }

@@ -10,6 +10,7 @@ import {ProductDTO, SortByValue} from "../../@core/models/ProductSortDTO";
 import {SCDetailsService} from "../../@core/services/s-c.-details.service";
 import {CategoryService} from "../../@core/services/category.service";
 import {BrandService} from "../../service/brand.service";
+import {SoleService} from "../../service/sole.service";
 
 @Component({
   selector: 'app-product',
@@ -46,6 +47,8 @@ listproduct:any;//getalllistvaf phân trang
   endgia: any;
   namesot:any;
   trangthai: any;
+  namesholine:any;
+  namesole:any;
  // end
 
   constructor(
@@ -56,6 +59,7 @@ listproduct:any;//getalllistvaf phân trang
     private productService: ProductService,
     private cateService: CategoryService,
     private brandService: BrandService,
+    private soleservice:SoleService,
   ) {
   }
 
@@ -406,16 +410,22 @@ this.productFrom.value.status=this.trangthai;
     this.openLg(content);
     this.message = "Cập nhật ";
     this.hiddeen = false;
-    const productId = this.datas.find(value => {
-      return value.id == id;
-    })
-    if (productId) {
-      this.product = productId;
-    }
+    // const productId = this.datas.find(value => {
+    //   return value.id == id;
+    // })
+    // if (productId) {
+    //   this.product = productId;
+    // }
+    this.getone(id);
     this.initFormAdd();
     this.fillValueForm();
   }
-
+getone(id:any){
+    this.productService.getone(id).subscribe(result=>{
+      this.product=result;
+      console.log(this.product)
+    })
+}
   fillValueForm() {
     this.formAdd.patchValue({
       name: this.product.name,
@@ -506,7 +516,12 @@ this.productFrom.value.status=this.trangthai;
   addValueFromBrand() {
     this.brand.name = this.formAddBrand.value.name;
   }
-
+  solefrom = new FormGroup({
+   namesole:new FormControl('',Validators.required)
+  })
+  sholinefrom = new FormGroup({
+    nameshoeline:new FormControl('',Validators.required)
+  })
   createBrand(content: any){
     this.addValueFromBrand();
     this.brandService.create(this.brand).subscribe(
@@ -522,6 +537,26 @@ this.productFrom.value.status=this.trangthai;
     );
   }
 
+  createsole(content: any) {
+    this.solefrom.value.namesole=this.namesole;
+    console.log(this.namesole)
+this.soleservice.create(this.solefrom.value).subscribe(result=>{
+  console.log(result)
+})
+  }
+  createshoeline(content: any) {
+
+  }
 
 
+
+  quickAddsole(contentsole: any) {
+    this.modalService.dismissAll();
+    this.modalService.open(contentsole, {size: 'lg', centered: true, scrollable: true});
+  }
+
+  quickAddshoeline(contentshoeline: any) {
+    this.modalService.dismissAll();
+    this.modalService.open(contentshoeline, {size: 'lg', centered: true, scrollable: true});
+  }
 }

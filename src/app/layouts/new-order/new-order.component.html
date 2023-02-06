@@ -26,8 +26,8 @@
                      [(ngModel)]="namesot"/>
               <label class="form-label" for="form1"></label>
             </div>
-            <button type="button" class="btn btn-primary">
-              <i class="fas fa-search" (click)="openProduct(product)"></i>
+            <button type="button" class="btn btn-primary"(click)="openProduct(product)">
+             Tìm kiếm
             </button>
 
           </div>
@@ -202,7 +202,7 @@
               địa chỉ </span>
             </div>
             <div class="col-3" style="margin-top: 20px;">
-              <button class="btn btn-success" type="submit">Thêm mới</button>
+              <button class="btn btn-success" type="submit">Lưu</button>
             </div>
           </div>
         </form>
@@ -288,7 +288,7 @@
               </select>
             </th>
             <th>
-              <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
+              <select #selectSize (change)="laysize(selectSize.value,item.id)" class="form-select "
                       aria-label="Default select example">
                 <option>Chọn size</option>
                 <option *ngFor="let itemsize of item.litsai" [value]="itemsize.id">{{itemsize.value}}</option>

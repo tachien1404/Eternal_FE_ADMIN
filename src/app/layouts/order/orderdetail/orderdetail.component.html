@@ -267,7 +267,7 @@
 
     </div>
   </div>
-  <label style="font-size: 25px ;float: right ;margin: 20px" >Tổng tiền : <b style="color: orangered">{{order.price| currency :'VND'}}</b></label>
+  <label style="font-size: 25px ;float: right ;margin: 20px" >Tổng tiền : <b style="color: orangered">{{price| currency :'VND'}}</b></label>
   <span *ngIf="order.status ==0">
   <div>
     <button class="btn btn-success" (click)="openProduct(product)">Thêm sản phẩm</button>
