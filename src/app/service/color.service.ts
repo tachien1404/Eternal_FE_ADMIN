@@ -46,9 +46,9 @@ export class ColorService {
     )
   }
 
-  search(keyword: any): Observable<Array<any>> {
+  search(keyword: any, status: any): Observable<Array<any>> {
     return this.http.get<Array<any>>(
-      api + `search?keyword=${keyword}`
+      api + `search?keyword=${keyword}&status=${status}`
     )
   }
 

@@ -30,7 +30,7 @@ export class MauSacComponent implements OnInit {
     private fb: FormBuilder,
     private readonly router: Router,
     private toastr: ToastrService,
-    private modalService: NgbModal,
+    public modalService: NgbModal,
     private colorService: ColorService,
   ) { }
 
@@ -43,14 +43,16 @@ export class MauSacComponent implements OnInit {
 
   initFormSearch() {
     this.formSearch = this.fb.group({
-      keyword: ''
+      keyword: '',
+      Status: "all"
     });
   }
 
   initFormAdd() {
     this.formAdd = this.fb.group({
       name: ['', Validators.required],
-      value: ['', Validators.required]
+      value: ['', Validators.required],
+      Active: ['false']
     })
   }
 
@@ -80,8 +82,7 @@ export class MauSacComponent implements OnInit {
 
   onSubmitSearch() {
     this.fillValueSearch();
-    this.formSearch.value.keyword.trim() ?
-      this.colorService.search(this.formSearch.value.keyword).subscribe(
+      this.colorService.search(this.formSearch.value.keyword, this.formSearch.value.Status).subscribe(
         res => {
           this.colors = res
         },
@@ -90,8 +91,6 @@ export class MauSacComponent implements OnInit {
           this.pagination(0)
         }
       )
-      :
-      this.pagination(0)
     this.initFormSearch();
   }
 
@@ -104,16 +103,23 @@ export class MauSacComponent implements OnInit {
     this.addValue();
     let valid = false
     if (this.formAdd.value.name.trim().length > 0
-        && String(this.formAdd.value.value).trim().length > 0) {
+        && this.formAdd.value.value.trim().length > 0) {
       valid = true
     }
+    for (let i = 0; i < this.colors.length; i++) {
+      if (this.colors[i].name?.trim() === this.formAdd.value.name.trim()
+          || this.colors[i].value?.trim() === this.formAdd.value.value.trim()) {
+           valid = false;
+           break
+      }
+  }
     valid == true ? this.colorService.create(this.color).subscribe(
       (res) => {
         this.toastr.success("Success!");
         this.ngOnInit();
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Some things went wrong :<");
+        this.toastr.error("Lỗi Nhập Liệu :<");
       }
     )
     :
@@ -137,18 +143,20 @@ export class MauSacComponent implements OnInit {
   fillValueForm() {
     this.formAdd.patchValue({
       name: this.color.name,
-      value: this.color.value
+      value: this.color.value,
+      Active: this.color.isdelete
     })
   }
 
   update() {
-    let valid = true
+    let valid = false
     if (this.formAdd.value.name.trim().length > 0
         && String(this.formAdd.value.value).trim().length > 0) {
-      valid = false
+      valid = true
     }
-    this.color.name = this.formAdd.value.name
-    this. color.value = this.formAdd.value.value
+    this.color.name = this.formAdd.value.name.trim()
+    this.color.value = this.formAdd.value.value.trim()
+    this.color.isdelete = this.formAdd.value.Active
     this.color.id && valid ? this.colorService.update(this.color.id, this.color).subscribe(
       res => {
         this.toastr.success("Success!");
@@ -156,13 +164,15 @@ export class MauSacComponent implements OnInit {
         this.color = {};
         this.modalService.dismissAll();
       }, error => {
-        this.toastr.error("Some things went wrong :<");
+        console.log(error);
+
+        this.toastr.error("Lỗi :<");
       }
     ) : this.toastr.error("Invalid Form");
   }
 
   delete() {
-    this.color.id && confirm("Are u sure?") ? this.colorService.delete(this.color.id).subscribe(
+    this.color.id && confirm("Bạn đã chắn chắn xóa chưa?") ? this.colorService.delete(this.color.id).subscribe(
       res => {
         this.toastr.success("Success!");
         this.ngOnInit();
@@ -186,7 +196,7 @@ export class MauSacComponent implements OnInit {
           console.log(this.colors)
           this.Page = res;
         }, error: error => {
-          this.toastr.error("Some things went wrong :<");
+          this.toastr.error("Lỗi :<");
         }
       });
   }
