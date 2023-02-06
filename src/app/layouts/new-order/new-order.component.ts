@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {CustomerService} from "../../service/customer.service";
@@ -14,9 +14,6 @@ import {OrdertimlineService} from "../../service/ordertimline.service";
 import {S_CDetails} from "../../@core/models/SCDetails";
 import {SaimauService} from "../../service/saimau.service";
 import {AdminunitService} from "../../service/adminunit.service";
-import {CategoryService} from "../../service/category.service";
-import {BrandService} from "../../service/brand.service";
-import {SoleService} from "../../service/sole.service";
 
 @Component({
   selector: 'app-new-order',
@@ -24,6 +21,7 @@ import {SoleService} from "../../service/sole.service";
   styleUrls: ['./new-order.component.css']
 })
 export class NewOrderComponent implements OnInit {
+  @Input() tabIndex: number | undefined
   @Output() childEvent = new EventEmitter();
   @Output() childEventCreateDra = new EventEmitter();
 
@@ -38,11 +36,10 @@ export class NewOrderComponent implements OnInit {
   khachdua: any = 0;
   giamgia: any = 0;
   tongthu: any;
-  valuekenh: any = 1;
+  valuekenh: any = 0;
   valuesize: any;
   valuecolor: any;
   size: any;
-  dis:any;
   litthanhpho: any;
   lithuyen: any;
   litxa: any
@@ -58,8 +55,6 @@ export class NewOrderComponent implements OnInit {
   message!: String;
   orderdeteo: any;
   litorderdeteo: any;
-  listcategory: any;
-  listbrand: any;
   listhoadoncho: any;
   namecity: any;
   nameDistrict: any;
@@ -70,20 +65,9 @@ export class NewOrderComponent implements OnInit {
   ordertimeline: OrderTimeline = {};
   listordertimeline: any;
   shippingFee: any = 0;
-  listsole: any;
-  category_id: any;
-  brand_id: any;
-  sole_id: any;
-  startgia: any;
-  endgia: any;
 
-  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService,
-              private orderService: OrderService, private tokenservice: TokenStorageService
-    , private categoryservice: CategoryService, private hangservice: BrandService, private soleService: SoleService,
-              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService,
-              private toastr: ToastrService, private router: Router,
-              private service: CustomerService, private modalService: NgbModal,
-              private productService: ProductService
+  constructor(private adminunitservice: AdminunitService, private saimauService: SCDetailsService, private orderService: OrderService, private tokenservice: TokenStorageService,
+              private saimauservice: SaimauService, private ordertimelineservice: OrdertimlineService, private toastr: ToastrService, private router: Router, private service: CustomerService, private modalService: NgbModal, private productService: ProductService
   ) {
   }
 
@@ -94,7 +78,8 @@ export class NewOrderComponent implements OnInit {
   customerFrom = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     sdt: new FormControl('', [Validators.required, Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]),
-    address: new FormControl('', Validators.required)
+    address: new FormControl('', Validators.required),
+    active: new FormControl("true")
   })
   orderFrom = new FormGroup({
     id: new FormControl(''),
@@ -118,24 +103,16 @@ export class NewOrderComponent implements OnInit {
   })
   productFrom = new FormGroup({
     name: new FormControl(''),
-    hang_id: new FormControl(''),
-    sole_id: new FormControl(''),
-    category_id: new FormControl(''),
-    startgia: new FormControl(''),
-    endgia: new FormControl(''),
   })
 
   ngOnInit(): void {
     this.taodonhang()
     this.tinh();
-    if(this.litorderdeteo!=null){
-      this.dis=1;
-    }
+    this.getDataFromLocal()
   }
 
-  sumquantitygia() {//tổng số lượng mua và tổng giá
+  sumquantitygia() {
     this.orderService.sumgiaquantity(this.order.id).subscribe(result => {
-
       this.orderdeteogiaquantity = result;
       this.price = this.orderdeteogiaquantity.price;
       this.tongthu = this.price - this.giamgia;
@@ -143,18 +120,12 @@ export class NewOrderComponent implements OnInit {
     })
   }
 
-  changeQuantity(quantity: any, id: any, quantitysaimau: any) {//chỉnh số lượng
+  changeQuantity(quantity: any, id: any, quantitysaimau: any) {
     this.orderdetail.detail_id = id;
     this.orderdetail.quantity = quantity;
     if (quantity > quantitysaimau) {
       this.orderdetail.quantity = quantitysaimau;
       this.toastr.success("Số lượng sản phẩm vượt quá số lượng hàng có sẵn");
-    }
-    else
-    if (quantity == 0 ||quantity<0) {
-      if (confirm("bạn muốn xóa sản phâẩm này khỏi giỏ hàng ?")) {
-         this.delete(id);
-      }
     }
     this.orderService.savedeteo(this.orderdetail).subscribe(result => {
 
@@ -237,7 +208,6 @@ export class NewOrderComponent implements OnInit {
 
   laykenh(kenhvalue: any) {
     this.valuekenh = kenhvalue;
-
   }
 
   savecustomer() {
@@ -248,7 +218,7 @@ export class NewOrderComponent implements OnInit {
         this.getFeeShip();
         this.toastr.success("Thêm mới thành công");
         this.modalService.dismissAll();
-
+        // localStorage.setItem("customer", this.customer)
       }, error => {
         this.toastr.success("Thêm mới thất bại");
       })
@@ -289,10 +259,12 @@ export class NewOrderComponent implements OnInit {
 
   delete(id: any) {
     //xóa đơn chi tiết
+    console.log(id)
+
+
     if (confirm("Bạn chắc chắn muốn xóa chứ?")) {
       this.orderService.delete(id).subscribe(result => {
         this.getByOrderId();
-        this.sumquantitygia();
       });
     }
   }
@@ -309,41 +281,9 @@ export class NewOrderComponent implements OnInit {
 
   })
 
-  laycategory(value: string) {
-    if (value == '100') {
-      this.category_id = null;
-      console.log("có")
-      console.log(this.category_id)
-    } else {
-      this.category_id = value;
-    }
-
-  }
-
-  laybrand(value: string) {
-
-    if (value == '100') {
-      console.log("có")
-      this.brand_id = null;
-    } else {
-      this.brand_id = value;
-    }
-
-  }
-
-  laysole(value: string) {
-    if (value == '100') {
-      console.log("có")
-      this.sole_id = null;
-    } else {
-      this.sole_id = value;
-    }
-
-  }
-
   laycolor(colorvalue: any, id: any) {
     this.valuecolor = colorvalue;
-
+    console.log(id)
     this.saimauform.value.color_id = colorvalue;
     this.saimauform.value.product_id = id;
     console.log(this.saimauform.value)
@@ -352,7 +292,7 @@ export class NewOrderComponent implements OnInit {
       this.size = result;
 
     })
-
+    console.log(this.size)
   }
 
 
@@ -370,11 +310,11 @@ export class NewOrderComponent implements OnInit {
         this.getByOrderId();
         this.sumquantitygia();
       } else {
-        this.toastr.success("Mời bạn lựa chọn màu hoặc size  ");
+        this.toastr.success("ko có màu size phù hợp ");
       }
 
     }, error => {
-      this.toastr.success("Mời bạn lựa chọn màu hoặc size  ");
+      this.toastr.success("ko có màu size phù hợp ");
     })
 
   }
@@ -401,13 +341,8 @@ export class NewOrderComponent implements OnInit {
   }
 
   openProduct(product: any) {
-    this.brand_id = null;
-    this.category_id = null;
-    this.sole_id = null;
     this.serchNameProduct();
-    this.getAllbrand();
-    this.getAllcategory();
-    this.getAllSole();
+
     this.getAllmau();
     this.modalService.dismissAll();
     this.modalService.open(product, {
@@ -422,51 +357,22 @@ export class NewOrderComponent implements OnInit {
     })
   }
 
-  getAllcategory() {
-    this.categoryservice.getAllCategory().subscribe(result => {
-      this.listcategory = result;
-    })
-  }
-
-  getAllbrand() {
-    this.hangservice.getAllBrand().subscribe(result => {
-      this.listbrand = result;
-    })
-  }
-
-  getAllSole() {
-    this.soleService.getall().subscribe(result => {
-      this.listsole = result;
-    })
-  }
-
-  getByOrderId() {//đơn chi tiết
+  getByOrderId() {
     this.orderService.getByOrderId(this.order.id).subscribe(result => {
       this.litorderdeteo = result;
-     if(this.litorderdeteo!=null){
       for (let item of this.litorderdeteo) {
         this.tru.push({
           id: item.scId,
           quantity: item.quantity
         })
       }
-     }else{
-        this.litorderdeteo=null;
-      }
     })
   }
 
-  bocloc() {
-    this.serchNameProduct();
-  }
+
 
   serchNameProduct() {
-    this.productFrom.value.name = this.namesot;
-    this.productFrom.value.hang_id = this.brand_id;
-    this.productFrom.value.category_id = this.category_id;
-    this.productFrom.value.sole_id = this.sole_id;
-    this.productFrom.value.startgia = this.startgia;
-    this.productFrom.value.endgia = this.endgia;
+    this.productFrom.value.name = this.namesot
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
 
@@ -503,8 +409,8 @@ export class NewOrderComponent implements OnInit {
       this.orderFrom.value.customer_id = this.customer.id;
     }
 
-    this.orderFrom.value.giamgia = this.giamgia;
-    this.orderFrom.value.ship = this.shippingFee;
+    this.orderFrom.value.giamgia=this.giamgia;
+    this.orderFrom.value.ship=this.shippingFee;
     this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
@@ -538,13 +444,13 @@ export class NewOrderComponent implements OnInit {
   enddononlai() {
     this.orderFrom.value.id = this.order.id;
     this.orderFrom.value.kenh = this.valuekenh;
-    this.orderFrom.value.status = '1';
+    this.orderFrom.value.status = '0';
     if (this.customer != null) {
       this.orderFrom.value.customer_id = this.customer.id;
     }
 
-    this.orderFrom.value.giamgia = this.giamgia;
-    this.orderFrom.value.ship = this.shippingFee;
+    this.orderFrom.value.giamgia=this.giamgia;
+    this.orderFrom.value.ship=this.shippingFee;
     this.tongthu = this.tongthu - this.giamgia;
     this.orderFrom.value.price = this.tongthu;
     this.orderFrom.value.note = this.note;
@@ -622,23 +528,125 @@ export class NewOrderComponent implements OnInit {
     return this.customerFrom.get('name');
   }
 
+  onFocusout() {
+    this.service.save(this.customerFrom.value).subscribe(result => {
+      this.customer = result;
+      this.getFeeShip();
+      // localStorage.setItem("customer", this.customer)
+    }, error => {
+    })
+    this.orderFrom.value.id = this.order.id;
+    this.orderFrom.value.kenh = this.valuekenh;
+    this.orderFrom.value.status = '0';
+    if (this.customer != null) {
+      this.orderFrom.value.customer_id = this.customer.id;
+    }
 
-  laygia(value: string) {
-    if (value == '100') {
-      this.startgia = null;
-      this.endgia = null;
+    this.orderFrom.value.giamgia=this.giamgia;
+    this.orderFrom.value.ship=this.shippingFee;
+    this.tongthu = this.tongthu - this.giamgia;
+    this.orderFrom.value.price = this.tongthu;
+    this.orderFrom.value.note = this.note;
+    //tham lai
+    this.username = this.tokenservice.getUser();
+    this.ordertimeline.account_name = this.username;
+    this.ordertimeline.order_id = this.order.id;
+    this.type = 'Tạo đơn hàng';
+    this.ordertimeline.type = this.type;
+
+    this.ordertimeline.description = this.username + " tạo đơn hàng";
+
+    let data = {
+      tru: this.tru,
+      fordon: this.fordon,
+      orderdetail: this.orderdetail,
+      orderdeteogiaquantity: this.orderdeteogiaquantity,
+      customer: this.customer,
+      quantity: this.quantity,
+      price: this.price,
+      note: this.note,
+      khachdua: this.khachdua,
+      giamgia: this.giamgia,
+      tongthu: this.tongthu,
+      valuekenh: this.valuekenh,
+      valuesize: this.valuesize,
+      valuecolor: this.valuecolor,
+      size: this.size,
+      litthanhpho: this.litthanhpho,
+      lithuyen: this.lithuyen,
+      litxa: this.litxa,
+      tp_id: this.tp_id,
+      huyen_id: this.huyen_id,
+      xa_id: this.xa_id,
+      addres: this.addres,
+      mau: this.mau,
+      order: this.order,
+      namesot: this.namesot,
+      namecus: this.namecus,
+      litproduct: this.litproduct,
+      message: this.message,
+      orderdeteo: this.orderdeteo,
+      litorderdeteo: this.listhoadoncho,
+      listhoadoncho: this.listhoadoncho,
+      namecity: this.namecity,
+      nameDistrict: this.nameDistrict,
+      p: this.p,
+      username: this.username,
+      type: this.type,
+      description: this.description,
+      ordertimeline: this.ordertimeline,
+      listordertimeline: this.listordertimeline,
+      shippingFee: this.shippingFee
     }
-    if (value == '1') {
-      this.startgia = 400000;
-      this.endgia = 1000000;
+    localStorage.setItem("Order" + this.tabIndex, JSON.stringify(data));
+  }
+
+  getDataFromLocal() {
+    var data = localStorage.getItem("Order" + this.tabIndex);
+    if (data) {
+      const dataOb = JSON.parse(data);
+      this.tru = dataOb.tru
+      this.fordon = dataOb.fordon
+      this.orderdetail = dataOb.orderdetail
+      this.orderdeteogiaquantity = dataOb.orderdeteogiaquantity
+      this.customer = dataOb.customer
+      this.quantity = dataOb.quantity
+      this.price = dataOb.price
+      this.note = dataOb.note
+      this.khachdua = dataOb.khachdua
+      this.giamgia = dataOb.giamgia
+      this.tongthu = dataOb.tongthu
+      this.valuekenh = dataOb.valuekenh
+      this.valuesize = dataOb.valuesize
+      this.valuecolor = dataOb.valuecolor
+      this.size = dataOb.size
+      this.litthanhpho = dataOb.litthanhpho
+      this.lithuyen = dataOb.lithuyen
+      this.litxa = dataOb.litxa
+      this.tp_id = dataOb.tp_id
+      this.huyen_id = dataOb.huyen_id
+      this.xa_id = dataOb.xa_id
+      this.addres = dataOb.addres
+      this.mau = dataOb.mau
+      this.order = dataOb.order
+      this.namesot = dataOb.namesot
+      this.namecus = dataOb.namecus
+      this.litproduct = dataOb.litproduct
+      this.message = dataOb.message
+      this.orderdeteo = dataOb.orderdeteo
+      this.litorderdeteo = dataOb.listhoadoncho
+      this.listhoadoncho = dataOb.listhoadoncho
+      this.namecity = dataOb.namecity
+      this.nameDistrict = dataOb.nameDistrict
+      this.p = dataOb.p
+      this.username = dataOb.username
+      this.type = dataOb.type
+      this.description = dataOb.description
+      this.ordertimeline = dataOb.ordertimeline
+      this.listordertimeline = dataOb.listordertimeline
+      this.shippingFee = dataOb.shippingFee
     }
-    if (value == '2') {
-      this.startgia = 1000000;
-      this.endgia = 1500000;
-    }
-    if (value == '3') {
-      this.startgia = 1500000;
-      this.endgia = 2000000;
-    }
+    this.getByOrderId();
+    this.sumquantitygia();
   }
 }

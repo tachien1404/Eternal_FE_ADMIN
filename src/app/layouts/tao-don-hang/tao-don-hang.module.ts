@@ -7,7 +7,7 @@ import {TaoDonHangRouting} from "./tao-don-hang.routing";
   declarations:[],
   imports:[
     CommonModule,
-    TaoDonHangRouting
+    TaoDonHangRouting,
   ]
 })
 export class TaoDonHangModule{}
