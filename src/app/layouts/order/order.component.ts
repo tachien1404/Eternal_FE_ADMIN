@@ -19,6 +19,7 @@ export class OrderComponent implements OnInit {
   status: any=null;
   keyword: any=null;
 index:any=0;
+kenh:any=null;
   constructor(private service: OrderService,
               private toastr: ToastrService,
               private modalService: NgbModal) {
@@ -35,7 +36,8 @@ index:any=0;
       start: new FormControl(),
       end: new FormControl(),
       keyword: new FormControl(),
-      status: new FormControl()
+      status: new FormControl(),
+      kenh:new FormControl(),
     }
   )
 timkiem(){
@@ -45,7 +47,7 @@ timkiem(){
   }else{
     this.Input.value.keyword=this.keyword;
   }
-
+this.Input.value.kenh=this.kenh;
   this.Input.value.end=this.end;
   this.Input.value.start=this.start;
   this.service.timkiem(this.Input.value).subscribe(result =>{
@@ -70,7 +72,12 @@ timkiem(){
       })
     }
   };
-
+loadkenh(kenh:any){
+  this.Input.value.kenh= kenh;
+  this.service.getByPage(this.Input.value).subscribe(data => {
+    this.orderdata = data;
+  })
+}
 
   openLg(content: any, id: any, status: any) {
 
@@ -86,5 +93,22 @@ timkiem(){
     })
   }
 
+
+  laykenh(value: string) {
+
+      if (value == '100') {
+       this.kenh=null;
+      }
+      if (value == '0') {
+        this.kenh= 0;
+      }
+      if (value == '1') {
+        this.kenh=1;
+      }
+      if (value == '2') {
+        this.kenh=2;
+      }
+
+    }
 
 }
