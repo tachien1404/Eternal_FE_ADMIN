@@ -54,20 +54,23 @@
 
 
           <div class="form-group row">
-            <input type="text" class="col-3 ms-3" placeholder="Số điện thoại" [(ngModel)]="keyword"
+            <input type="text" class="col-3 ms-3 mt-3" placeholder="Số điện thoại" [(ngModel)]="keyword"
                    aria-describedby="basic-addon1" style="border-radius: 10px; height: 40px; border: solid 1px gray;">
             <div class="col-2">
-              <b>Ngày bắt đầu</b>
+              <b class="ms-2">Ngày bắt đầu</b>
               <input class="ms-2" type="date" [(ngModel)]="start">
             </div>
 
             <div class="col-2">
-              <b>Ngày kết thúc</b>
+              <b  class="ms-2">Ngày kết thúc</b>
               <input class="ms-2" type="date" [(ngModel)]="end">
             </div>
-            <div class="col-1"><b >Kênh bán</b></div>
-            <div class="col-1">
-              <select class="form-select " aria-label="Default select example" #selectkenh
+
+            <div class="col-3 d-flex">
+
+              <div class="col-6">
+                <b >Kênh bán</b>
+                <select class="form-select" aria-label="Default select example" #selectkenh
                       (change)="laykenh (selectkenh.value)">
                 <option value="100">--All-</option>
                 <option value="0">Web</option>
@@ -75,10 +78,12 @@
                 <option value="2">Giao hàng</option>
 
               </select>
+              </div>
+              <div class="col-6 mt-4 ms-4" >
+                <button class=" btn btn-success " (click)="timkiem()">Tìm kiếm</button>
+              </div>
             </div>
-            <div class="col-2" >
-              <button class=" btn btn-success " (click)="timkiem()">Tìm kiếm</button>
-            </div>
+
           </div>
 
 

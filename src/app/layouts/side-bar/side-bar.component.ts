@@ -1,6 +1,6 @@
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Inject }  from '@angular/core';
+import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -10,30 +10,30 @@ import { DOCUMENT } from '@angular/common';
 })
 export class SideBarComponent implements OnInit {
 
-  constructor(@Inject(DOCUMENT) document: Document, private ElByClassName: ElementRef, private router: Router) {}
+  constructor(@Inject(DOCUMENT) document: Document, private ElByClassName: ElementRef, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   status: boolean = false;
-clickEvent(){
+  clickEvent() {
     this.status = !this.status;
-}
- greet(){
+  }
+  greet() {
     console.log('hello');
     const btnElement = (<HTMLElement>this.ElByClassName.nativeElement).querySelector(
       '.dropdown-menu'
-      );
-      console.log(btnElement);
+    );
+    console.log(btnElement);
 
-      // btnElement.innerHTML = 'This is Button';
- }
-
- selected(id: string) {
-  let uri ="" + this.router.url
-  console.log(uri);
-  if (uri.indexOf(id) !== -1) {
-    document.getElementById(id)?.classList.add('selected');
+    // btnElement.innerHTML = 'This is Button';
   }
- }
+
+  selected(id: string) {
+    let uri = "" + this.router.url
+    console.log(uri);
+    if (uri.indexOf(id) !== -1) {
+      document.getElementById(id)?.classList.add('selected');
+    }
+  }
 }
