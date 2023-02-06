@@ -3,98 +3,98 @@
   <app-side-bar></app-side-bar>
   <div class="card" style="margin-left: 260px;">
     <div class="row mx-2">
-<!--      <form [formGroup]="formSearch">-->
-        <!--      <ng-template #content1 let-modal>-->
-<!--        <div class="row">-->
-<!--          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm sản phẩm</h2>-->
-<!--          &lt;!&ndash;          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>&ndash;&gt;-->
-<!--        </div>-->
-<!--        <div class="row">-->
+      <!--      <form [formGroup]="formSearch">-->
+      <!--      <ng-template #content1 let-modal>-->
+      <!--        <div class="row">-->
+      <!--          <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Tìm kiếm sản phẩm</h2>-->
+      <!--          &lt;!&ndash;          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>&ndash;&gt;-->
+      <!--        </div>-->
+      <!--        <div class="row">-->
 
-<!--          <div class="row ml-3">-->
-<!--            <div class="col-6">-->
-<!--              <div class="form-group row">-->
-<!--                <label class="col-md-4 col-form-label">Tên sản phẩm: </label>-->
-<!--                <div class="col-md-10">-->
-<!--                  <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">-->
-<!--                </div>-->
-<!--              </div>-->
+      <!--          <div class="row ml-3">-->
+      <!--            <div class="col-6">-->
+      <!--              <div class="form-group row">-->
+      <!--                <label class="col-md-4 col-form-label">Tên sản phẩm: </label>-->
+      <!--                <div class="col-md-10">-->
+      <!--                  <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">-->
+      <!--                </div>-->
+      <!--              </div>-->
 
-<!--              <div class="form-group row">-->
-<!--                <label class="col-md-4 col-form-label">Giá bán:</label>-->
-<!--                <div class="col-md-10">-->
-<!--                  <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">-->
-<!--                </div>-->
-<!--              </div>-->
+      <!--              <div class="form-group row">-->
+      <!--                <label class="col-md-4 col-form-label">Giá bán:</label>-->
+      <!--                <div class="col-md-10">-->
+      <!--                  <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">-->
+      <!--                </div>-->
+      <!--              </div>-->
 
-<!--              <div class="form-group row">-->
-<!--                <label class="col-md-4 col-form-label">Đinh giày: </label>-->
-<!--                <div class="col-md-10 mt-2">-->
-<!--                  <div>-->
-<!--                    <select class="form-select" formControlName="sole" style="border: solid 1px gray;">-->
-<!--                      <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}-->
-<!--                      </option>-->
+      <!--              <div class="form-group row">-->
+      <!--                <label class="col-md-4 col-form-label">Đinh giày: </label>-->
+      <!--                <div class="col-md-10 mt-2">-->
+      <!--                  <div>-->
+      <!--                    <select class="form-select" formControlName="sole" style="border: solid 1px gray;">-->
+      <!--                      <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}-->
+      <!--                      </option>-->
 
-<!--                    </select>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+      <!--                    </select>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--            </div>-->
 
-<!--            <div class="col-6">-->
-<!--              <div class="form-group row">-->
-<!--                <label class="col-md-4 col-form-label">Danh Mục: </label>-->
-<!--                <div class="col-md-10 mt-2">-->
-<!--                  <div>-->
-<!--                    <select class="form-select" formControlName="category" style="border: solid 1px gray;">-->
-<!--                      <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}-->
-<!--                      </option>-->
+      <!--            <div class="col-6">-->
+      <!--              <div class="form-group row">-->
+      <!--                <label class="col-md-4 col-form-label">Danh Mục: </label>-->
+      <!--                <div class="col-md-10 mt-2">-->
+      <!--                  <div>-->
+      <!--                    <select class="form-select" formControlName="category" style="border: solid 1px gray;">-->
+      <!--                      <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}-->
+      <!--                      </option>-->
 
-<!--                    </select>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+      <!--                    </select>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--              </div>-->
 
-<!--              <div class="form-group row">-->
-<!--                <label class="col-md-4 col-form-label">Hãng: </label>-->
-<!--                <div class="col-md-10 mt-2">-->
-<!--                  <div>-->
-<!--                    <select class="form-select" formControlName="hang" style="border: solid 1px gray;">-->
-<!--                      <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}-->
-<!--                      </option>-->
+      <!--              <div class="form-group row">-->
+      <!--                <label class="col-md-4 col-form-label">Hãng: </label>-->
+      <!--                <div class="col-md-10 mt-2">-->
+      <!--                  <div>-->
+      <!--                    <select class="form-select" formControlName="hang" style="border: solid 1px gray;">-->
+      <!--                      <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}-->
+      <!--                      </option>-->
 
-<!--                    </select>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+      <!--                    </select>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--              </div>-->
 
-<!--              <div class="form-group row">-->
-<!--                <label class="col-md-4 col-form-label">Dòng giày: </label>-->
-<!--                <div class="col-md-10 mt-2">-->
-<!--                  <div>-->
-<!--                    <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">-->
-<!--                      <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}-->
-<!--                      </option>-->
+      <!--              <div class="form-group row">-->
+      <!--                <label class="col-md-4 col-form-label">Dòng giày: </label>-->
+      <!--                <div class="col-md-10 mt-2">-->
+      <!--                  <div>-->
+      <!--                    <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">-->
+      <!--                      <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}-->
+      <!--                      </option>-->
 
-<!--                    </select>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+      <!--                    </select>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--              </div>-->
 
-<!--            </div>-->
+      <!--            </div>-->
 
-<!--          </div>-->
-<!--        </div>-->
+      <!--          </div>-->
+      <!--        </div>-->
       <div class="input-group mt-3">
         <div class="form-outline  m-2">
           Nhập tên sản phẩm
-          <input type="search" id="form" class="form-control" [(ngModel)]="namesot"/>
+          <input type="search" id="form" class="form-control" [(ngModel)]="namesot" />
           <label class="form-label" for="form"></label>
         </div>
         <div class="form-outline m-2">
           Danh mục
           <select #selectcategory (change)="laycategory(selectcategory.value)" class="form-select "
-                  aria-label="Default select example">
+            aria-label="Default select example">
             <option value="100">--All--</option>
             <option *ngFor="let itemcategory of dataCate" [value]="itemcategory.id">{{itemcategory.name}}</option>
 
@@ -103,7 +103,7 @@
         <div class="form-outline m-2">
           Hãng
           <select #selectbrand (change)="laybrand(selectbrand.value)" class="form-select "
-                  aria-label="Default select example">
+            aria-label="Default select example">
             <option value="100">--All--</option>
             <option *ngFor="let itembrand of dataBrand" [value]="itembrand.id">{{itembrand.name}}</option>
 
@@ -113,7 +113,7 @@
         <div class="form-outline m-2">
           Đinh giày
           <select #selectsole (change)="laysole(selectsole.value)" class="form-select "
-                  aria-label="Default select example">
+            aria-label="Default select example">
             <option value="100">--All--</option>
             <option *ngFor="let itemsole of dataSole" [value]="itemsole.id">{{itemsole.name}}</option>
 
@@ -122,7 +122,7 @@
         <div class="form-outline m-2">
           Giá nhập
           <select class="form-select " aria-label="Default select example" #selectgia
-                  (change)="laygia (selectgia.value)">
+            (change)="laygia (selectgia.value)">
             <option value="100">--All-</option>
             <option value="1">Từ 400.000 - 1.000.000 triệu</option>
             <option value="2">Từ 1.000.000 - 1.500.000 triệu</option>
@@ -133,7 +133,7 @@
         <div class="form-outline m-2">
           Trạng thái
           <select class="form-select " aria-label="Default select example" #selecttrangthai
-                  (change)="laytrangthai (selecttrangthai.value)">
+            (change)="laytrangthai (selecttrangthai.value)">
             <option value="100">--All-</option>
             <option value="1">Kinh doanh</option>
             <option value="0">Ngừng kinh doanh</option>
@@ -159,25 +159,25 @@
     <table class="table table-hover table-responsive ">
       <thead>
         <tr>
-<!--          <th class="text-center col-1" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>-->
-<!--          <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>-->
-<!--          <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>-->
-<!--          <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>-->
-<!--          <th class="text-center" scope="col" (click)="sortByValue('sole')">Loại đinh</th>-->
-<!--          <th class="text-center" scope="col" (click)="sortByValue('shoeLine')">Dòng giày</th>-->
+          <!--          <th class="text-center col-1" scope="col" (click)="sortByValue('name')">Tên sản phẩm</th>-->
+          <!--          <th class="text-center" scope="col" (click)="sortByValue('outputprice')">Giá bán</th>-->
+          <!--          <th class="text-center" scope="col" (click)="sortByValue('category')">Danh mục</th>-->
+          <!--          <th class="text-center" scope="col" (click)="sortByValue('hang')">Hãng</th>-->
+          <!--          <th class="text-center" scope="col" (click)="sortByValue('sole')">Loại đinh</th>-->
+          <!--          <th class="text-center" scope="col" (click)="sortByValue('shoeLine')">Dòng giày</th>-->
           <!--          //Tuấn-->
-          <th class="text-center " scope="col" >STT</th>
+          <th class="text-center " scope="col">STT</th>
           <th class="text-center" scope="col">Ảnh</th>
-        <th class="text-center " scope="col" >Tên sản phẩm</th>
+          <th class="text-center " scope="col">Tên sản phẩm</th>
 
           <th class="text-center" scope="col">Giá bán</th>
-          <th class="text-center" scope="col" >Danh mục</th>
-          <th class="text-center" scope="col" >Hãng</th>
-<!--          <th class="text-center" scope="col" >Loại đinh</th>-->
-<!--          <th class="text-center" scope="col" >Dòng giày</th>-->
-          <th class="text-center" scope="col" >Số lượng tồn</th>
+          <th class="text-center" scope="col">Danh mục</th>
+          <th class="text-center" scope="col">Hãng</th>
+          <!--          <th class="text-center" scope="col" >Loại đinh</th>-->
+          <!--          <th class="text-center" scope="col" >Dòng giày</th>-->
+          <th class="text-center" scope="col">Số lượng tồn</th>
           <th class="text-center" scope="col">Ngày tạo</th>
-          <th class="text-center" scope="col" >Trạng thái</th>
+          <th class="text-center" scope="col">Trạng thái</th>
           <th class="text-center" scope="col">Thao tác</th>
         </tr>
       </thead>
@@ -185,24 +185,25 @@
         <tr *ngFor="let item of listproduct| paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
           <td class="text-center" style="padding-top: 30px;">{{i+1}}</td>
           <td class="text-center"><img class="img-fluid img" style="width: 100px;height: 80px;"
-                                       src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}"></td>
+              src="https://enternalproduct.s3.ap-southeast-1.amazonaws.com/{{item.photo}}"></td>
           <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.outputprice| currency :'VND'}}</td>
-          <td class="text-center" style="padding-top: 30px;" >{{item.categoryName}}</td>
-          <td class="text-center" style="padding-top: 30px;" >{{item.brandName}}</td>
-<!--          <td class="text-center" style="padding-top: 30px;" >{{item.soleName}}</td>-->
-<!--          <td class="text-center" style="padding-top: 30px;" >{{item.shoelineName}}</td>-->
-          <td class="text-center" style="padding-top: 30px;" >{{item.sumquantity}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.categoryName}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{item.brandName}}</td>
+          <!--          <td class="text-center" style="padding-top: 30px;" >{{item.soleName}}</td>-->
+          <!--          <td class="text-center" style="padding-top: 30px;" >{{item.shoelineName}}</td>-->
+          <td class="text-center" style="padding-top: 30px;">{{item.sumquantity}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.createDate| date:'dd-MM-yyyy '}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.statusName}}</td>
-          <td class="text-center"  style="padding-top: 30px;">
-            <a  (click)="infoProduct(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <td class="text-center" style="padding-top: 30px;">
+            <a (click)="infoProduct(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                 <path
                   d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
               </svg></a>
-            <a (click)="config(item.id)" role="button" style="padding-top: 30px;" title="Chi tiết"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                fill="currentColor" class="bi bi-gear ms-2" viewBox="0 0 16 16">
+            <a (click)="config(item.id)" role="button" style="padding-top: 30px;" title="Chi tiết"><svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear ms-2"
+                viewBox="0 0 16 16">
                 <path
                   d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
                 <path
@@ -215,41 +216,41 @@
     <div style="margin-bottom: 100px;float: right;">
       <pagination-controls class="mr-3" (pageChange)="p= $event"></pagination-controls>
     </div>
-<!--    <div>-->
+    <!--    <div>-->
 
 
-<!--      &lt;!&ndash;              Pagination                &ndash;&gt;-->
-<!--      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">-->
-<!--        <ul class="pagination justify-content-end">-->
-<!--          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">-->
-<!--            <option selected>5</option>-->
-<!--            <option>10</option>-->
-<!--            <option>15</option>-->
-<!--          </select>-->
-<!--          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">-->
-<!--              <path-->
-<!--                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />-->
-<!--            </svg>-->
-<!--          </li>-->
+    <!--      &lt;!&ndash;              Pagination                &ndash;&gt;-->
+    <!--      <nav *ngIf="Page" class="mr-3 mb-8" aria-label="...">-->
+    <!--        <ul class="pagination justify-content-end">-->
+    <!--          <select #selectSize (change)="pageItem(selectSize.value)" class="page-items mr-1 me-3">-->
+    <!--            <option selected>5</option>-->
+    <!--            <option>10</option>-->
+    <!--            <option>15</option>-->
+    <!--          </select>-->
+    <!--          <li class="page-item " [ngClass]="indexPage == 0?'disabled':''">-->
+    <!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+    <!--              class="bi bi-caret-left-fill page-link" viewBox="0 0 16 16" (click)="preNextPage('pre')">-->
+    <!--              <path-->
+    <!--                d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />-->
+    <!--            </svg>-->
+    <!--          </li>-->
 
-<!--          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"-->
-<!--            [ngClass]="indexPage == i?'active':''">-->
-<!--            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>-->
-<!--          </li>-->
+    <!--          <li *ngFor="let pageNumber of [].constructor(Page['totalPages']);let i = index" class="page-item"-->
+    <!--            [ngClass]="indexPage == i?'active':''">-->
+    <!--            <a style="color:black ;" class="page-link" (click)="pagination(i)">{{i + 1}}</a>-->
+    <!--          </li>-->
 
-<!--          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">-->
-<!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">-->
-<!--              <path-->
-<!--                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"-->
-<!--                (click)="preNextPage('next')" />-->
-<!--            </svg>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </nav>-->
-<!--    </div>-->
+    <!--          <li class="page-item" [ngClass]="(Page['totalPages'] - 1) === indexPage?'disabled':''">-->
+    <!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+    <!--              class="bi bi-caret-right-fill page-link" viewBox="0 0 16 16">-->
+    <!--              <path-->
+    <!--                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"-->
+    <!--                (click)="preNextPage('next')" />-->
+    <!--            </svg>-->
+    <!--          </li>-->
+    <!--        </ul>-->
+    <!--      </nav>-->
+    <!--    </div>-->
   </div>
 
   <form novalidate [formGroup]="formAdd" enctype="multipart/form-data">
@@ -290,22 +291,28 @@
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Danh mục: </label>
               <div class="col-md-11 mt-2">
-                <div class="d-flex">
-                  <select class="form-select" formControlName="category" style="border: solid 1px gray;">
-                    <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
-                    </option>
-                  </select>
-
+                <div>
+                  <div class="d-flex">
+                    <select class="form-select" formControlName="category" style="border: solid 1px gray;">
+                      <option *ngFor="let item of dataCate" [value]="item.id">{{item.name}}
+                      </option>
+                    </select>
+                    <a role="button" style="margin-left: 25px;margin-top: 5px;"
+                      (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="25"
+                        height="25" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                        <path
+                          d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
+                        <path
+                          d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                      </svg>
+                    </a>
+                  </div>
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('category')?.errors?.required && formAdd.get('category')?.touched">
                     Danh mục chưa được chọn !
                   </small>
-                  <button style="margin-left: 25px;" (click)="quickAddCategory(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                  </button>
                 </div>
+
 
               </div>
             </div>
@@ -314,21 +321,28 @@
               <label class="col-md-4 col-form-label">Hãng: </label>
 
               <div class="col-md-11 mt-2">
-                <div class="d-flex">
-                  <select class="form-select" formControlName="hang" style="border: solid 1px gray;">
-                    <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
-                    </option>
-                  </select>
+                <div>
+                  <div class="d-flex">
+                    <select class="form-select" formControlName="hang" style="border: solid 1px gray;">
+                      <option *ngFor="let item of dataBrand" [value]="item.id">{{item.name}}
+                      </option>
+                    </select>
 
+                    <a role="button" style="margin-left: 25px;margin-top: 5px;"
+                      (click)="quickAddBrand(contentBrand)"><svg xmlns="http://www.w3.org/2000/svg" width="25"
+                        height="25" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                        <path
+                          d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
+                        <path
+                          d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                      </svg>
+                    </a>
+
+                  </div>
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('hang')?.errors?.required && formAdd.get('hang')?.touched">
                     Hãng chưa được chọn !
                   </small>
-                  <button style="margin-left: 25px;" (click)="quickAddBrand(contentBrand)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                  </button>
                 </div>
               </div>
             </div>
@@ -336,21 +350,27 @@
               <label class="col-md-4 col-form-label">Loại đinh giày: </label>
 
               <div class="col-md-11 mt-2">
-                <div class="d-flex">
-                  <select class="form-select" formControlName="sole" style="border: solid 1px gray;">
-                    <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}
-                    </option>
-                  </select>
+                <div>
+                  <div class="d-flex">
+                    <select class="form-select" formControlName="sole" style="border: solid 1px gray;">
+                      <option *ngFor="let item of dataSole" [value]="item.id">{{item.name}}
+                      </option>
+                    </select>
 
+                    <a role="button" style="margin-left: 25px;margin-top: 5px;" (click)="quickAddsole(content)"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                        class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                        <path
+                          d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
+                        <path
+                          d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                      </svg>
+                    </a>
+                  </div>
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('sole')?.errors?.required && formAdd.get('sole')?.touched">
                     Loại đinh giày chưa được chọn !
                   </small>
-                  <button style="margin-left: 25px;" (click)="quickAddsole(content)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                  </button>
                 </div>
               </div>
             </div>
@@ -359,45 +379,52 @@
               <label class="col-md-4 col-form-label"> Dòng giày: </label>
 
               <div class="col-md-11 mt-2">
-                <div class="d-flex">
-                  <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">
-                    <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}
-                    </option>
-                  </select>
+                <div>
+                  <div class="d-flex">
+                    <select class="form-select" formControlName="shoeLine" style="border: solid 1px gray;">
+                      <option *ngFor="let item of dataShoeLine" [value]="item.id">{{item.name}}
+                      </option>
+                    </select>
+
+                    <a role="button" style="margin-left: 25px;margin-top: 5px;"
+                      (click)="quickAddshoeline(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="25"
+                        height="25" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                        <path
+                          d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
+                        <path
+                          d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
+                      </svg>
+                    </a>
+                  </div>
 
                   <small class="col alert text-danger" role="alert"
                     *ngIf="formAdd.get('shoeLine')?.errors?.required && formAdd.get('shoeLine')?.touched">
                     Dòng giày chưa được chọn !
                   </small>
-                  <button style="margin-left: 25px;" (click)="quickAddshoeline(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
-                  </button>
                 </div>
               </div>
             </div>
 
-<!--            <div class="form-group row">-->
-<!--              <label class="col-md-4 col-form-label">Tình trạng :</label>-->
-<!--              <div class="col-md-10 mt-2 ">-->
-<!--                <div class="form-check form-check-inline col-12 col-sm-12 ">-->
-<!--                  <input class="form-check-input" formControlName="status" [value]="1" type="radio" name="status"-->
-<!--                    id="active">-->
-<!--                  <label class="form-check-label" for="active">Đang kinh doanh</label>-->
-<!--                </div>-->
+            <!--            <div class="form-group row">-->
+            <!--              <label class="col-md-4 col-form-label">Tình trạng :</label>-->
+            <!--              <div class="col-md-10 mt-2 ">-->
+            <!--                <div class="form-check form-check-inline col-12 col-sm-12 ">-->
+            <!--                  <input class="form-check-input" formControlName="status" [value]="1" type="radio" name="status"-->
+            <!--                    id="active">-->
+            <!--                  <label class="form-check-label" for="active">Đang kinh doanh</label>-->
+            <!--                </div>-->
 
-<!--                <div class="form-check form-check-inline col-12 col-sm-12">-->
-<!--                  <input class="form-check-input" formControlName="status" [value]="0" type="radio" name="status"-->
-<!--                    id="notActive">-->
-<!--                  <label class="form-check-label" for="notActive">Ngừng kinh doanh</label>-->
-<!--                </div>-->
-<!--                <small class="col alert text-danger" role="alert"-->
-<!--                  *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">-->
-<!--                  Tình trạng chưa được chọn !-->
-<!--                </small>-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--                <div class="form-check form-check-inline col-12 col-sm-12">-->
+            <!--                  <input class="form-check-input" formControlName="status" [value]="0" type="radio" name="status"-->
+            <!--                    id="notActive">-->
+            <!--                  <label class="form-check-label" for="notActive">Ngừng kinh doanh</label>-->
+            <!--                </div>-->
+            <!--                <small class="col alert text-danger" role="alert"-->
+            <!--                  *ngIf="formAdd.get('status')?.errors?.required && formAdd.get('status')?.touched">-->
+            <!--                  Tình trạng chưa được chọn !-->
+            <!--                </small>-->
+            <!--              </div>-->
+            <!--            </div>-->
             <div class="col-md-10 ">
               <label for="formFile" class="form-label">Ảnh</label>
               <input type="text" formControlName="" value="{{product.photo}}" class="form-control">
@@ -463,7 +490,7 @@
           <div class="col-md-10">
             <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
             <small class="col alert text-danger" role="alert"
-                   *ngIf="formAddCate.get('name')?.errors?.required && formAddCate.get('name')?.touched">
+              *ngIf="formAddCate.get('name')?.errors?.required && formAddCate.get('name')?.touched">
               Tên danh mục không được để trống !
             </small>
           </div>
@@ -491,7 +518,7 @@
           <div class="col-md-10">
             <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
             <small class="col alert text-danger" role="alert"
-                   *ngIf="formAddBrand.get('name')?.errors?.required && formAddBrand.get('name')?.touched">
+              *ngIf="formAddBrand.get('name')?.errors?.required && formAddBrand.get('name')?.touched">
               Tên hãng không được để trống !
             </small>
           </div>
@@ -505,5 +532,3 @@
     </div>
   </ng-template>
 </form>
-
-

@@ -1,5 +1,6 @@
+import { DOCUMENT } from '@angular/common';
 import {TokenStorageService} from './../../../@core/services/Token-storage.service';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, ElementRef, Inject } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderService} from "../../../service/order.service";
 import {ToastrService} from "ngx-toastr";
@@ -67,7 +68,8 @@ export class OrderdetailComponent implements OnInit {
               private service: OrderService,
               private toastr: ToastrService, private router: Router, private exportService: ExportService,
               private productService: ProductService,
-              private tokenService: TokenStorageService,) {
+              private tokenService: TokenStorageService,
+              @Inject(DOCUMENT) document: Document, private ElByClassName: ElementRef,) {
     this.Orderid = this.route.snapshot.paramMap.get('id');
 
     if (this.Orderid != null && this.Orderid >= 0) {
@@ -80,6 +82,7 @@ export class OrderdetailComponent implements OnInit {
     this.tinh();
     this.sumquantitygia();
   }
+  status1: boolean = false;
 
   productFrom = new FormGroup({
     name: new FormControl(''),
@@ -542,5 +545,26 @@ this.sumquantitygia();
     return this.customerinfoFrom.get('name');
   }
 
+
+  clickEvent() {
+    this.status1 = !this.status;
+  }
+  greet() {
+    console.log('hello');
+    const btnElement = (<HTMLElement>this.ElByClassName.nativeElement).querySelector(
+      '.dropdown-menu'
+    );
+    console.log(btnElement);
+
+    // btnElement.innerHTML = 'This is Button';
+  }
+
+  selected(id: string) {
+    let uri = "" + this.router.url
+    console.log(uri);
+    if (uri.indexOf(id) !== -1) {
+      document.getElementById(id)?.classList.add('selected');
+    }
+  }
 
 }

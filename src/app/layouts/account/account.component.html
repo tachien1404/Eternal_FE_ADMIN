@@ -18,7 +18,8 @@
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" id="email" formControlName="Email" value="{{account.email}}" class="form-control"
-              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;" [readonly]="account.id != ''">
+              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;"
+              [readonly]="account.id != ''">
             <span style="color: red;"
               *ngIf="accountForm.controls['Email'].errors?.['required'] && accountForm.get('Email')?.touched">
               Email không được để trống!
@@ -55,7 +56,7 @@
           <div class="mb-3">
             <label for="sdt" class="form-label">SDT</label>
             <input type="text" formControlName="SDT" value="{{account.sdt}}" class="form-control" id="sdt"
-              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;" >
+              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
             <span style="color: red;"
               *ngIf="accountForm.controls['SDT'].errors?.['required'] && accountForm.get('SDT')?.touched">
               SDT không được để trống!
@@ -78,8 +79,8 @@
           </div>
           <div class="mb-3" [hidden]="account.id != ''">
             <label for="sdt" class="form-label">Password</label>
-            <input type="password" formControlName="Password" value="{{account.password}}" class="form-control" id="password"
-              aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;" >
+            <input type="password" formControlName="Password" value="{{account.password}}" class="form-control"
+              id="password" aria-describedby="emailHelp" style="border: solid 1px gray; padding-left: 5px;">
             <span style="color: red;"
               *ngIf="accountForm.controls['Password'].errors?.['required'] && accountForm.get('Password')?.touched">
               Password không được để trống!
@@ -141,24 +142,24 @@
             <input class="form-control ms-3 filterByEmail" type="email" formControlName="Email"
               placeholder="Tìm kiếm theo email!">
             <div class="mt-2 col-1">Trạng thái</div>
-            <select class="form-select drpCombobox me-3" formControlName="Active">
+            <select class="form-select drpCombobox me-3" style="height: 38px;" formControlName="Active">
               <option value="all" selected>Tất Cả</option>
               <option value="true">Hoạt động</option>
               <option value="false">Ngưng hoạt động</option>
             </select>
             <div class="mt-2 col-1">Phân quyền</div>
-            <select class="form-select drpCombobox me-3" formControlName="Role">
+            <select class="form-select drpCombobox me-3"  style="height: 38px; " formControlName="Role">
               <option value="all" selected>Tất Cả</option>
               <option value="true">ADMIN</option>
               <option value="false">USER</option>
             </select>
 
-            <button type="submit" class="btn btn-success me-3"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+            <button type="submit" class="btn btn-success me-3 col-1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                 height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path
                   d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
               </svg></button>
-            <button (click)="clearFilter()" class="btn btn-primary me-3"><i class="fas fa-times"></i></button>
+            <button (click)="clearFilter()" class="btn btn-primary me-3 col-1"><i class="fas fa-times"></i></button>
           </form>
 
         </div>
