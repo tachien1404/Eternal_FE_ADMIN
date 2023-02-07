@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit {
   dataBrand: Brand[] = [];
   dataSole: Sole[] = [];
   dataShoeLine: ShoeLine[] = [];
-  product: Product = {};
+  product!: Product;
   message!: String;
   hiddeen!: boolean;
   category: Category = {};
@@ -282,6 +282,7 @@ this.productFrom.value.status=this.trangthai;
     let shoeLineId = formSearchValue.shoeLine;
     this.productDTO.shoeLine = this.dataShoeLine.find(shoeLine => {
       return shoeLine.id == shoeLineId;
+      return shoeLine.id == shoeLineId;
     });
 
   }
@@ -416,6 +417,12 @@ this.productFrom.value.status=this.trangthai;
     // if (productId) {
     //   this.product = productId;
     // }
+    this.productService.getProductById(id).subscribe(
+      (res) => {
+        this.product = res;
+        console.log(res);
+      }
+    )
     this.getone(id);
     this.initFormAdd();
     this.fillValueForm();
@@ -427,17 +434,17 @@ getone(id:any){
     })
 }
   fillValueForm() {
-    this.formAdd.patchValue({
-      name: this.product.name,
-      outputprice: this.product.outputprice,
-      category: this.product.category!.id,
-      hang: this.product.hang!.id,
-      sole: this.product.sole!.id,
-      shoeLine: this.product.shoeLine!.id,
-      status: this.product.status,
-      createDate: this.product.createDate,
-      updatedate: this.product.updatedate,
-    })
+      this.formAdd.patchValue({
+        name: this.product.name,
+        outputprice: this.product.outputprice,
+        category: this.product.category?.id,
+        hang: this.product.hang?.id,
+        sole: this.product.sole?.id,
+        shoeLine: this.product.shoeLine?.id,
+        status: this.product.status,
+        createDate: this.product.createDate,
+        updatedate: this.product.updatedate,
+      })
   }
 
   update() {
