@@ -101,7 +101,7 @@ listproduct:any;//getalllistvaf phân trang
     this.formAdd = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(20)]],
      // createDate: '',
-      outputprice: ['', [Validators.required, Validators.pattern('[0-9]{1,10}')]],
+      outputprice:['', Validators.required],
       //updatedate: '',
       Photo: 'null.png',
       status: ['', Validators.required],
