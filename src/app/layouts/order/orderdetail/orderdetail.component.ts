@@ -15,6 +15,7 @@ import {ProductService} from "../../../@core/services/products.service";
 import {SaimauService} from "../../../service/saimau.service";
 import {AdminunitService} from "../../../service/adminunit.service";
 import {OrderDeteo} from "../../../@core/models/OrderDeteo.";
+import {S_CDetails} from "../../../@core/models/SCDetails";
 
 @Component({
   selector: 'app-orderdetail',
@@ -61,6 +62,7 @@ export class OrderdetailComponent implements OnInit {
   price: any;
   saimau: any;//lấy obj scdeteo
   countsl: any;//số lượng có trong giỏ hàng
+  tru:S_CDetails[]=[];//lưu các thứu đê cộng trừ khi hủy hoặc tạo đơn
   constructor(private modalService: NgbModal, private adminunitservice: AdminunitService,
               private saimauservice: SaimauService,
               private saimauService: SCDetailsService,
@@ -150,6 +152,8 @@ export class OrderdetailComponent implements OnInit {
 
   laytp(value: any) {
     this.tp_id = value;
+    this.diachi4='';
+    this.addres='';
     this.adminunitFrom.value.parentId = this.tp_id;
     for (let item of this.litthanhpho) {
       if (item.id == this.tp_id) {
@@ -251,13 +255,18 @@ export class OrderdetailComponent implements OnInit {
       this.orderdeteogiaquantity = result;
       this.price = this.orderdeteogiaquantity.price;
 
-
     })
   }
 
   getByOrderId(id: any) {//lấy ra chi tiết đơn
     this.service.getByOrderId(id).subscribe(result => {
       this.litorderdetail = result;
+      for (let item of this.litorderdetail){
+        this.tru.push({
+          id:item.scId,
+          quantity:item.quantity
+        })
+      }
       this.service.countsoluong(this.Orderid).subscribe(result => {
         this.countsl = result;
 
@@ -316,11 +325,12 @@ export class OrderdetailComponent implements OnInit {
         this.type = 'Hủy đơn hàng';
         this.ordertimeline.type = this.type;
         this.ordertimeline.description = this.description;
-        console.log(this.description)
-        console.log(this.ordertimeline)
+
         this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
           this.ordertimeline = result;
-          console.log(this.ordertimeline)
+          this.saimauservice.congsl(this.tru).subscribe(result =>{
+            this.toastr.success("Thay đổi thành công")
+          })
         })
         this.service.updatetrangthai(this.Input.value, id).subscribe(result => {
           location.reload()
@@ -369,7 +379,7 @@ export class OrderdetailComponent implements OnInit {
     this.customerinfoFrom.value.id = id;
     this.customerinfoFrom.value.name = this.name4;
     this.customerinfoFrom.value.sdt = this.sdt4;
-    this.customerinfoFrom.value.address = this.addres;
+    this.customerinfoFrom.value.address = this.diachi4+""+this.addres;
     this.username = this.tokenservice.getUser();
     this.ordertimeline.account_name = this.username;
     this.ordertimeline.order_id = this.order.id;
@@ -474,7 +484,7 @@ export class OrderdetailComponent implements OnInit {
   }
 
   opencustomerinfo(content: any) {
-    this.addres = this.order.addressinfo;
+    this.diachi4 = this.order.addressinfo;
     this.name4 = this.order.nameinfo;
     this.sdt4 = this.order.sdtinfo;
     this.modalService.open(content, {
