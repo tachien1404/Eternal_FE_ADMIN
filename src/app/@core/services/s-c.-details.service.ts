@@ -38,6 +38,8 @@ export class SCDetailsService{
     return this.http.put<any>(this.SCDetailAPI +"public/s_c_details/configProduct?page="+indexPage +"&size="+size+"&product_id="+product_id,null) ;
   }
 
-
+  public delete(id: number): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}public/s_c_details/delete/`+ id);
+  }
 
 }

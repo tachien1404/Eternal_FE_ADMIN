@@ -123,6 +123,10 @@ export class ConfigProductComponent implements OnInit {
 
   create() {
     this.addValue();
+    if(this.SCDetail?.quantity! <=0){
+      this.toastr.error("Số lượng phải lớn hơn 0");
+      return;
+    }
     console.log(this.SCDetail)
     this.configService.create(this.SCDetail).subscribe(
       (res) => {
@@ -193,16 +197,18 @@ export class ConfigProductComponent implements OnInit {
   }
 
   delete() {
-    // this.productService.delete(this.product.id).subscribe(
-    //   res =>{
-    //     this.toastr.success(res.message);
-    //     this.ngOnInit();
-    //     this.product={};
-    //     this.modalService.dismissAll();
-    //   }, error => {
-    //     this.toastr.error(error.error.message);
-    //   }
-    // );
+   if(this.SCDetail.id){
+     this.configService.delete(this.SCDetail.id).subscribe(
+       res =>{
+         this.toastr.success("Xóa thành công");
+         this.ngOnInit();
+         this.SCDetail={};
+         this.modalService.dismissAll();
+       }, error => {
+         this.toastr.error(error.error.message);
+       }
+     );
+   }
   }
 
 

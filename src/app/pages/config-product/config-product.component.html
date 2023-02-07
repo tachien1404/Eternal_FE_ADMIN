@@ -141,7 +141,7 @@
           <label class="col-md-2 col-form-label">Size: </label>
           <div class="col-md-10 mt-2">
             <div>
-              <select class="form-control" formControlName="size">
+              <select class="form-select" formControlName="size">
                 <option *ngFor="let item of dataSize" [value]="item.id">{{item.value}}
                 </option>
 
@@ -158,7 +158,7 @@
           <label class="col-md-2 col-form-label">Màu: </label>
           <div class="col-md-10 mt-2">
             <div>
-              <select class="form-control" formControlName="mau">
+              <select class="form-select" formControlName="mau">
                 <option *ngFor="let item of dataColor" [value]="item.id">{{item.name}}
                 </option>
 
