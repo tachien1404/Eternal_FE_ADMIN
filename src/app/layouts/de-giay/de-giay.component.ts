@@ -48,7 +48,7 @@ export class DeGiayComponent implements OnInit {
   initFormAdd() {
     this.formAdd = this.fb.group({
       name: ['', Validators.required],
-      Active: ['false']
+      Active: ['true']
     })
   }
 

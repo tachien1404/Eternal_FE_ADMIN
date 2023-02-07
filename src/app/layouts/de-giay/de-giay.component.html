@@ -19,8 +19,8 @@
                 <div class="col-3">
                   <select class="form-select drpCombobox me-3"aria-label="Default select example" formControlName="Active">
                     <option value = "all" selected>Tất Cả</option>
-                    <option value="1">Hoạt động</option>
-                    <option value="2">Ngưng hoạt động</option>
+                    <option value="2">Hoạt động</option>
+                    <option value="1">Ngưng hoạt động</option>
                   </select>
                 </div>
                   <div  class="col-md-2">
@@ -55,7 +55,7 @@
         <tr *ngFor="let item of soles; let i = index">
           <td class="text-center" style="padding-top: 30px;">{{i + 1}}</td>
           <td class="text-center" style="padding-top: 30px;">{{item.name}}</td>
-          <td class="text-center" style="padding-top: 30px;">{{!item.isdelete ? "Hoạt động" : "Ngưng hoạt động"}}</td>
+          <td class="text-center" style="padding-top: 30px;">{{!item.isdelete ?   "Ngưng hoạt động" :"Hoạt động"}}</td>
           <td class="text-center" style="padding-top: 30px;">
             <a (click)="info(item.id,content)" role="button" title="Sửa"><svg xmlns="http://www.w3.org/2000/svg"
                 width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -130,8 +130,8 @@
                   Tên đinh giày không được để trống !
                 </small>
                 <select formControlName="Active" [hidden]="hiddeen">
-                  <option [ngValue]="false" [selected]="!sole.isdelete ? true : false">Active</option>
-                  <option [ngValue]="true" [selected]="sole.isdelete ? true : false">In-active</option>
+                  <option [ngValue]="false" [selected]="sole.isdelete ? true : false">Active</option>
+                  <option [ngValue]="true" [selected]="!sole.isdelete ? true : false">In-active</option>
                 </select>
               </div>
 

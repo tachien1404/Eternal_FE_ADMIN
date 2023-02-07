@@ -48,7 +48,7 @@ export class ShoelineshoeComponent implements OnInit {
   initFormAdd() {
     this.formAdd = this.fb.group({
       name: ['', Validators.required],
-      Active: ['false']
+      Active: ['true']
     })
   }
 
@@ -185,7 +185,6 @@ export class ShoelineshoeComponent implements OnInit {
       .subscribe({
         next: res => {
           this.shoeLines = res.content;
-          console.log(this.shoeLines)
           this.Page = res;
         }, error: error => {
           this.toastr.error("Lỗi ");
