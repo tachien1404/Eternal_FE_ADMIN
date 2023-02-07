@@ -93,7 +93,7 @@
 
             <div style="margin-left: 300px;">
               <span *ngIf="valuekenh==1">
-                <button [disabled]="khachdua<=0" class="btn btn-success" (click)="enddonhang()">
+                <button [disabled]="khachdua<=tongthu" class="btn btn-success" (click)="enddonhang()">
                   Thanh toán
                 </button>
               </span>
@@ -123,11 +123,11 @@
             <hr>
             <div class="input-group">
               <div class="form-outline">
-                <input type="search" id="form2" [(ngModel)]="namecus" class="form-control" placeholder="Search"/>
+                <input type="search" id="form2" [(ngModel)]="namecus" class="form-control" placeholder="Nhập sdt"/>
 
               </div>
               <button type="button" class="btn btn-primary" (click)="timkiemcus()">
-                <i class="fas fa-search"></i>
+              Tìm kiếm
               </button>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import { DOCUMENT } from '@angular/common';
+import {DOCUMENT} from '@angular/common';
 import {TokenStorageService} from './../../../@core/services/Token-storage.service';
-import { Component, OnInit, ElementRef, Inject } from '@angular/core';
+import {Component, OnInit, ElementRef, Inject} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {OrderService} from "../../../service/order.service";
 import {ToastrService} from "ngx-toastr";
@@ -45,6 +45,7 @@ export class OrderdetailComponent implements OnInit {
   mau: any;
   litproduct: any;
   namesot: any = null;
+  biendem: any;
   valuesize: any;
   valuecolor: any;
   addres: any = "";
@@ -52,12 +53,14 @@ export class OrderdetailComponent implements OnInit {
   category_id: any;
   brand_id: any;
   sole_id: any;
-  startgia:any;
-  endgia:any;
+  startgia: any;
+  endgia: any;
   listcategory: any;
   listbrand: any;
   orderdeteogiaquantity: OrderDeteo = {};
-   price: any;
+  price: any;
+  saimau: any;//lấy obj scdeteo
+  countsl: any;//số lượng có trong giỏ hàng
   constructor(private modalService: NgbModal, private adminunitservice: AdminunitService,
               private saimauservice: SaimauService,
               private saimauService: SCDetailsService,
@@ -82,15 +85,16 @@ export class OrderdetailComponent implements OnInit {
     this.tinh();
     this.sumquantitygia();
   }
+
   status1: boolean = false;
 
   productFrom = new FormGroup({
     name: new FormControl(''),
-    hang_id:new FormControl(''),
-    sole_id :new FormControl(''),
-    category_id:new FormControl(''),
-    startgia:new FormControl(''),
-    endgia:new FormControl(''),
+    hang_id: new FormControl(''),
+    sole_id: new FormControl(''),
+    category_id: new FormControl(''),
+    startgia: new FormControl(''),
+    endgia: new FormControl(''),
   })
   orderdeteoFrom = new FormGroup({
     productId: new FormControl(),
@@ -176,34 +180,35 @@ export class OrderdetailComponent implements OnInit {
     }
     console.log(this.addres)
   }
+
   laycategory(value: string) {
-    if(value=='100'){
-      this.category_id=null;
+    if (value == '100') {
+      this.category_id = null;
       console.log("có")
       console.log(this.category_id)
-    }else{
-      this.category_id=value;
+    } else {
+      this.category_id = value;
     }
 
   }
 
   laybrand(value: string) {
 
-    if(value=='100'){
+    if (value == '100') {
       console.log("có")
-      this.brand_id=null;
-    }else{
-      this.brand_id=value;
+      this.brand_id = null;
+    } else {
+      this.brand_id = value;
     }
 
   }
 
   laysole(value: string) {
-    if(value=='100'){
+    if (value == '100') {
       console.log("có")
-      this.sole_id=null;
-    }else{
-      this.sole_id=value;
+      this.sole_id = null;
+    } else {
+      this.sole_id = value;
     }
 
   }
@@ -212,24 +217,34 @@ export class OrderdetailComponent implements OnInit {
   delete(id: any) {
     //xóa đơn chi tiết
     this.Orderid = this.route.snapshot.paramMap.get('id');
+    this.username = this.tokenservice.getUser();
+    this.ordertimeline.account_name = this.username;
+    this.ordertimeline.order_id = this.order.id;
 
-    if (confirm("bnaj có chắc muốn xóa sản phẩm này khói giỏ hàng?")) {
-      this.service.delete(id).subscribe(result => {
-        this.getByOrderId(this.Orderid);
-        this.type = 'Sửa đơn hàng';
-        this.ordertimeline.type = this.type;
+    if (confirm("bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+      console.log(this.countsl)
+      if (this.countsl > 1) {
+        console.log(this.countsl)
+        this.service.delete(id).subscribe(result => {
+          this.getByOrderId(this.Orderid);
+          this.type = 'Sửa đơn hàng';
+          this.ordertimeline.type = this.type;
 
-        this.ordertimeline.description = 'Xóa sản phẩm ';
+          this.ordertimeline.description = 'Xóa sản phẩm ';
 
-        this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
-          this.ordertimeline = result;
+          this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+            this.ordertimeline = result;
 
-        })
-        this.sumquantitygia()
-        this.toastr.success("Xóa thành công")
-      });
+          })
+          this.sumquantitygia()
+          this.toastr.success("Xóa thành công")
+        });
+      } else {
+        this.toastr.success("Không đuợc xóa hết khỏi giỏ hàng")
+      }
     }
   }
+
   sumquantitygia() {//tổng số lượng mua và tổng giá
     this.Orderid = this.route.snapshot.paramMap.get('id');
     this.service.sumgiaquantity(this.Orderid).subscribe(result => {
@@ -239,10 +254,14 @@ export class OrderdetailComponent implements OnInit {
 
     })
   }
+
   getByOrderId(id: any) {//lấy ra chi tiết đơn
     this.service.getByOrderId(id).subscribe(result => {
       this.litorderdetail = result;
+      this.service.countsoluong(this.Orderid).subscribe(result => {
+        this.countsl = result;
 
+      })
 
     })
   }
@@ -379,9 +398,20 @@ export class OrderdetailComponent implements OnInit {
 
   })
 
-  laysize(sizevalue: any) {
+  laysize(sizevalue: any, id: any) {
     this.valuesize = sizevalue;
+    this.saimauform.value.size_id = this.valuesize;
+    this.saimauform.value.color_id = this.valuecolor;
+    this.saimauform.value.product_id = id;
+    this.saimauservice.soluongsaimau(this.saimauform.value).subscribe(result => {
+      this.saimau = result;
+      if (this.saimau != null) {
+        console.log(this.saimau)
 
+        this.biendem = this.saimau.quantity;
+        console.log(this.biendem)
+      }
+    })
   }
 
   laycolor(colorvalue: any, id: any) {
@@ -408,31 +438,37 @@ export class OrderdetailComponent implements OnInit {
     this.username = this.tokenservice.getUser();
     this.ordertimeline.account_name = this.username;
     this.ordertimeline.order_id = this.order.id;
-    if(this.valuesize!=null&&this.valuecolor!=null&&this.valuesize!=''&&this.valuecolor!='') {
-      this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
-        this.orderdetail = result;
-        this.type = 'Sửa đơn hàng';
-        this.ordertimeline.type = this.type;
+    if (this.valuesize != null && this.valuecolor != null && this.valuesize != '' && this.valuecolor != '') {
+      if (this.biendem > 0) {
+        this.service.savedeteo(this.orderdeteoFrom.value).subscribe(result => {
+          this.orderdetail = result;
+          this.type = 'Sửa đơn hàng';
+          this.ordertimeline.type = this.type;
 
-        this.ordertimeline.description = 'Thêm sản phẩm ';
+          this.ordertimeline.description = 'Thêm sản phẩm ';
 
-        this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
-          this.ordertimeline = result;
+          this.ordertimelineservice.save(this.ordertimeline).subscribe(result => {
+            this.ordertimeline = result;
 
-        })
-        if (this.orderdetail != null) {
-          this.toastr.success("Đã thêm vào giỏ");
-          this.getByOrderId(this.Orderid);
+          })
+          if (this.orderdetail != null) {
+            this.toastr.success("Đã thêm vào giỏ");
+            this.biendem = this.biendem - 1;
+            this.getByOrderId(this.Orderid);
 
-this.sumquantitygia();
-        } else {
+            this.sumquantitygia();
+          } else {
+            this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
+          }
+
+        }, error => {
           this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
-        }
-
-      }, error => {
+        })
+      } else {
         this.toastr.success("Sản phẩm đã hết màu hoặc size bạn chọn , mời chọn màu hoặc size khác");
-      })
-    }else{
+
+      }
+    } else {
       this.toastr.success("Mời bạn chọn màu và size của sản phẩm ");
     }
   }
@@ -497,16 +533,18 @@ this.sumquantitygia();
 
     })
   }
+
   bocloc() {
     this.serchNameProduct();
   }
+
   serchNameProduct() {
     this.productFrom.value.name = this.namesot;
     this.productFrom.value.hang_id = this.brand_id;
     this.productFrom.value.category_id = this.category_id;
     this.productFrom.value.sole_id = this.sole_id;
-    this.productFrom.value.startgia=this.startgia;
-    this.productFrom.value.endgia=this.endgia;
+    this.productFrom.value.startgia = this.startgia;
+    this.productFrom.value.endgia = this.endgia;
     this.productService.serchName(this.productFrom.value).subscribe(result => {
       this.litproduct = result;
 
@@ -516,23 +554,24 @@ this.sumquantitygia();
   }
 
   laygia(value: string) {
-    if(value=='100'){
-      this.startgia=null;
-      this.endgia=null;
+    if (value == '100') {
+      this.startgia = null;
+      this.endgia = null;
     }
-    if(value=='1'){
-      this.startgia=400000;
-      this.endgia=1000000;
+    if (value == '1') {
+      this.startgia = 400000;
+      this.endgia = 1000000;
     }
-    if(value=='2'){
-      this.startgia=1000000;
-      this.endgia=1500000;
+    if (value == '2') {
+      this.startgia = 1000000;
+      this.endgia = 1500000;
     }
-    if(value=='3'){
-      this.startgia=1500000;
-      this.endgia=2000000;
+    if (value == '3') {
+      this.startgia = 1500000;
+      this.endgia = 2000000;
     }
   }
+
   get sdt() {
     return this.customerinfoFrom.get('sdt');
   }
@@ -549,6 +588,7 @@ this.sumquantitygia();
   clickEvent() {
     this.status1 = !this.status;
   }
+
   greet() {
     console.log('hello');
     const btnElement = (<HTMLElement>this.ElByClassName.nativeElement).querySelector(
