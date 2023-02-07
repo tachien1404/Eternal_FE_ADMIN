@@ -357,7 +357,7 @@
                       </option>
                     </select>
 
-                    <a role="button" style="margin-left: 25px;margin-top: 5px;" (click)="quickAddsole(content)"><svg
+                    <a role="button" style="margin-left: 25px;margin-top: 5px;" (click)="quickAddsole(contentSole)"><svg
                         xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                         class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
                         <path
@@ -387,7 +387,7 @@
                     </select>
 
                     <a role="button" style="margin-left: 25px;margin-top: 5px;"
-                      (click)="quickAddshoeline(contentCate)"><svg xmlns="http://www.w3.org/2000/svg" width="25"
+                      (click)="quickAddshoeline(contentShoeLine)"><svg xmlns="http://www.w3.org/2000/svg" width="25"
                         height="25" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
                         <path
                           d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
@@ -532,3 +532,61 @@
     </div>
   </ng-template>
 </form>
+
+<form novalidate [formGroup]="formAddSole">
+  <ng-template #contentSole let-modal>
+    <div class="modal-header">
+      <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Thêm mới loại đinh giày</h2>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Tên loại đinh giày: </label>
+          <div class="col-md-10">
+            <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+            <small class="col alert text-danger" role="alert"
+                   *ngIf="formAddSole.get('name')?.errors?.required && formAddSole.get('name')?.touched">
+              Loại đinh giày không được để trống !
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button type="button" class="btn btn-success" type="submit" (click)="createSole(content)">Thêm</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</form>
+
+
+<form novalidate [formGroup]="formAddShoeLine">
+  <ng-template #contentShoeLine let-modal>
+    <div class="modal-header">
+      <h2 class="container-fluid text-center lead fw-normal" style="color: #3c763d">Thêm mới dòng giày</h2>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Tên dòng giày: </label>
+          <div class="col-md-10">
+            <input class="form-control" type="text" formControlName="name" style="border: solid 1px gray;">
+            <small class="col alert text-danger" role="alert"
+                   *ngIf="formAddShoeLine.get('name')?.errors?.required && formAddShoeLine.get('name')?.touched">
+              Tên dòng giày không được để trống !
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <button type="button" class="btn btn-success" type="submit" (click)="createShoeLine(content)">Thêm</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</form>
+

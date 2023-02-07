@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { ShoeLine } from '../@core/models/product';
+import {Brand, ShoeLine, Sole} from '../@core/models/product';
+import {environment} from "../../environments/environment";
 const api = 'http://localhost:8080/api/public/shoelines/'
 
 @Injectable({
@@ -52,5 +53,9 @@ export class ShoelineService {
     return this.http.get<Array<any>>(
       api + `?page=${indexPage}&size=${size}`
     )
+  }
+
+  public save(shoeLine: ShoeLine): Observable<any> {
+    return this.http.post(`${environment.apiUrl}public/shoelines/create`, shoeLine);
   }
 }

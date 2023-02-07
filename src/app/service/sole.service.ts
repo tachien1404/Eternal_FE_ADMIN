@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Sole } from '../@core/models/ProductSortDTO';
+import {environment} from "../../environments/environment";
 
 const api = 'http://localhost:8080/api/public/soles/'
 
@@ -56,4 +57,7 @@ export class SoleService {
     )
   }
 
+  save(sole: Sole): Observable<any> {
+    return this.http.post(`${environment.apiUrl}public/soles/create`, sole);
+  }
 }
