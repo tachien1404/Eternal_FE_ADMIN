@@ -93,12 +93,12 @@
 
             <div style="margin-left: 300px;">
               <span *ngIf="valuekenh==1">
-                <button [disabled]="khachdua<=tongthu" class="btn btn-success" (click)="enddonhang()">
+                <button [disabled]="khachdua<=tongthu||this.litorderdeteo==null" class="btn btn-success" (click)="enddonhang()">
                   Thanh toán
                 </button>
               </span>
               <span *ngIf="valuekenh==2">
-                <button class="btn btn-primary ms-3" (click)="enddononlai()">Lưu</button>
+                <button [disabled]="this.litorderdeteo==null||this.customer==null" class="btn btn-primary ms-3" (click)="enddononlai()">Lưu</button>
               </span>
             </div>
           </div>
