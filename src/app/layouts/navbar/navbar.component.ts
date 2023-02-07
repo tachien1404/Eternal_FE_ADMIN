@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  userName!: string;
   constructor(
     private toastr: ToastrService,
     private router: Router,
@@ -19,7 +20,8 @@ export class NavbarComponent implements OnInit {
 }
 
 ngOnInit(): void {
-}
+   this.userName = this.tokenService.getUser()
+};
 logout(){
   this.tokenService.logout();
   this.toastr.success("Đã đăng xuất")

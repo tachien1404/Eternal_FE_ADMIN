@@ -276,14 +276,14 @@
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Giá bán: </label>
               <div class="col-md-9">
-                <input class="form-control" type="text" formControlName="outputprice" style="border: solid 1px gray;">
+                <input class="form-control" min="0" type="number" formControlName="outputprice" style="border: solid 1px gray;">
                 <small class="col alert text-danger" role="alert"
                   *ngIf="formAdd.get('outputprice')?.errors?.required && formAdd.get('outputprice')?.touched">
                   Giá bán không được để trống !
                 </small>
 
                 <small class="col alert text-danger" role="alert"
-                  *ngIf="formAdd.get('outputprice')?.errors?.outputprice && formAdd.get('outputprice')?.touched">
+                       *ngIf="formAdd.get('outputprice')?.errors?.pattern && formAdd.get('outputprice')?.touched">
                   Định dạng giá bán chưa đúng !
                 </small>
               </div>
