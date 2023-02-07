@@ -500,6 +500,7 @@ getone(id:any){
         this.toastr.success(res.message);
         this.ngOnInit();
         this.product = {};
+        this.getAllProduct()
         this.modalService.dismissAll();
       }, error => {
         this.toastr.error(error.error.message);
