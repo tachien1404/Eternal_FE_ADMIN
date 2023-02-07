@@ -249,16 +249,23 @@ export class NewOrderComponent implements OnInit {
       this.customerFrom.value.address += " " + this.addres;
       this.customerFrom.value.nameCity=this.namecity;
       this.customerFrom.value.nameDistrict=this.nameDistrict;
-      console.log(this.customerFrom.value)
-      this.service.save(this.customerFrom.value).subscribe(result => {
-        this.customer = result;
-        this.getFeeShip();
-        this.toastr.success("Thêm mới thành công");
-        this.modalService.dismissAll();
+     this.service.searchSdt(this.customerFrom.value.sdt).subscribe(result =>{
+       this.customer=result;
+       if(this.customer==null){
+         this.service.save(this.customerFrom.value).subscribe(result => {
+           this.customer = result;
+           this.getFeeShip();
+           this.toastr.success("Thêm mới thành công");
+           this.modalService.dismissAll();
 
-      }, error => {
-        this.toastr.error("Thêm mới thất bại");
-      })
+         }, error => {
+           this.toastr.error("Thêm mới thất bại");
+         })
+       }else{
+         this.toastr.error("Khách hàng đã tồn tại");
+       }
+     })
+
     }
   }
 
