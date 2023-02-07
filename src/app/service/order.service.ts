@@ -82,4 +82,7 @@ export class OrderService{
   sumgiaquantity(id:any){
     return this.http.get(this.api2+'/sum/'+id)
   }
+  countsoluong(id:any){
+    return this.http.get(this.api2+'/count/'+id)
+  }
 }

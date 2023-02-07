@@ -96,7 +96,8 @@ export class NewOrderComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.maxLength(255)]),
     sdt: new FormControl('', [Validators.required, Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]),
     address: new FormControl('', Validators.required),
-
+    nameCity:new FormControl(''),
+    nameDistrict:new FormControl('')
   })
   orderFrom = new FormGroup({
     id: new FormControl(''),
@@ -140,8 +141,11 @@ export class NewOrderComponent implements OnInit {
     this.orderService.sumgiaquantity(this.order.id).subscribe(result => {
       this.orderdeteogiaquantity = result;
       this.price = this.orderdeteogiaquantity.price;
-      this.tongthu = this.price - this.giamgia;
+      this.tongthu = this.price ;
 
+    },error => {
+      this.tongthu=0;
+      this.orderdeteogiaquantity={};
     })
   }
 
@@ -243,6 +247,9 @@ export class NewOrderComponent implements OnInit {
   savecustomer() {
     if (this.customerFrom.valid) {
       this.customerFrom.value.address += " " + this.addres;
+      this.customerFrom.value.nameCity=this.namecity;
+      this.customerFrom.value.nameDistrict=this.nameDistrict;
+      console.log(this.customerFrom.value)
       this.service.save(this.customerFrom.value).subscribe(result => {
         this.customer = result;
         this.getFeeShip();
@@ -258,8 +265,10 @@ export class NewOrderComponent implements OnInit {
   timkiemcus() {
     this.service.searchSdt(this.namecus).subscribe(result => {
       this.customer = result;
-
-
+this.namecity=this.customer.nameCity;
+this.nameDistrict=this.customer.nameDistrict;
+this.addres=this.customer.address;
+this.getFeeShip();
     }, error => {
       this.toastr.success("Không có thông tin kahch hàng");
     });

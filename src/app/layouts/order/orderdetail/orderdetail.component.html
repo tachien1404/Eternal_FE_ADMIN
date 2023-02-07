@@ -485,7 +485,7 @@
           </select>
         </th>
         <th>
-          <select #selectSize (change)="laysize(selectSize.value)" class="form-select "
+          <select #selectSize (change)="laysize(selectSize.value,item.id)" class="form-select "
                   aria-label="Default select example">
             <option>Chọn size</option>
             <option *ngFor="let itemsize of item.litsai" [value]="itemsize.id">{{itemsize.value}}</option>
