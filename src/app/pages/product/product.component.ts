@@ -11,6 +11,7 @@ import {SCDetailsService} from "../../@core/services/s-c.-details.service";
 import {CategoryService} from "../../@core/services/category.service";
 import {BrandService} from "../../service/brand.service";
 import {SoleService} from "../../service/sole.service";
+import {ShoelineService} from "../../service/shoeline.service";
 
 @Component({
   selector: 'app-product',
@@ -22,6 +23,8 @@ export class ProductComponent implements OnInit {
   formSearch!: FormGroup;
   formAddCate!: FormGroup;
   formAddBrand!: FormGroup;
+  formAddSole!: FormGroup;
+  formAddShoeLine!: FormGroup;
   datas: Product[] = [];
   indexPage = 0;
   Page: any;
@@ -37,6 +40,8 @@ export class ProductComponent implements OnInit {
   hiddeen!: boolean;
   category: Category = {};
   brand: Brand = {};
+  sole: Sole ={};
+  shoeLine: ShoeLine = {};
   //tuấn
 listproduct:any;//getalllistvaf phân trang
   p:number=1;
@@ -60,6 +65,7 @@ listproduct:any;//getalllistvaf phân trang
     private cateService: CategoryService,
     private brandService: BrandService,
     private soleservice:SoleService,
+    private shoeLineService: ShoelineService,
   ) {
   }
 
@@ -75,6 +81,8 @@ listproduct:any;//getalllistvaf phân trang
     this.initFormSearch();
     this.initFormAddCate();
     this.initFormAddBrand();
+    this.initFormAddSole();
+    this.initFormAddShonLine()
     this.getAllProduct();
   }
 
@@ -113,6 +121,20 @@ listproduct:any;//getalllistvaf phân trang
 
   initFormAddBrand(){
     this.formAddBrand = this.fb.group({
+      id:'',
+      name: ['', [Validators.required, Validators.maxLength(20)]]
+    });
+  }
+
+  initFormAddSole(){
+    this.formAddSole = this.fb.group({
+      id:'',
+      name: ['', [Validators.required, Validators.maxLength(20)]]
+    });
+  }
+
+  initFormAddShonLine(){
+    this.formAddShoeLine = this.fb.group({
       id:'',
       name: ['', [Validators.required, Validators.maxLength(20)]]
     });
@@ -506,6 +528,7 @@ getone(id:any){
         this.toastr.success(res.message);
         this.category={};
         this.getAllCategory();
+        this.initFormAddCate();
         this.modalService.dismissAll();
         this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
       }, error => {
@@ -523,12 +546,7 @@ getone(id:any){
   addValueFromBrand() {
     this.brand.name = this.formAddBrand.value.name;
   }
-  solefrom = new FormGroup({
-   namesole:new FormControl('',Validators.required)
-  })
-  sholinefrom = new FormGroup({
-    nameshoeline:new FormControl('',Validators.required)
-  })
+
   createBrand(content: any){
     this.addValueFromBrand();
     this.brandService.create(this.brand).subscribe(
@@ -536,6 +554,7 @@ getone(id:any){
         this.toastr.success(res.message);
         this.brand={};
         this.getAllBrand();
+        this.initFormAddBrand();
         this.modalService.dismissAll();
         this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
       }, error => {
@@ -543,18 +562,6 @@ getone(id:any){
       }
     );
   }
-
-  createsole(content: any) {
-    this.solefrom.value.namesole=this.namesole;
-    console.log(this.namesole)
-this.soleservice.create(this.solefrom.value).subscribe(result=>{
-  console.log(result)
-})
-  }
-  createshoeline(content: any) {
-
-  }
-
 
 
   quickAddsole(contentsole: any) {
@@ -565,5 +572,45 @@ this.soleservice.create(this.solefrom.value).subscribe(result=>{
   quickAddshoeline(contentshoeline: any) {
     this.modalService.dismissAll();
     this.modalService.open(contentshoeline, {size: 'lg', centered: true, scrollable: true});
+  }
+
+  addValueFromSole() {
+    this.sole.name = this.formAddSole.value.name;
+  }
+
+  addValueFromShoeLine() {
+    this.shoeLine.name = this.formAddShoeLine.value.name;
+  }
+  createSole(content: any){
+    this.addValueFromSole();
+    console.log(this.sole)
+    this.soleservice.save(this.sole).subscribe(
+      res =>{
+        this.toastr.success(res.message);
+        this.sole={};
+        this.getAllSole();
+        this.initFormAddSole();
+        this.modalService.dismissAll();
+        this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
+      }, error => {
+        this.toastr.error(error.error.message);
+      }
+    );
+  }
+
+  createShoeLine(content: any){
+    this.addValueFromShoeLine();
+    this.shoeLineService.save(this.shoeLine).subscribe(
+      res =>{
+        this.toastr.success(res.message);
+        this.shoeLine={};
+        this.getAllShoeLine();
+        this.initFormAddShonLine();
+        this.modalService.dismissAll();
+        this.modalService.open(content, {size: 'lg', centered: true, scrollable: true});
+      }, error => {
+        this.toastr.error(error.error.message);
+      }
+    );
   }
 }
