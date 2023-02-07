@@ -135,7 +135,7 @@
         <span *ngIf="customer!=null">
           <div class="card p-4" style="margin-top: 53px">
             <h5>Thông tin người mua</h5>
-            <button (click)="openedit(content,customer.id)">Sửa</button>
+            <button class="btn" style="border: solid 1px gray; color: orangered;"  (click)="openedit(content,customer.id)">Sửa</button>
             <label>{{customer.name}}</label>
             <label>{{customer.email}}</label>
             <hr>
